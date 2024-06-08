@@ -1,20 +1,35 @@
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import Logo from '@/components/icon/appIcon';
+
+import apptheme from '@/themes/apptheme';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 32, fontWeight: "bold", color: "black" }}> Insectario </Text>
-      <Button title="Button" />
-      <StatusBar style="auto" />
-    </View>
+    <LinearGradient style={styles.gradient} colors={[apptheme.secondary, apptheme.black]}>
+      <View style={styles.container}>
+        <Logo/>
+        <Text style={styles.text}>INSECTARIO</Text>
+      </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    ...StyleSheet.absoluteFillObject,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: "center"
-  }
+    alignItems: 'center',
+    gap: 30
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: '300',
+    letterSpacing: 7,
+    color: '#FFF',
+  },
 });
