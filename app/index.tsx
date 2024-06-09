@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image, Dimensions, Platform } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 
@@ -15,6 +15,10 @@ export default function HomeScreen() {
     'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
     'Roboto-Thin': require('@/assets/fonts/Roboto-Thin.ttf'),
   });
+
+  if(!fontsLoaded) {
+    return <ActivityIndicator />
+  }
 
   return (
     <LinearGradient style={ StyleSheet.absoluteFill } colors={[apptheme.secondary, apptheme.black]}>
