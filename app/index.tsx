@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, Button, Image, Dimensions, Platform } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 
-import Logo from '@/components/icon/appIcon';
+import Logo from '@/components/appIcon';
 import apptheme from '@/themes/apptheme';
+import SlidingButton from '@/components/slideButton';
 
 const { height } = Dimensions.get('window');
 
@@ -21,11 +22,7 @@ export default function HomeScreen() {
         <Logo />
         <Text style={styles.text}>INSECTARIO</Text>
         <View style={styles.footer}>
-          <Image 
-            source={require('@/assets/images/background-button.png')}
-            style={styles.backgroundButton}
-            resizeMode='contain'/>
-          <Text style={styles.textButton}>Go</Text>
+          <SlidingButton />
         </View>
       </View>
     </LinearGradient>
@@ -43,7 +40,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Roboto-Thin' : 'Roboto-Regular',
     fontSize: 25,
     letterSpacing: 5,
-    color: '#FFF',
+    color: apptheme.white,
   },
   footer: {
     flex: 0,
@@ -51,16 +48,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: height * 0.1,
   },
-  backgroundButton: {
-    flexShrink: 0
-  },
-  textButton: {
-    color: apptheme.text,
-    fontFamily: Platform.OS === 'ios' ? 'Roboto-Thin' : 'Roboto-Regular',
-    fontSize: 25,
-    fontStyle: 'normal',
-    lineHeight: 74.02,
-    letterSpacing: 1.25,
-    position: 'absolute'
-  }
 });
