@@ -13,12 +13,16 @@ import Animated, {
 
 import apptheme from "@/themes/apptheme";
 
+interface SlidingButtonProps {
+    onSwipeComplete: () => void
+}
+
 const BUTTON_HEIGHT = 150;
 const BUTTON_WIDTH = 75;
 const BUTTON_PADDING = 5; 
 const SWIPEABLE_AREA = BUTTON_WIDTH - 2 * BUTTON_PADDING;
 
-export default function SlidingButton() {
+export default function SlidingButton({ onSwipeComplete} : SlidingButtonProps) {
 
     const translateY = useSharedValue(0);
 
@@ -31,6 +35,7 @@ export default function SlidingButton() {
             translateY.value = withSpring(0);
         } else {
             translateY.value = withSpring(-BUTTON_HEIGHT/2);
+            // onSwipeComplete();
         }
     });
 

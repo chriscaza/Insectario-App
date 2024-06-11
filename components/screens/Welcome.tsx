@@ -4,12 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const { height } = Dimensions.get('window');
+import { useNavigation } from '@react-navigation/native';
 
 import apptheme from '@/themes/apptheme';
 import Logo from '../icons/AppIcon';
 import SlidingButton from '../icons/SlideButton';
+import LogIn from './LogIn';
 
-export default function HomeScreen() {
+
+export default function Welcome() {
+  const navigation = useNavigation();
 
   const [ fontsLoaded ] = useFonts({
     'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
@@ -20,6 +24,10 @@ export default function HomeScreen() {
     return <ActivityIndicator />
   }
 
+  const handleSwipeComplete = () => {
+    // navigation.navigate('LogIn');
+  };
+
   return (
     <LinearGradient style={ StyleSheet.absoluteFill } colors={[apptheme.secondary, apptheme.black]}>
       <GestureHandlerRootView>
@@ -27,7 +35,7 @@ export default function HomeScreen() {
           <Logo />
           <Text style={styles.text}>INSECTARIO</Text>
           <View style={styles.footer}>
-            <SlidingButton />
+            <SlidingButton onSwipeComplete={handleSwipeComplete}/>
           </View>
         </View>
       </GestureHandlerRootView>
