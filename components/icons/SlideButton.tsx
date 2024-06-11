@@ -7,7 +7,6 @@ import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withSpring,
-    useAnimatedRef,
     interpolate,
     Extrapolation,
 } from "react-native-reanimated";
