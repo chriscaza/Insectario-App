@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+const { height } = Dimensions.get('window');
 
 import Logo from '@/components/appIcon';
 import apptheme from '@/themes/apptheme';
 import SlidingButton from '@/components/slideButton';
 
-const { height } = Dimensions.get('window');
+
 
 export default function HomeScreen() {
 
@@ -22,14 +24,16 @@ export default function HomeScreen() {
 
   return (
     <LinearGradient style={ StyleSheet.absoluteFill } colors={[apptheme.secondary, apptheme.black]}>
-      <View style={styles.container}>
-        <Logo />
-        <Text style={styles.text}>INSECTARIO</Text>
-        <View style={styles.footer}>
-          <SlidingButton />
+      <GestureHandlerRootView>
+        <View style={styles.container}>
+          <Logo />
+          <Text style={styles.text}>INSECTARIO</Text>
+          <View style={styles.footer}>
+            <SlidingButton />
+          </View>
         </View>
-      </View>
-    </LinearGradient>
+      </GestureHandlerRootView>
+  </LinearGradient>
   );
 }
 
