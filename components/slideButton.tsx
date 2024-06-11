@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from '@expo/vector-icons'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
@@ -8,6 +8,8 @@ import Animated, {
     useAnimatedStyle,
     withSpring,
     useAnimatedRef,
+    interpolate,
+    Extrapolation,
 } from "react-native-reanimated";
 
 import apptheme from "@/themes/apptheme";
@@ -41,6 +43,15 @@ export default function SlidingButton() {
                 }],
             };
         }),
+        clearText: useAnimatedStyle(() => {
+            const opacity = interpolate(
+                translateY.value, [-(BUTTON_HEIGHT - SWIPEABLE_AREA), 0], [-1, 1],
+                Extrapolation.CLAMP
+            );
+            return {
+                opacity,
+            };
+        }),
     };
 
     return(
@@ -53,6 +64,7 @@ export default function SlidingButton() {
                     <FontAwesome name="chevron-up" size={24} color={'rgba(255, 255, 255, 1)'}></FontAwesome>
                 </View>
                 <Animated.View style={[ styles.button, animatedStyles.swipeable ]}>
+                    <Animated.Text style={[styles.textButton, animatedStyles.clearText]}>Go</Animated.Text>
                 </Animated.View>
             </LinearGradient>
         </GestureDetector>
