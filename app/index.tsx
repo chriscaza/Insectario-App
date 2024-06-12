@@ -1,59 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useFonts } from 'expo-font';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-const { height } = Dimensions.get('window');
+import React from "react";
 
-import Logo from '@/components/appIcon';
+import Welcome from "@/components/screens/Welcome";
 import apptheme from '@/themes/apptheme';
-import SlidingButton from '@/components/slideButton';
+import LogIn from '@/components/screens/LogIn';
 
 
+export default function index() {
 
-export default function HomeScreen() {
-
-  const [ fontsLoaded ] = useFonts({
-    'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
-    'Roboto-Thin': require('@/assets/fonts/Roboto-Thin.ttf'),
-  });
-
-  if(!fontsLoaded) {
-    return <ActivityIndicator />
-  }
+  const Stack = createStackNavigator();
 
   return (
-    <LinearGradient style={ StyleSheet.absoluteFill } colors={[apptheme.secondary, apptheme.black]}>
-      <GestureHandlerRootView>
-        <View style={styles.container}>
-          <Logo />
-          <Text style={styles.text}>INSECTARIO</Text>
-          <View style={styles.footer}>
-            <SlidingButton />
-          </View>
-        </View>
-      </GestureHandlerRootView>
-  </LinearGradient>
+    // <Stack.Navigator screenOptions={{ headerShown: false }}>
+    //   {/* <Stack.Screen name="Welcome" component={Welcome} /> */}
+    //   <Stack.Screen name='LogIn' component={LogIn} />
+    // </Stack.Navigator>
+    <LogIn />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 20,
-  },
-  text: {
-    fontFamily: Platform.OS === 'ios' ? 'Roboto-Thin' : 'Roboto-Regular',
-    fontSize: 25,
-    letterSpacing: 5,
-    color: apptheme.white,
-  },
-  footer: {
-    flex: 0,
-    position: 'absolute',
-    alignItems: 'center',
-    bottom: height * 0.1,
-  },
-});
