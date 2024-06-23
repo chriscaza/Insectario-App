@@ -9,11 +9,12 @@ import { useNavigation } from '@react-navigation/native';
 import apptheme from '@/themes/apptheme';
 import Logo from '../icons/AppIcon';
 import SlidingButton from '../icons/SlideButton';
-import LogIn from './LogIn';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 export default function Welcome() {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const [ fontsLoaded ] = useFonts({
     'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
@@ -29,21 +30,28 @@ export default function Welcome() {
   };
 
   return (
-    <LinearGradient style={ StyleSheet.absoluteFill } colors={[apptheme.secondary, apptheme.black]}>
-      <GestureHandlerRootView>
-        <View style={styles.container}>
-          <Logo />
-          <Text style={styles.text}>INSECTARIO</Text>
-          <View style={styles.footer}>
-            <SlidingButton onSwipeComplete={handleSwipeComplete}/>
+    <LinearGradient style={ StyleSheet.absoluteFillObject } colors={[apptheme.secondary, apptheme.black]}>
+      {/* <View style={[styles.safeArea, {height: insets.top, backgroundColor: apptheme.black}]} /> */}
+      <SafeAreaView style={{flex: 1}}>
+        <GestureHandlerRootView>
+          <View style={styles.container}>
+            <Logo />
+            <Text style={styles.text}>INSECTARIO</Text>
+            <View style={styles.footer}>
+              <SlidingButton onSwipeComplete={handleSwipeComplete}/>
+            </View>
           </View>
-        </View>
-      </GestureHandlerRootView>
-  </LinearGradient>
+        </GestureHandlerRootView>
+      </SafeAreaView>
+      {/* <View style={[styles.safeArea, {height: insets.bottom, backgroundColor: apptheme.black}]}/> */}
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    width: '100%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
