@@ -28,9 +28,17 @@
     },
     "plugins": [
       [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Roboto-Regular.ttf", "./assets/fonts/Roboto-Thin.ttf"]     
+          "fonts": ["./assets/fonts/Roboto-Regular.ttf", "./assets/fonts/Roboto-Thin.ttf"]
         }
       ],
       "expo-router"
