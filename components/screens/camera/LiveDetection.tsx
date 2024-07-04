@@ -4,7 +4,7 @@ import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 're
 
 const { width, height }  = Dimensions.get('screen')
 
-export default function App() {
+export default function LiveDetection() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
 

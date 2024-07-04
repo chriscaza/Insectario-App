@@ -31,7 +31,6 @@ export default function Welcome() {
 
   return (
     <LinearGradient style={ StyleSheet.absoluteFillObject } colors={[apptheme.secondary, apptheme.black]}>
-      {/* <View style={[styles.safeArea, {height: insets.top, backgroundColor: apptheme.black}]} /> */}
       <SafeAreaView style={{flex: 1}}>
         <GestureHandlerRootView>
           <View style={styles.container}>
@@ -43,7 +42,6 @@ export default function Welcome() {
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>
-      {/* <View style={[styles.safeArea, {height: insets.bottom, backgroundColor: apptheme.black}]}/> */}
     </LinearGradient>
   );
 }
