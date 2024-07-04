@@ -30,7 +30,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(INSECTARIO) to access your camera",
+          "cameraPermission": "Permitir que $(INSECTARIO) acceda a tu cámara",
           "recordAudioAndroid": true
         }
       ],
@@ -38,6 +38,12 @@
         "expo-font",
         {
           "fonts": ["./assets/fonts/Roboto-Regular.ttf", "./assets/fonts/Roboto-Thin.ttf"]
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir que $(INSECTARIO) acceda a tus fotos"
         }
       ],
       "expo-router"
