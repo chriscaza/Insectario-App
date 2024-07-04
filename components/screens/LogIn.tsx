@@ -10,7 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function App() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -24,32 +24,32 @@ export default function App() {
     >
       <Text style={styles.title}>Inicia sesión</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        placeholderTextColor="rgba(255, 255, 255, 0.7)"
-        value={email}
-        onChangeText={setEmail}
-      />
-
-      <View style={styles.passwordContainer}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Correo</Text>
         <TextInput
-          style={styles.inputPass}
-          placeholder="Contraseña"
-          placeholderTextColor="rgba(255, 255, 255, 0.7)"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+            style={styles.input}
+            placeholder="hola@gmail.com"
+            placeholderTextColor="rgba(255, 255, 255, 1)"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Contraseña</Text>
+        <TextInput
+            style={styles.input}
+            placeholder="**************"
+            placeholderTextColor="rgba(255, 255, 255, 1)"
+            secureTextEntry={!showPassword}
         />
         <TouchableOpacity
-          onPress={() => setShowPassword(!showPassword)}
-          style={styles.eyeButton}
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeButton}
         >
-          <Ionicons
-            name={showPassword ? "eye-off-outline" : "eye-outline"}
-            size={24}
-            color="#fff"
-          />
+            <Ionicons
+                name={showPassword ? "eye-off-outline" : "eye-outline"}
+                size={24}
+                color="#fff"
+            />
         </TouchableOpacity>
       </View>
 
@@ -73,7 +73,7 @@ export default function App() {
 
       <TouchableOpacity>
         <Text style={styles.createAccount}>
-          ¿Aún no tienes cuenta? Crear cuenta
+          ¿Aún no tienes cuenta? <Text style={styles.bold}>Crear cuenta</Text>
         </Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -82,9 +82,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    flex: 1,
     justifyContent: "center",
+    ...StyleSheet.absoluteFillObject,
     paddingHorizontal: 46,
   },
   title: {
@@ -92,13 +92,22 @@ const styles = StyleSheet.create({
     marginBottom: 36,
     color: "#fff",
   },
-  input: {
+  inputContainer: {
     width: "100%",
     backgroundColor: "#314F33",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 24,
-    color: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 15,
+    marginBottom: 24,  
+  },
+  label: {
+      fontSize: 12,
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginBottom: 3,
+  }, 
+  input: {
+      fontSize: 16,
+      color: '#fff',
   },
   inputPass: {
     width: "100%",
@@ -117,7 +126,7 @@ const styles = StyleSheet.create({
   eyeButton: {
     position: "absolute",
     right: 15,
-    top: 10,
+    top: 15,
   },
   eyeText: {
     color: "#fff",
@@ -175,4 +184,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     fontWeight: "500",
   },
+  bold: {
+    fontWeight: "bold"
+  }
 });
