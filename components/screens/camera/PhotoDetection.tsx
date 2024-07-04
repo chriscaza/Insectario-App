@@ -67,8 +67,8 @@ export default function PhotoDetection() {
                     onPress={() => {
                       // Tomar fotografia
                     }}>
-                      <View style={{width: 85, height: 85, borderRadius: 50, backgroundColor: apptheme.white, justifyContent: 'center', alignItems: 'center'}}>
-                        <View style={{width: 78, height: 78, borderRadius: 50, borderColor: apptheme.black, borderWidth: 1.5}}></View>
+                      <View style={{width: 85, height: 85, borderRadius: 50, borderColor: apptheme.white, borderWidth: 4, justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{width: 72, height: 72, borderRadius: 50, backgroundColor: apptheme.white}}></View>
                       </View>
                     </Pressable>
                   </View>
