@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import apptheme from '@/themes/apptheme';
 import Logo from '../icons/AppIcon';
 import SlidingButton from '../icons/SlideButton';
-import LogIn from './LogIn';
+//import Login from './Login';
 
 
 export default function Welcome() {
@@ -25,7 +25,7 @@ export default function Welcome() {
   }
 
   const handleSwipeComplete = () => {
-    // navigation.navigate('LogIn');
+    // navigation.navigate('Login');
   };
 
   return (
