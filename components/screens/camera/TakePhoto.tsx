@@ -8,12 +8,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import Flash from '@/components/icons/Flash'
+import PhotoPreview from './PhotoPreview'
 const { width } = Dimensions.get('window');
 
 export default function PhotoDetection() {
 
   const [ hasPermission, setHasPermission ] = useState<boolean>(false);
-  const [ image, setImage ] = useState<string>();
+  const [ image, setImage ] = useState<string | undefined>();
   const [ type, setType ] = useState<CameraType>('back');
   const [ flash, setFlash ] = useState<FlashMode>('off');
   const cameraRef = useRef<CameraView>(null);
@@ -37,8 +38,7 @@ export default function PhotoDetection() {
     if(cameraRef.current) {
       try {
         const photo = await cameraRef.current.takePictureAsync({quality: 1});
-        // setImage(photo?.uri)
-        console.log(photo)
+        setImage(photo?.uri)
       } catch (error) {
         console.error(error)
       }
@@ -53,6 +53,10 @@ export default function PhotoDetection() {
     setFlash((flash) =>
       flash === 'off' ? 'on' : 'off'
     );
+  }
+
+  const closePreview = () => {
+    setImage(undefined)
   }
 
   return (
@@ -123,8 +127,7 @@ export default function PhotoDetection() {
                 </View>
              </View>
              :
-            //  Vista de la imagen para ser detectada
-             <View></View>
+             <PhotoPreview uri={image} onPress={closePreview}/>
             }
           </SafeAreaView>
     </LinearGradient>
