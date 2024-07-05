@@ -28,11 +28,7 @@
     },
     "plugins": [
       [
-        "expo-camera",
-        {
-          "cameraPermission": "Permitir que $(INSECTARIO) acceda a tu cámara",
-          "recordAudioAndroid": true
-        }
+        "expo-camera"
       ],
       [
         "expo-font",
@@ -43,7 +39,9 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Permitir que $(INSECTARIO) acceda a tus fotos"
+          "photosPermission": "Permitir que $(INSECTARIO) acceda a tus fotos",
+          "cameraPermission": "Permitir que $(INSECTARIO) acceda a tu cámara",
+          "microphonePermission": false
         }
       ],
       "expo-router"
