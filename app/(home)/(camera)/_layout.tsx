@@ -6,6 +6,7 @@ export default function CameraLayout() {
         <Stack screenOptions={{headerShown: false}}>
             <Stack.Screen name="index"/>
             <Stack.Screen name="PhotoPreview"/>
+            <Stack.Screen name="PhotoLibrary" options={{presentation: 'modal'}}/>
         </Stack>
     )
 }
