@@ -1,29 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator, Button, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { usePermissions } from 'expo-media-library' 
+import { useCameraPermissions } from 'expo-camera';
+
 const { height } = Dimensions.get('window');
 
 import apptheme from '@/themes/apptheme';
 import Logo from '../../components/icons/AppIcon';
 import SlidingButton from '../../components/icons/SlideButton';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function inddex() {
 
   const router = useRouter();
+  const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
+  const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
 
-  const [ fontsLoaded ] = useFonts({
-    'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
-    'Roboto-Thin': require('@/assets/fonts/Roboto-Thin.ttf'),
-  });
-
-  if(!fontsLoaded) {
-    return <ActivityIndicator />
+  async function handleContinue() {
+    const allPermissions = await requestAllPermissions();
+    if(allPermissions) {
+      handleSwipeComplete()
+    } else {
+      Alert.alert("Para continuar es necesario dar permisos a la aplicación desde ajustes")
+    }
   }
+
+  async function requestAllPermissions() {
+    
+    const cameraStatus = await requestCameraPermission();
+    if(!cameraStatus.granted) {
+      Alert.alert("Error", 'Se necesita acceso a la cámara');
+      return false;
+    }
+
+    const mediaLibraryStatus = await requestMediaLibraryPermission();
+    if(!mediaLibraryStatus.granted) {
+      Alert.alert("Error", 'Se necesita acceso al contenido multimedia');
+      return false;
+    }
+
+    await AsyncStorage.setItem('hasOpened', 'true');
+    return true;
+  }
+
 
   const handleSwipeComplete = () => {
     router.replace('(home)/LogIn')
@@ -38,7 +63,7 @@ export default function inddex() {
             <Text style={styles.text}>INSECTARIO</Text>
             <View style={styles.footer}>
               {/* <SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
-              <Text onPress={handleSwipeComplete} style={styles.text}>Iniciar</Text>
+              <Text onPress={handleContinue} style={styles.text}>Iniciar</Text>
             </View>
           </View>
         </GestureHandlerRootView>
@@ -58,7 +83,6 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   text: {
-    fontFamily: Platform.OS === 'ios' ? 'Roboto-Thin' : 'Roboto-Regular',
     fontSize: 25,
     letterSpacing: 5,
     color: apptheme.white,
