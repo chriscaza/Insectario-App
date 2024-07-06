@@ -1,20 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator, Button } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const { height } = Dimensions.get('window');
-import { useNavigation } from '@react-navigation/native';
 
 import apptheme from '@/themes/apptheme';
-import Logo from '../icons/AppIcon';
-import SlidingButton from '../icons/SlideButton';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Logo from '../../components/icons/AppIcon';
+import SlidingButton from '../../components/icons/SlideButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link, useRouter } from 'expo-router';
 
 
-export default function Welcome() {
-  const navigation = useNavigation();
-  const insets = useSafeAreaInsets();
+export default function inddex() {
+
+  const router = useRouter();
 
   const [ fontsLoaded ] = useFonts({
     'Roboto-Regular': require('@/assets/fonts/Roboto-Regular.ttf'),
@@ -26,7 +26,7 @@ export default function Welcome() {
   }
 
   const handleSwipeComplete = () => {
-    // navigation.navigate('LogIn');
+    router.replace('(home)/LogIn')
   };
 
   return (
@@ -37,7 +37,8 @@ export default function Welcome() {
             <Logo />
             <Text style={styles.text}>INSECTARIO</Text>
             <View style={styles.footer}>
-              <SlidingButton onSwipeComplete={handleSwipeComplete}/>
+              {/* <SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
+              <Text onPress={handleSwipeComplete} style={styles.text}>Iniciar</Text>
             </View>
           </View>
         </GestureHandlerRootView>

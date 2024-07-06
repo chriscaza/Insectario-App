@@ -14,7 +14,7 @@ export default function CloseButton({icon, onPress}: CloseButtonProps) {
         onPress={onPress}>
           <Ionicons 
           name={icon}
-          size={30} 
+          size={35} 
           color="white"/>
       </Pressable> 
     );

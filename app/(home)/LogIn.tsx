@@ -5,78 +5,89 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Link, useRouter } from "expo-router";
 
-export default function App() {
+export default function LogIn() {
+  const router =  useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <LinearGradient
-      colors={["#98D798", "#507150"]}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      style={styles.container}
-    >
-      <Text style={styles.title}>Inicia sesión</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <LinearGradient
+        colors={["#98D798", "#507150"]}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.container}
+      >
+        <Text style={styles.title}>Inicia sesión</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Correo"
-        placeholderTextColor="rgba(255, 255, 255, 0.7)"
-        value={email}
-        onChangeText={setEmail}
-      />
-
-      <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.inputPass}
-          placeholder="Contraseña"
+          style={styles.input}
+          placeholder="Correo"
           placeholderTextColor="rgba(255, 255, 255, 0.7)"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+          value={email}
+          onChangeText={setEmail}
         />
-        <TouchableOpacity
-          onPress={() => setShowPassword(!showPassword)}
-          style={styles.eyeButton}
-        >
-          <Ionicons
-            name={showPassword ? "eye-off-outline" : "eye-outline"}
-            size={24}
-            color="#fff"
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.inputPass}
+            placeholder="Contraseña"
+            placeholderTextColor="rgba(255, 255, 255, 0.7)"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
           />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeButton}
+          >
+            <Ionicons
+              name={showPassword ? "eye-off-outline" : "eye-outline"}
+              size={24}
+              color="#fff"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity>
+          <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
-      </View>
 
-      <TouchableOpacity>
-        <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
-      </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.continueButton}
+          onPress={() => {router.replace('(home)/(camera)')}}
+        >
+          <Text style={styles.continueButtonText}>Continuar</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.continueButton}>
-        <Text style={styles.continueButtonText}>Continuar</Text>
-      </TouchableOpacity>
+        <View style={styles.orContainer}>
+          <View style={styles.line} />
+          <Text style={styles.orText}>o</Text>
+          <View style={styles.line} />
+        </View>
 
-      <View style={styles.orContainer}>
-        <View style={styles.line} />
-        <Text style={styles.orText}>o</Text>
-        <View style={styles.line} />
-      </View>
+        <TouchableOpacity style={styles.googleButton}>
+          <Text style={styles.googleButtonText}>Continuar con Google</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.googleButton}>
-        <Text style={styles.googleButtonText}>Continuar con Google</Text>
-      </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.createAccount}>
+            ¿Aún no tienes cuenta? Crear cuenta
+          </Text>
+        </TouchableOpacity>
+      </LinearGradient>
+    </TouchableWithoutFeedback>
 
-      <TouchableOpacity>
-        <Text style={styles.createAccount}>
-          ¿Aún no tienes cuenta? Crear cuenta
-        </Text>
-      </TouchableOpacity>
-    </LinearGradient>
   );
 }
 
