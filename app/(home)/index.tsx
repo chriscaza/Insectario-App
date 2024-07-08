@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Platform, ActivityIndicator, Button, Alert } from 'react-native';
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
+import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

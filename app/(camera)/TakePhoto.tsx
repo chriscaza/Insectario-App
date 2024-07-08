@@ -10,7 +10,6 @@ import { router } from 'expo-router'
 import { useCameraStore } from '@/global/cameraStore'
 
 import Flash from '@/components/icons/Flash'
-import PhotoPreview from './PhotoPreview'
 
 const { width } = Dimensions.get('window')
 

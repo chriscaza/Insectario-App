@@ -12,27 +12,28 @@ import { Asset, getAlbumsAsync, getAssetsAsync } from "expo-media-library";
 import { Image } from "expo-image";
 import apptheme from "@/themes/apptheme";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router, useRouter } from "expo-router";
+import { router } from "expo-router";
 import { useCameraStore } from "@/global/cameraStore";
 
 interface MemoizedImageProps {
     uri: string
 }
 
+const {width} = Dimensions.get('window')
+
 const MemoizedImage = React.memo(({ uri }: MemoizedImageProps) => {
     
-    const router = useRouter();
     const { setPicture } = useCameraStore();
 
     function imagePressed() {
         setPicture(uri);
-        router.navigate('/(camera)/PhotoPreview');
-    };
+        router.navigate('PhotoPreview')
+    }        
 
     return (
         <Pressable 
             style={{
-                width: '30%',
+                width: width/3.3,
                 height: 170,
                 margin: '1.5%'
             }}
@@ -53,7 +54,6 @@ const MemoizedImage = React.memo(({ uri }: MemoizedImageProps) => {
 
 export default function PhotoLibrary() {
 
-    const {width} = Dimensions.get('window')
 
     const [ assets, setAssets ] = useState<Asset[]>([]);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -75,7 +75,6 @@ export default function PhotoLibrary() {
                 mediaType: 'photo',
                 sortBy: 'creationTime',
                 after: assets.length ? assets[assets.length -1].id : undefined
-                
             });
             setAssets((prevAssets) => {
                 const newAssets = albumAssets.assets.filter(asset => 

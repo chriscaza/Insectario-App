@@ -14,7 +14,6 @@ const {width} = Dimensions.get("window")
 
 export default function PhotoPreview() {
     const { picture } = useCameraStore();
-
     function closeImage() {
         router.back()
     }
