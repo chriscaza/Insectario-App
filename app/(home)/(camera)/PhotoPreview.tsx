@@ -1,20 +1,24 @@
-import CloseButton from "@/components/icons/CloseButton";
-import apptheme from "@/themes/apptheme";
 import React, { Dispatch } from "react";
-import { View, StyleSheet, Text, Dimensions, TouchableOpacity, SafeAreaView} from "react-native";
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity} from "react-native";
 import { Image } from 'expo-image';
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from "expo-linear-gradient";
-
-interface PhotoPreviewProps {
-    picture: string,
-    setPicture: Dispatch<React.SetStateAction<string>>
-}
+import CloseButton from "@/components/icons/CloseButton";
+import apptheme from "@/themes/apptheme";
+import { useCameraStore } from "@/global/cameraStore";
+import { router } from "expo-router";
 
 const {width} = Dimensions.get("window")
 
-export default function PhotoPreview({ picture, setPicture } : PhotoPreviewProps) {
+export default function PhotoPreview() {
+    const { picture } = useCameraStore();
+
+    function closeImage() {
+        router.navigate('(camera)')
+    }
+
     return(
         <LinearGradient 
             colors={["#98D798", "#507150"]}
@@ -23,26 +27,25 @@ export default function PhotoPreview({ picture, setPicture } : PhotoPreviewProps
             style={styles.container}
         > 
 
-        <SafeAreaView>
-            <View style={styles.mainContainer}>
-                <Image 
-                    source={{uri: picture}}
-                    style={styles.photo}
-                />
-                <View 
-                    style={{
-                        position: 'absolute',
-                        left: '15%',
-                    }}
-                >
-                    <CloseButton icon="close" onPress={() => setPicture('')}/>
-                </View>
-                <View style={styles.detect}>
-                    <TouchableOpacity style={styles.pressable}>
-                        <Text style={styles.text}>Detectar</Text>
-                        <Ionicons name="arrow-forward" size={24} color="white" />
-                    </TouchableOpacity>
-                </View>
+        <SafeAreaView style={styles.mainContainer}>
+            <Image 
+                source={{uri: picture}}
+                style={styles.photo}
+            />
+            <View 
+                style={{
+                    position: 'absolute',
+                    left: '15%',
+                    top: '5%',
+                }}
+            >
+                <CloseButton icon="close" onPress={closeImage}/>   
+            </View>
+            <View style={styles.detect}>
+                <TouchableOpacity style={styles.pressable}>
+                    <Text style={styles.text}>Detectar</Text>
+                    <Ionicons name="arrow-forward" size={24} color="white" />
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     </LinearGradient>

@@ -51,7 +51,7 @@ export default function inddex() {
 
 
   const handleSwipeComplete = () => {
-    router.replace('(home)/LogIn')
+    router.replace('LogIn')
   };
 
   return (

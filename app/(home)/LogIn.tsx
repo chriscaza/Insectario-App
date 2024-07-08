@@ -65,7 +65,7 @@ export default function LogIn() {
 
         <TouchableOpacity 
           style={styles.continueButton}
-          onPress={() => {router.replace('(home)/(camera)')}}
+          onPress={() => {router.replace('(camera)')}}
         >
           <Text style={styles.continueButtonText}>Continuar</Text>
         </TouchableOpacity>
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
     justifyContent: "center",
     paddingHorizontal: 46,
+    ...StyleSheet.absoluteFillObject
   },
   title: {
     fontSize: 24,

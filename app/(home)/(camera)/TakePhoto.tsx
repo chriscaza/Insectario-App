@@ -6,19 +6,21 @@ import { Dimensions, Pressable, StyleSheet, Text, View, TouchableOpacity } from 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome6 } from '@expo/vector-icons'
+import { router } from 'expo-router'
+import { useCameraStore } from '@/global/cameraStore'
 
 import Flash from '@/components/icons/Flash'
 import PhotoPreview from './PhotoPreview'
-import { router } from 'expo-router'
 
 const { width } = Dimensions.get('window')
 
-export default function PhotoDetection() {
-  const [image, setImage] = useState<string>('')
+export default function TakePhoto() {
   const [type, setType] = useState<CameraType>('back')
   const [flash, setFlash] = useState<FlashMode>('off')
   const [cameraReady, setCameraReady] = useState<boolean>(false)
   const cameraRef = useRef<CameraView>(null)
+
+  const { setPicture } = useCameraStore();
 
   const onCameraReady = async () => {
     setCameraReady(true)
@@ -27,7 +29,10 @@ export default function PhotoDetection() {
   async function takePicture() {
     if (cameraReady) {
       const response = await cameraRef.current?.takePictureAsync({})
-      setImage(response!.uri)
+      if(response) {
+        setPicture(response!.uri);
+        router.navigate('PhotoPreview');
+      }
     } 
   }
 
@@ -39,7 +44,6 @@ export default function PhotoDetection() {
     setFlash((flash) => (flash === 'off' ? 'on' : 'off'))
   }
 
-  if(image) return <PhotoPreview picture={image} setPicture={setImage}/>
   return (
     <LinearGradient
       colors={['#98D798', '#507150']}
@@ -124,7 +128,7 @@ export default function PhotoDetection() {
             <TouchableOpacity 
               onPress={
                 () => {
-                  router.push('(camera)/PhotoLibrary');
+                  router.navigate('PhotoLibrary');
                 }}
               >
                 <Text style={style.text}>GALERÍA</Text>
