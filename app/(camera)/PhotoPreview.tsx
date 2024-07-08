@@ -16,7 +16,7 @@ export default function PhotoPreview() {
     const { picture } = useCameraStore();
 
     function closeImage() {
-        router.navigate('(camera)')
+        router.back()
     }
 
     return(

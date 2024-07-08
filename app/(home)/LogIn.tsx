@@ -65,7 +65,7 @@ export default function LogIn() {
 
         <TouchableOpacity 
           style={styles.continueButton}
-          onPress={() => {router.replace('(camera)')}}
+          onPress={() => {router.replace('/(camera)/TakePhoto')}}
         >
           <Text style={styles.continueButtonText}>Continuar</Text>
         </TouchableOpacity>

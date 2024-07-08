@@ -16,7 +16,7 @@ import SlidingButton from '../../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function inddex() {
+export default function index() {
 
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();

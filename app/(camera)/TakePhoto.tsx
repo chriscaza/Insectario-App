@@ -31,7 +31,7 @@ export default function TakePhoto() {
       const response = await cameraRef.current?.takePictureAsync({})
       if(response) {
         setPicture(response!.uri);
-        router.navigate('PhotoPreview');
+        router.navigate('/(camera)/PhotoPreview');
       }
     } 
   }
@@ -128,7 +128,7 @@ export default function TakePhoto() {
             <TouchableOpacity 
               onPress={
                 () => {
-                  router.navigate('PhotoLibrary');
+                  router.navigate('/(camera)/PhotoLibrary');
                 }}
               >
                 <Text style={style.text}>GALERÍA</Text>
