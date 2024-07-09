@@ -41,7 +41,7 @@ export default function PhotoPreview() {
                 <CloseButton icon="close" onPress={closeImage}/>   
             </View>
             <View style={styles.detect}>
-                <TouchableOpacity style={styles.pressable}>
+                <TouchableOpacity style={styles.pressable} onPress={() => {router.navigate('/(detect)/Detection')}}>
                     <Text style={styles.text}>Detectar</Text>
                     <Ionicons name="arrow-forward" size={24} color="white" />
                 </TouchableOpacity>
