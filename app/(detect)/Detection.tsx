@@ -3,7 +3,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
-import FastTFLite from 'react-native-fast-tflite';
 import { Asset } from "expo-asset";
 
 import { useCameraStore } from "@/global/cameraStore";
