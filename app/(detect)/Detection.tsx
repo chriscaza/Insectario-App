@@ -8,17 +8,18 @@ import { Asset } from "expo-asset";
 import { useCameraStore } from "@/global/cameraStore";
 import { Classes } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
+import BottomSheet from "@/components/BottomSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Detection() {
 
     const { picture } = useCameraStore();
-    const { width } = Dimensions.get('window')
+    const { width, height } = Dimensions.get('window')
 
     const [classification, setClassification] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const clase = Classes[2].split('/')[0]
-    const order = Classes[2].split('/')[1]
+    const [clase, order] = Classes[2].split('/')
     
     return(
         <LinearGradient
@@ -27,14 +28,24 @@ export default function Detection() {
             end={{ x: 0, y: 1 }}
             style={styles.container}
         >
-            <SafeAreaView style={{flex: 1, width: width-10, top: 20}}>
-                <Image source={{uri: picture}} style={styles.containerImage}>
-                    <View style={{right: 20, top: 30}}>
-                        <Text style={styles.classText}>{clase.toUpperCase()}</Text>
-                        <Text style={styles.orderText}>{order}</Text>       
-                    </View>
-                </Image>
-            </SafeAreaView>
+            <GestureHandlerRootView>
+                <SafeAreaView 
+                    style={{
+                        flex: 1,
+                        width: width-10,
+                        top: 20,
+                        left: 5,
+                    }}
+                >
+                    <Image source={{uri: picture}} style={styles.containerImage}>
+                        <View style={{right: 20, top: 30}}>
+                            <Text style={styles.classText}>{clase.toUpperCase()}</Text>
+                            <Text style={styles.orderText}>{order}</Text>       
+                        </View>
+                    </Image>
+                    <BottomSheet />
+                </SafeAreaView>
+            </GestureHandlerRootView>
         </LinearGradient>
     );
 }
@@ -42,8 +53,6 @@ export default function Detection() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     containerImage: {
         flex: 1, 
