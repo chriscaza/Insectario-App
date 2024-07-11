@@ -1,4 +1,5 @@
 import apptheme from "@/themes/apptheme";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { 
     Dimensions,
@@ -14,9 +15,11 @@ import {
     ScrollView,
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { Extrapolation, interpolate, SharedValue, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const { width, height } = Dimensions.get('window');
+const MAX_TRANSLATE_Y = -height*0.9
 
 export default function BottomSheet() {
     const [clas, setClas] = useState<string>('');
@@ -31,8 +34,7 @@ export default function BottomSheet() {
 
     const translateY = useSharedValue<number>(0)
     const context = useSharedValue({y: 0})
-    const MAX_TRANSLATE_Y = -height+70
-    const MIN_TRANSLATE_Y = -height/8.5
+    const MIN_TRANSLATE_Y = -height*0.1
 
     const gesture = Gesture.Pan()
         .onStart(() => {
@@ -43,15 +45,15 @@ export default function BottomSheet() {
             translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y)
         })
         .onEnd(() => {
-            if (translateY.value > -height / 3) {
+            if (translateY.value >= -height/2) {
                 translateY.value = withSpring(MIN_TRANSLATE_Y, { damping: 50 });
-            } else if (translateY.value < -height / 1.5) {
+            } else if (translateY.value <= -height / 1.9) {
                 translateY.value = withSpring(MAX_TRANSLATE_Y, { damping: 50 });
             } 
             });
         
         useEffect(() => {
-            translateY.value = withSpring(MIN_TRANSLATE_Y, {damping: 50})
+            translateY.value = withSpring(MIN_TRANSLATE_Y)
         }, [])
 
     const rBottomSheetStyle = useAnimatedStyle(() => {
@@ -68,76 +70,107 @@ export default function BottomSheet() {
                         <View style={styles.line}/>
                         <Text style={styles.text}>Registrar Datos</Text>
                     </View>
-                    <ScrollView 
-                        showsVerticalScrollIndicator={false} 
-                        style={styles.form}
-                        contentContainerStyle={{ 
-                            flexGrow: 1,
-                            alignItems: 'center',
-                            gap: 20,
-                            height: height
-                        }}
+                    <View 
+                        style={{width: '100%', height: height*0.73}}
                     >
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Arachnida"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={clas}
-                            onChangeText={setClas}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Araneae"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={order}
-                            onChangeText={setOrder}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Spider"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={name}
-                            onChangeText={setName}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="20.698808997601578, -103.33158..."
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={location}
-                            onChangeText={setLocation}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Forest"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={habitat}
-                            onChangeText={setHabitat}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="12:30"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={hour}
-                            onChangeText={setHour}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Black with red dot"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={details}
-                            onChangeText={setDetails}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Under a rock"
-                            placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                            value={observations}
-                            onChangeText={setObservations}
-                        />
-                        <TouchableOpacity style={styles.registerButton}>
-                            <Text style={styles.textButton}>Registrar</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
+                        <KeyboardAwareScrollView 
+                            showsVerticalScrollIndicator={false} 
+                            style={styles.form}
+                            contentContainerStyle={{ 
+                                flexGrow: 1,
+                                alignItems: 'center',
+                                gap: 10,
+                                paddingBottom: 30
+                            }}
+                            enableOnAndroid={true}
+                            enableAutomaticScroll={true}
+                        >
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Fecha de nacimiento</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="dd/mm/aaaa"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                                <TouchableOpacity
+                                    style={styles.calendarButton}
+                                >
+                                    <Ionicons
+                                        name="calendar"
+                                        size={24}
+                                        color="#fff"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Nombre de usuario</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="chris.caza25"
+                                    placeholderTextColor="rgba(255, 255, 255, 1)"
+                                />
+                            </View>
+                            <TouchableOpacity style={styles.registerButton}>
+                                <Text style={styles.textButton}>Registrar</Text>
+                            </TouchableOpacity>
+                        </KeyboardAwareScrollView>
+                    </View>
                 </Animated.View>
             </GestureDetector>
         </TouchableWithoutFeedback>
@@ -146,13 +179,13 @@ export default function BottomSheet() {
 
 const styles = StyleSheet.create({
     bottomSheetContainer: {
-        height: height,
-        width: '100%',
+        width: width,
         backgroundColor: apptheme.secondary,
         position: 'absolute',
         top: height,
         borderRadius: 20,
         alignItems: 'center',
+        height: '100%'
     },
     lineTextContainer: {
         alignItems: 'center',
@@ -179,13 +212,27 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     input: {
-        width: '80%',
-        textAlign: 'left',
-        paddingLeft: 10,
-        backgroundColor: '#314F33',
-        height: 60,
-        borderRadius: 10,
+        fontSize: 16,
+        color: '#fff',
     },
+    inputContainer: {
+        width: "80%",
+        backgroundColor: "#314F33",
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 15,
+        marginBottom: 24,  
+      },
+      label: {
+        fontSize: 12,
+        color: 'rgba(255, 255, 255, 0.7)',
+        marginBottom: 3,
+    },
+    calendarButton: {
+        position: "absolute",
+        right: 15,
+        top: 15,
+      },
     registerButton: {
         backgroundColor: apptheme.background,
         padding: 15,

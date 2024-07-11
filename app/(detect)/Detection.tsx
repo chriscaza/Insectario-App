@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { Asset } from "expo-asset";
@@ -11,54 +11,62 @@ import apptheme from "@/themes/apptheme";
 import BottomSheet from "@/components/BottomSheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+    const { width, height } = Dimensions.get('window')
+
 export default function Detection() {
 
     const { picture } = useCameraStore();
-    const { width, height } = Dimensions.get('window')
+    const isSmallScreen = width > 400;
 
     const [classification, setClassification] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const [clase, order] = Classes[2].split('/')
+    const [clase, order] = Classes[6].split('/');
     
     return(
-        <LinearGradient
-            colors={["#98D798", "#507150"]}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.container}
-        >
-            <GestureHandlerRootView>
+        <GestureHandlerRootView style={{flex: 1}}>
+            <LinearGradient
+                colors={["#98D798", "#507150"]}
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.container}
+            >
                 <SafeAreaView 
                     style={{
                         flex: 1,
                         width: width-10,
-                        top: 20,
-                        left: 5,
+                        marginTop: 20,
+                        marginHorizontal: 5,
                     }}
                 >
-                    <Image source={{uri: picture}} style={styles.containerImage}>
-                        <View style={{right: 20, top: 30}}>
+                    <View style={styles.imageWrapper}>
+                        <Image source={{uri: picture}} style={styles.containerImage} />
+                        <View style={{position: 'absolute', right: '4%', top: '5%'}}>
                             <Text style={styles.classText}>{clase.toUpperCase()}</Text>
-                            <Text style={styles.orderText}>{order}</Text>       
+                            <Text style={isSmallScreen ? styles.orderLargeText : styles.orderSmallText}>{order}</Text>       
                         </View>
-                    </Image>
-                    <BottomSheet />
+                    </View>
                 </SafeAreaView>
-            </GestureHandlerRootView>
-        </LinearGradient>
+                <BottomSheet />
+            </LinearGradient>
+        </GestureHandlerRootView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     containerImage: {
-        flex: 1, 
+        flex: 1,
         borderRadius: 20,
         alignItems: 'flex-end',
     },
+    imageWrapper: {
+        flex: 1,
+        borderRadius: 20,
+        overflow: "hidden",
+      },
     classText: {
         color: apptheme.white,
         letterSpacing: 8,
@@ -67,11 +75,18 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         textAlign: 'right',
     },
-    orderText: {
+    orderLargeText: {
         color: apptheme.white,
-        letterSpacing: 5,
-        fontSize: 48,
+        letterSpacing: 3,
+        fontSize: 38,
         fontWeight: '800',
-        textAlign: 'center',
+        textAlign: 'right',
+    },
+    orderSmallText: {
+        color: apptheme.white,
+        letterSpacing: 2,
+        fontSize: 32,
+        fontWeight: '800',
+        textAlign: 'right',
     }
 })
