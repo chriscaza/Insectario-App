@@ -30,34 +30,34 @@ export default function LogIn() {
       >
         <Text style={styles.title}>Inicia sesión</Text>
 
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Correo</Text>
         <TextInput
-          style={styles.input}
-          placeholder="Correo"
-          placeholderTextColor="rgba(255, 255, 255, 0.7)"
-          value={email}
-          onChangeText={setEmail}
+            style={styles.input}
+            placeholder="hola@gmail.com"
+            placeholderTextColor="rgba(255, 255, 255, 1)"
         />
+      </View>
 
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.inputPass}
-            placeholder="Contraseña"
-            placeholderTextColor="rgba(255, 255, 255, 0.7)"
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Contraseña</Text>
+        <TextInput
+            style={styles.input}
+            placeholder="**************"
+            placeholderTextColor="rgba(255, 255, 255, 1)"
             secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TouchableOpacity
+        />
+        <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
             style={styles.eyeButton}
-          >
+        >
             <Ionicons
-              name={showPassword ? "eye-off-outline" : "eye-outline"}
-              size={24}
-              color="#fff"
+                name={showPassword ? "eye-off-outline" : "eye-outline"}
+                size={24}
+                color="#fff"
             />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+      </View>
 
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
@@ -93,9 +93,9 @@ export default function LogIn() {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    flex: 1,
     justifyContent: "center",
+    ...StyleSheet.absoluteFillObject,
     paddingHorizontal: 46,
     ...StyleSheet.absoluteFillObject
   },
@@ -104,13 +104,22 @@ const styles = StyleSheet.create({
     marginBottom: 36,
     color: "#fff",
   },
-  input: {
+  inputContainer: {
     width: "100%",
     backgroundColor: "#314F33",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 24,
-    color: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 15,
+    marginBottom: 24,  
+  },
+  label: {
+      fontSize: 12,
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginBottom: 3,
+  }, 
+  input: {
+      fontSize: 16,
+      color: '#fff',
   },
   inputPass: {
     width: "100%",
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
   eyeButton: {
     position: "absolute",
     right: 15,
-    top: 10,
+    top: 15,
   },
   eyeText: {
     color: "#fff",
@@ -187,4 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     fontWeight: "500",
   },
+  bold: {
+    fontWeight: "bold"
+  }
 });
