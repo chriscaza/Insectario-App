@@ -9,9 +9,8 @@ import {
   Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function LogIn() {
   const router =  useRouter();
@@ -36,6 +35,8 @@ export default function LogIn() {
             style={styles.input}
             placeholder="hola@gmail.com"
             placeholderTextColor="rgba(255, 255, 255, 1)"
+            value={email}
+            onChangeText={setEmail}
         />
       </View>
 
@@ -45,7 +46,9 @@ export default function LogIn() {
             style={styles.input}
             placeholder="**************"
             placeholderTextColor="rgba(255, 255, 255, 1)"
+            value={password}
             secureTextEntry={!showPassword}
+            onChangeText={setPassword}
         />
         <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
@@ -59,7 +62,7 @@ export default function LogIn() {
         </TouchableOpacity>
       </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {router.navigate('ForgotPass')}}>
           <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
 
@@ -81,7 +84,7 @@ export default function LogIn() {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Text style={styles.createAccount}>
+          <Text style={styles.createAccount} onPress={() => {router.navigate('Register')}}>
             ¿Aún no tienes cuenta? Crear cuenta
           </Text>
         </TouchableOpacity>

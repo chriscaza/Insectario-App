@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import CloseButton from "@/components/icons/CloseButton";
+import { router } from "expo-router";
 
 export default function ForgotPass() {
 
@@ -18,9 +20,7 @@ export default function ForgotPass() {
             end={{ x: 0, y: 1 }}
             style={styles.container}
         >
-            <TouchableOpacity style={styles.floatingButton}>
-                <Ionicons name="close" size={24} color="white" />
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.floatingButton}><CloseButton icon="close" onPress={()=> router.back()}/></TouchableOpacity>
 
             <Text style={styles.title}>Vamos a buscar tu cuenta de Insectario</Text>
 
@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 65, // Ajusta según sea necesario
         left: 46, // Ajusta según sea necesario
-        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Fondo semi-transparente
         borderRadius: 50,
         padding: 6,
         zIndex: 1,

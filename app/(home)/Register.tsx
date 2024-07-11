@@ -8,6 +8,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function Register() {
 
@@ -97,7 +98,7 @@ export default function Register() {
                 <Text style={styles.googleButtonText}>Continuar con Google</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {router.back()}}>
                 <Text style={styles.login}>
                 ¿Ya tienes una cuenta? <Text style={styles.bold}>Inicia sesión</Text>
                 </Text>
