@@ -21,32 +21,25 @@ export default function Detection() {
     const [classification, setClassification] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const [clase, order] = Classes[6].split('/');
+    const [clase, order] = Classes[4].split('/');
     
     return(
-        <GestureHandlerRootView style={{flex: 1}}>
+        <GestureHandlerRootView>
             <LinearGradient
                 colors={["#98D798", "#507150"]}
                 start={{ x: 1, y: 0 }}
                 end={{ x: 0, y: 1 }}
                 style={styles.container}
             >
-                <SafeAreaView 
-                    style={{
-                        flex: 1,
-                        width: width-10,
-                        marginTop: 20,
-                        marginHorizontal: 5,
-                    }}
-                >
-                    <View style={styles.imageWrapper}>
-                        <Image source={{uri: picture}} style={styles.containerImage} />
-                        <View style={{position: 'absolute', right: '4%', top: '5%'}}>
-                            <Text style={styles.classText}>{clase.toUpperCase()}</Text>
-                            <Text style={isSmallScreen ? styles.orderLargeText : styles.orderSmallText}>{order}</Text>       
-                        </View>
+                <View style={styles.dummyView}/>
+                <View style={styles.imageWraper}>
+                    <Image source={picture} style={styles.pictureContainer}/>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.classText}>{clase.toUpperCase()}</Text>
+                        <Text style={isSmallScreen ? styles.orderLargeText : styles.orderSmallText}>{order}</Text>
                     </View>
-                </SafeAreaView>
+                </View>
+                <View style={styles.dummyView} />
                 <BottomSheet />
             </LinearGradient>
         </GestureHandlerRootView>
@@ -55,38 +48,49 @@ export default function Detection() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    containerImage: {
+    imageWraper: {
+        flex: 10,
+        width: width-15,
+        borderRadius: 20,
+    },
+    pictureContainer: {
         flex: 1,
         borderRadius: 20,
-        alignItems: 'flex-end',
     },
-    imageWrapper: {
-        flex: 1,
-        borderRadius: 20,
-        overflow: "hidden",
-      },
+    titleContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: 'auto',
+        marginTop: 20,
+        paddingHorizontal: 20,
+        // backgroundColor: apptheme.text
+    },
     classText: {
         color: apptheme.white,
         letterSpacing: 8,
         fontSize: 16,
         fontWeight: '800',
-        lineHeight: 20,
-        textAlign: 'right',
+        textAlign: 'right'
     },
     orderLargeText: {
         color: apptheme.white,
         letterSpacing: 3,
-        fontSize: 38,
+        fontSize: 36,
         fontWeight: '800',
-        textAlign: 'right',
+        textAlign: 'right'
     },
     orderSmallText: {
         color: apptheme.white,
         letterSpacing: 2,
-        fontSize: 32,
+        fontSize: 30,
         fontWeight: '800',
         textAlign: 'right',
+    },
+    dummyView: {
+        flex: 1
     }
 })

@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     },
     detect: {
         height: 90,
+        marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },

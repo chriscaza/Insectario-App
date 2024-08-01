@@ -1,40 +1,26 @@
 import apptheme from "@/themes/apptheme";
-import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
-import { 
+import React, { useEffect } from "react";
+import {
     Dimensions,
     StyleSheet,
     View,
     Text,
     TextInput,
-    TouchableWithoutFeedback,
-    Keyboard, 
     TouchableOpacity,
+    ScrollView,
     KeyboardAvoidingView,
     Platform,
-    ScrollView,
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const { width, height } = Dimensions.get('window');
-const MAX_TRANSLATE_Y = -height*0.9
+const { width, height } = Dimensions.get('screen');
+const MAX_TRANSLATE_Y = -height*0.92
+const MIN_TRANSLATE_Y = -height*0.12
 
 export default function BottomSheet() {
-    const [clas, setClas] = useState<string>('');
-    const [order, setOrder] = useState<string>('');
-    const [name, setName] = useState<string>('');
-    const [location, setLocation] = useState<string>('');
-    const [habitat, setHabitat] = useState<string>('');
-    const [date, setDate] = useState<Date>();
-    const [hour, setHour] = useState<string>('');
-    const [details, setDetails] = useState<string>('');
-    const [observations, setObservations] = useState<string>('');
-
     const translateY = useSharedValue<number>(0)
     const context = useSharedValue({y: 0})
-    const MIN_TRANSLATE_Y = -height*0.1
 
     const gesture = Gesture.Pan()
         .onStart(() => {
@@ -51,201 +37,158 @@ export default function BottomSheet() {
                 translateY.value = withSpring(MAX_TRANSLATE_Y, { damping: 50 });
             } 
             });
-        
-        useEffect(() => {
-            translateY.value = withSpring(MIN_TRANSLATE_Y)
-        }, [])
 
-    const rBottomSheetStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{translateY: translateY.value}]
-        }
-    })
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ translateY: translateY.value }],
+    }));
+
+    useEffect(() => {
+        translateY.value = withSpring(MIN_TRANSLATE_Y)
+        console.log(height)
+    }, [])
+
+    const formFields = [
+        { label: 'Clase', placeholder: 'Arachnida' },
+        { label: 'Orden', placeholder: 'Pseudoscorpiones' },
+        { label: 'Nombre', placeholder: 'Escorpión chico' },
+        { label: 'Coordenadas', placeholder: '20.698808997601578, -103.33158123132' },
+        { label: 'Hábitat', placeholder: 'Desierto' },
+        { label: 'Fecha', placeholder: 'dd/mm/aaaa' },
+        { label: 'Hora', placeholder: '12:30:00' },
+        { label: 'Detalles', placeholder: 'Especie pequeña' },
+        { label: 'Observaciones', placeholder: 'Debajo de una piedra' }
+    ];
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Animated.View style={[styles.container, animatedStyle]}>
             <GestureDetector gesture={gesture}>
-                <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
-                    <View style={styles.lineTextContainer}>
-                        <View style={styles.line}/>
-                        <Text style={styles.text}>Registrar Datos</Text>
+                <View style={styles.topContainer}>
+                    <View style={styles.lineContainer}>
+                        <View style={styles.line} />
                     </View>
-                    <View 
-                        style={{width: '100%', height: height*0.73}}
-                    >
-                        <KeyboardAwareScrollView 
-                            showsVerticalScrollIndicator={false} 
-                            style={styles.form}
-                            contentContainerStyle={{ 
-                                flexGrow: 1,
-                                alignItems: 'center',
-                                gap: 10,
-                                paddingBottom: 30
-                            }}
-                            enableOnAndroid={true}
-                            enableAutomaticScroll={true}
-                        >
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Fecha de nacimiento</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="dd/mm/aaaa"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                                <TouchableOpacity
-                                    style={styles.calendarButton}
-                                >
-                                    <Ionicons
-                                        name="calendar"
-                                        size={24}
-                                        color="#fff"
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Registrar Datos:</Text>
+                    </View>
+                </View>
+            </GestureDetector>
+            <KeyboardAvoidingView
+                style={{flex: 1}}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={70}
+            >
+                <ScrollView 
+                    contentContainerStyle={styles.scrollViewContent}
+                    style={{flex: 1}}
+                    keyboardShouldPersistTaps='handled'
+                >
+                    <View style={styles.bodyContainer}>
+                        <View style={styles.form}>
+                            {formFields.map((field, index) => (
+                                <View key={index} style={styles.input}>
+                                    <Text style={styles.label}>{field.label}</Text>
+                                    <TextInput
+                                        style={styles.textInput}
+                                        placeholder={field.placeholder}
+                                        placeholderTextColor="rgba(255, 255, 255, 1)"
                                     />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.label}>Nombre de usuario</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="chris.caza25"
-                                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                                />
-                            </View>
-                            <TouchableOpacity style={styles.registerButton}>
+                                </View>
+                            ))}
+                            <TouchableOpacity style={styles.button}>
                                 <Text style={styles.textButton}>Registrar</Text>
                             </TouchableOpacity>
-                        </KeyboardAwareScrollView>
+                        </View>
                     </View>
-                </Animated.View>
-            </GestureDetector>
-        </TouchableWithoutFeedback>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </Animated.View>
     );
 }
 
+
+
 const styles = StyleSheet.create({
-    bottomSheetContainer: {
-        width: width,
-        backgroundColor: apptheme.secondary,
+    container: {
+        flex: 1,
         position: 'absolute',
+        width,
+        height,
         top: height,
         borderRadius: 20,
-        alignItems: 'center',
-        height: '100%'
+        overflow: 'hidden',
+        borderTopWidth: 2,
+        borderColor: '#FFF',
+        backgroundColor: apptheme.secondary
     },
-    lineTextContainer: {
+    topContainer: {
+        height: 90,
+    },
+    lineContainer: {
+        flex: 1,
         alignItems: 'center',
-        gap: 20,
-        marginBottom: 20,
-        paddingVertical: 10,
-        marginTop: 10,
+        justifyContent: 'center',
     },
     line: {
-        backgroundColor: apptheme.white,
-        height: 4,
-        width: 75,
-        borderRadius: 100,
+        width: 85,
+        height: 6,
+        borderRadius: 20,
+        backgroundColor: '#FFF',
     },
-    text: {
-        color: apptheme.white,
-        fontSize: 16,
+    titleContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        color: '#FFF',
+        fontSize: 18,
         fontWeight: '400',
-        lineHeight: 20,
+        letterSpacing: 1,
+    },
+    scrollViewContent: {
+        flexGrow: 1,
+        paddingBottom: height < 850 ? height*0.1 : height*0.15
+    },
+    bodyContainer: {
+        flex: 1,
+        marginTop: 30,
+        paddingHorizontal: 35,
     },
     form: {
         flex: 1,
-        backgroundColor: apptheme.secondary,
+        gap: 24,
         width: '100%',
     },
     input: {
-        fontSize: 16,
-        color: '#fff',
-    },
-    inputContainer: {
-        width: "80%",
-        backgroundColor: "#314F33",
-        paddingVertical: 10,
+        width: '100%',
+        height: 60,
         paddingHorizontal: 16,
+        justifyContent: 'center',
         borderRadius: 15,
-        marginBottom: 24,  
-      },
-      label: {
-        fontSize: 12,
-        color: 'rgba(255, 255, 255, 0.7)',
-        marginBottom: 3,
+        backgroundColor: '#314F33',
     },
-    calendarButton: {
-        position: "absolute",
-        right: 15,
-        top: 15,
-      },
-    registerButton: {
-        backgroundColor: apptheme.background,
-        padding: 15,
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.4)',
-        borderRadius: 100,
-        width: '70%'
+    textInput: {
+        color: apptheme.white,
+        fontSize: 18,
+    },
+    label: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 16,
+        fontWeight: '400',
+    },
+    button: {
+        borderRadius: 50,
+        width: '100%',
+        height: 45,
+        paddingVertical: 10,
+        paddingHorizontal: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#7C967D',
     },
     textButton: {
-        textAlign: 'center',
-        fontSize: 14,
-        fontWeight: '500',
         color: apptheme.white,
-        letterSpacing: 1
-    }
+        fontSize: 18,
+        fontWeight: '500',
+        letterSpacing: 1,
+    },
 });
