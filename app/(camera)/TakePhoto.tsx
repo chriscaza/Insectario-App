@@ -118,6 +118,10 @@ export default function TakePhoto() {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
+              onPress={
+                () => {
+                  router.navigate('/(folder)/Insecta');
+                }}
             >
               <Ionicons name='folder-open-outline' size={25} color='white' />
             </TouchableOpacity>
