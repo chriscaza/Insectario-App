@@ -19,6 +19,7 @@ import { arachnidaOrders, insectaOrders } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import LogOutAlert from "@/components/LogOutAlert";
 
 
 interface InsectaProps {
@@ -69,8 +70,10 @@ const renderItem = ({ item }: { item: string }) => (
 
 export default function Insecta({ visible, onClose }: InsectaProps) {
 
+    const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [insecta, setInsecta] = useState<boolean>(true)
     const translateX = useSharedValue(visible ? 0 : width)
+    
     const animatedStyle = useAnimatedStyle(() => {
         return {
             transform: [{ translateX: -translateX.value }]
@@ -108,7 +111,7 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                                 <Text style={[styles.title, !insecta ? styles.bold : {}]}>ARACHNIDA</Text>
                             </Pressable>
                         </View>
-                        <TouchableOpacity style={styles.icons}>
+                        <TouchableOpacity style={styles.icons} onPress={() => {setModalVisible(true)}}>
                             <MaterialIcons name="exit-to-app" size={28} color="white" />
                         </TouchableOpacity>
                     </View>
@@ -121,6 +124,7 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                             contentContainerStyle={styles.flatList}
                         />
                     </View>
+                    {visible && <LogOutAlert visible={modalVisible} onClose={() => setModalVisible(false)} />}
                 </SafeAreaView>
             </LinearGradient>
         </Animated.View>
