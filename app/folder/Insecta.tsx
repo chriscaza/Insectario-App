@@ -47,7 +47,6 @@ const renderItem = ({ item }: { item: string }) => (
                         borderRadius: 5,
                         borderWidth: 1,
                         borderColor: 'rgba(255, 255, 255, 0.4)',
-                        overflow: 'hidden',
                         backgroundColor: apptheme.secondary
                     }}/>
                 <Text 
