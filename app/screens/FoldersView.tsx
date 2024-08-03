@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dimensions,
     FlatList,
@@ -15,7 +15,7 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { insectaOrders } from "@/global/classes";
+import { arachnidaOrders, insectaOrders } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -69,6 +69,7 @@ const renderItem = ({ item }: { item: string }) => (
 
 export default function Insecta({ visible, onClose }: InsectaProps) {
 
+    const [insecta, setInsecta] = useState<boolean>(true)
     const translateX = useSharedValue(visible ? 0 : width)
     const animatedStyle = useAnimatedStyle(() => {
         return {
@@ -79,6 +80,12 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
     useEffect(() => {
         translateX.value = withSpring(visible ? 0 : width, {damping: 20})
     }, [visible])
+
+    const changeClass = (classType: boolean) => {
+        if (classType !== insecta) {
+            setInsecta(classType);
+        }
+    }
 
     return (
         <Animated.View style={[ styles.modal, animatedStyle]}>
@@ -94,11 +101,11 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                             <Ionicons name="camera-outline" size={28} color='white' />
                         </TouchableOpacity>
                         <View style={styles.classes}>
-                            <Pressable>
-                                <Text style={[styles.title, {fontWeight: '700'}]}>INSECTA</Text>
+                            <Pressable onPress={() => changeClass(true)}>
+                                <Text style={[styles.title, insecta ? styles.bold : {}]}>INSECTA</Text>
                             </Pressable>
-                            <Pressable>
-                                <Text style={styles.title}>ARACHNIDA</Text>
+                            <Pressable onPress={() => changeClass(false)}>
+                                <Text style={[styles.title, !insecta ? styles.bold : {}]}>ARACHNIDA</Text>
                             </Pressable>
                         </View>
                         <TouchableOpacity style={styles.icons}>
@@ -107,7 +114,7 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                     </View>
                     <View style={styles.folderContainer}>
                         <FlatList 
-                            data={insectaOrders}
+                            data={insecta ? insectaOrders : arachnidaOrders}
                             renderItem={renderItem}
                             keyExtractor={(order) => order}
                             numColumns={3}
@@ -160,5 +167,8 @@ const styles = StyleSheet.create({
     title: {
         color: '#FFF',
         fontSize: 20,
+    },
+    bold: {
+        fontWeight: '700'
     }
 })

@@ -10,7 +10,7 @@ import { router } from 'expo-router'
 import { useCameraStore } from '@/global/cameraStore'
 
 import Flash from '@/components/icons/Flash'
-import Insecta from '../folder/Insecta'
+import Insecta from '../screens/FoldersView'
 
 const { width } = Dimensions.get('window')
 
