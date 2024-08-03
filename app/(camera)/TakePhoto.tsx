@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import apptheme from '@/themes/apptheme'
 import { CameraView, FlashMode, CameraType } from 'expo-camera'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -10,6 +10,7 @@ import { router } from 'expo-router'
 import { useCameraStore } from '@/global/cameraStore'
 
 import Flash from '@/components/icons/Flash'
+import Insecta from '../folder/Insecta'
 
 const { width } = Dimensions.get('window')
 
@@ -17,6 +18,7 @@ export default function TakePhoto() {
   const [type, setType] = useState<CameraType>('back')
   const [flash, setFlash] = useState<FlashMode>('off')
   const [cameraReady, setCameraReady] = useState<boolean>(false)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
   const cameraRef = useRef<CameraView>(null)
 
   const { setPicture } = useCameraStore();
@@ -24,6 +26,14 @@ export default function TakePhoto() {
   const onCameraReady = async () => {
     setCameraReady(true)
   }
+
+  useEffect(() => {
+    return () => {
+      if(cameraRef.current) {
+        cameraRef.current?.stopRecording()
+      }
+    }
+  }, [])
 
   async function takePicture() {
     if (cameraReady) {
@@ -118,10 +128,7 @@ export default function TakePhoto() {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
-              onPress={
-                () => {
-                  router.navigate('/(folder)/Insecta');
-                }}
+              onPress={() => {setModalVisible(true)}}
             >
               <Ionicons name='folder-open-outline' size={25} color='white' />
             </TouchableOpacity>
@@ -153,6 +160,7 @@ export default function TakePhoto() {
           
         </View>
       </SafeAreaView>
+      <Insecta visible={modalVisible} onClose={() => setModalVisible(false)}/>
     </LinearGradient>
   )
 }
@@ -160,13 +168,12 @@ export default function TakePhoto() {
 const style = StyleSheet.create({
   permission: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    ...StyleSheet.absoluteFillObject
   },
   mainContainer: {
     flex: 1,

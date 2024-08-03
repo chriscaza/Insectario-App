@@ -7,3 +7,27 @@ export const Classes = {
     5: 'Arachnida/Scorpions',
     6: 'Arachnida/Solifugae'
 }
+
+export const insectaOrders = [
+    'Archaeognatha', 'Blattodea',
+    'Coleoptera', 'Dermaptera',
+    'Diptera', 'Embioptera',
+    'Ephemeroptera', 'Hemiptera',
+    'Hymenoptera', 'Isoptera',
+    'Lepidoptera', 'Mantodea',
+    'Mecoptera', 'Megaloptera',
+    'Neuroptera', 'Notoptera',
+    'Odonata', 'Orthoptera',
+    'Phasmida', 'Plecoptera',
+    'Psocoptera', 'Raphidioptera',
+    'Siphonaptera', 'Strepsiptera',
+    'Thysanoptera', 'Trichoptera',
+    'Zoraptera', 'Zygentoma'
+]
+
+export const arachnidaOrders = [
+    'Acari', 'Amblypygi',
+    'Araneae', 'Opiliones',
+    'Pseudoscorpiones', 'Scorpions',
+    'Solifugae', 'Thelyphonida'
+]
