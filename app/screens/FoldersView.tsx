@@ -116,7 +116,6 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                         <FlatList 
                             data={insecta ? insectaOrders : arachnidaOrders}
                             renderItem={renderItem}
-                            keyExtractor={(order) => order}
                             numColumns={3}
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={styles.flatList}
