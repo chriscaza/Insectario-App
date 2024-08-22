@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Login() {
