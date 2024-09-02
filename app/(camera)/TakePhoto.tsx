@@ -40,7 +40,7 @@ export default function TakePhoto() {
       const response = await cameraRef.current?.takePictureAsync({})
       if(response) {
         setPicture(response!.uri);
-        router.navigate('/(camera)/PhotoPreview');
+        router.navigate('/PhotoPreview');
       }
     } 
   }

@@ -62,7 +62,7 @@ export default function LogIn() {
         </TouchableOpacity>
       </View>
 
-        <TouchableOpacity onPress={() => {router.navigate('ForgotPass')}}>
+        <TouchableOpacity onPress={() => {router.navigate('/ForgotPass')}}>
           <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
 
@@ -84,7 +84,7 @@ export default function LogIn() {
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Text style={styles.createAccount} onPress={() => {router.navigate('Register')}}>
+          <Text style={styles.createAccount} onPress={() => {router.navigate('/Register')}}>
             ¿Aún no tienes cuenta? Crear cuenta
           </Text>
         </TouchableOpacity>

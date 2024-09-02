@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
 export default function AccountNotFound() {
 
@@ -25,7 +26,7 @@ export default function AccountNotFound() {
 
             <Text style={styles.title}>Tu correo o nombre de usuario no se encuentra registrado</Text>
 
-            <TouchableOpacity style={styles.continueButton}>
+            <TouchableOpacity style={styles.continueButton} onPress={() => {router.replace('/Register')}}>
                 <Text style={styles.continueButtonText}>Crear cuenta</Text>
             </TouchableOpacity>
 
