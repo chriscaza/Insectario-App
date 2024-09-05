@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
 export default function NewPass() {
 
@@ -64,7 +65,7 @@ export default function NewPass() {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.continueButton}>
+            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('LogIn')}}>
                 <Text style={styles.continueButtonText}>Continuar</Text>
             </TouchableOpacity>
 
