@@ -1,30 +1,36 @@
-import CryptoJS from 'crypto'
+import CryptoJS from 'crypto-js';
 
-interface registerProps {
+export const register = async (
     username: string,
     password: string,
     email: string,
-    b_Day: string,
-}
-
-export const register = async ({
-    username, password, email, b_Day
-}: registerProps) => {
+    b_Day: string
+) => {
     const encryptedPassword = encryptPassword(password)
-    const response = await fetch('', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(({
-            values: {
-                username: username,
-                password: encryptedPassword,
-                email: email,
-                bDay: b_Day
+    console.log('Contrasena CLIENTE:', {encryptedPassword})
+    try {
+        const response = await fetch('http://127.0.0.1:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-        }))
-    })
+            body: JSON.stringify(({
+                values: {
+                    username: username,
+                    password: encryptedPassword,
+                    email: email,
+                    bDay: b_Day
+                },
+            }))
+        })
+        if(response.status === 200) {
+            
+        } else {
+
+        }
+    } catch (error) {
+        
+    }
 }
 
 export const login = async () => {
@@ -32,7 +38,6 @@ export const login = async () => {
 }
 
 function encryptPassword(password: string): string {
-    const secretKey = 'ee7284e11d38d59a3b03010c1654c0becaa69f29a413774603f56b8e1a85639f'
-    const encryptedPassword = CryptoJS.createHmac('sha256', secretKey).toString()
+    const encryptedPassword = CryptoJS.SHA256(password).toString()
     return encryptedPassword
 }
