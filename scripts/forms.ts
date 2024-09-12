@@ -1,9 +1,6 @@
 import CryptoJS from 'crypto-js';
-import dotenv from 'dotenv'
 import { Alert } from 'react-native';
 
-dotenv.config()
-const apiURL = process.env.API_URL
 
 export const register = async (
     username: string,
@@ -11,7 +8,6 @@ export const register = async (
     email: string,
     b_Day: string
 ) => {
-
     if(!isUserCorrect(username)) {
         Alert.alert('Usuario incorrecto')
         return
@@ -30,11 +26,10 @@ export const register = async (
     }
     
     b_Day = formatDate(b_Day)
-
     const encryptedPassword = encryptPassword(password)
 
     try {
-        const response = await fetch(`${apiURL}/register`, {
+        const response = await fetch('http://192.168.0.239:3001/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,10 +47,9 @@ export const register = async (
         const data = await response.json()
         console.log(data)
         if(response.status === 200) {
-
             Alert.alert(data.msg)
         } else {
-
+            Alert.alert(data.msg)
         }
     } catch (error) {
         console.log(error)
