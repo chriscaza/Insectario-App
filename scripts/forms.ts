@@ -29,7 +29,7 @@ export const register = async (
     const encryptedPassword = encryptPassword(password)
 
     try {
-        const response = await fetch('http://192.168.0.239:3001/register', {
+        const response = await fetch('http://192.168.0.101:3001/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,6 +88,12 @@ function encryptPassword(password: string): string {
 }
 
 function formatDate(bDay: string) : string {
-    const [d, m, a] = bDay.split('/')
-    return new Date(`${a}-${m}-${d}`).toISOString().split('T')[0]
+    const [d, m, a] = bDay.split('/');
+
+    // Asegurar que el día y el mes siempre tengan dos dígitos
+    const day = d.padStart(2, '0');
+    const month = m.padStart(2, '0');
+    
+    // Crear la fecha correctamente y formatearla
+    return new Date(`${a}-${month}-${day}`).toISOString().split('T')[0];
 }
