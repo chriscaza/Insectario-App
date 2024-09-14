@@ -45,8 +45,7 @@ export const register = async (
             })
         })
         const data = await response.json()
-        console.log(data)
-        if(response.status === 200) {
+        if(response.status === 201) {
             Alert.alert(data.msg)
         } else {
             Alert.alert(data.msg)
@@ -73,8 +72,7 @@ function isEmailCorrect(email: string): boolean {
 }
 
 function isUserCorrect(username: string): boolean {
-    // Al menos una letra (mayus o minus) un numero (opcional) y con una longitud de tres caracteres minimo
-    const regex: RegExp = /^(?=.*[A-Za-z])[A-Za-z0-9]{3,}$/
+    const regex: RegExp = /^[a-zA-Z0-9]{3,}$/
     return regex.test(username)
 }
 

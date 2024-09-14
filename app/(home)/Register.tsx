@@ -109,7 +109,9 @@ export default function Register() {
 
                 <TouchableOpacity 
                     style={styles.continueButton}
-                    onPress={() => {register(username, password, mail, birthDate)}}
+                    onPress={() => {
+                        register(username, password, mail, birthDate).then(() => {clearFields()})
+                    }}
                 >
                     <Text style={styles.continueButtonText}>Continuar</Text>
                 </TouchableOpacity>
