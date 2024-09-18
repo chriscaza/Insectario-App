@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import { router } from 'expo-router';
 
 export const login = async (email: string, password: string) => {
     if (!isEmailCorrect(email) || isPasswordEmtpy(password)) {
@@ -22,8 +23,9 @@ export const login = async (email: string, password: string) => {
         });
 
         const data = await response.json();
-        if (response.status === 200) {
-            return { success: true };
+        if (response.ok) {
+            router.replace('/(camera)/TakePhoto')
+            return { success: true, message: data.msg };
         } else {
             return { error: data.msg };
         }
@@ -72,7 +74,7 @@ export const register = async (
         });
 
         const data = await response.json();
-        if (response.status === 201) {
+        if (response.ok) {
             return { success: true, message: data.msg };
         } else {
             return { error: data.msg };

@@ -31,6 +31,7 @@ export default function Register() {
 
         if (result.error) {
           setAlertMessage(result.error);
+          setIsSuccess(false)
           setShowAlert(true);
         } else {
             setAlertMessage(result.message);

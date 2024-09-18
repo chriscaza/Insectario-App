@@ -23,18 +23,30 @@ export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const handleLogin = async () => {
     const result = await login(email, password);
+    
     if (result.error) {
       setAlertMessage(result.error);
+      setIsSuccess(false)
       setShowAlert(true);
-      clearFields()
     } else {
-      clearFields()
-      router.replace('/(camera)/TakePhoto');
+      setAlertMessage(result.message)
+      setShowAlert(true);
+      setIsSuccess(true)
     }
-  };
+
+    clearFields()
+  }
+
+  const handleAlertClose = () => {
+    setShowAlert(false)
+    if(isSuccess) {
+      router.replace('/(camera)/TakePhoto')
+    }
+  }
 
   function clearFields() {
     setEmail('')
@@ -96,7 +108,7 @@ export default function LogIn() {
         </TouchableOpacity>
 
         {showAlert && (
-          <CustomAlert visible={showAlert} message={alertMessage} onClose={() => setShowAlert(false)}/>
+          <CustomAlert visible={showAlert} message={alertMessage} onClose={()=> {setShowAlert(false)}}/>
         )}
 
         <View style={styles.orContainer}>
