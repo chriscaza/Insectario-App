@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { login } from "@/scripts/forms";
 
 export default function LogIn() {
   const router =  useRouter();
@@ -68,7 +69,9 @@ export default function LogIn() {
 
         <TouchableOpacity 
           style={styles.continueButton}
-          onPress={() => {router.replace('/(camera)/TakePhoto')}}
+          onPress={() => {
+            login(email, password)
+          }}
         >
           <Text style={styles.continueButtonText}>Continuar</Text>
         </TouchableOpacity>
