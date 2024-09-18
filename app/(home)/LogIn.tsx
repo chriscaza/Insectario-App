@@ -12,6 +12,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { login } from "@/scripts/forms";
+import CustomAlert from "@/components/Alerts/CustomAlert";
+
 
 export default function LogIn() {
   const router =  useRouter();
@@ -19,6 +21,25 @@ export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+
+  const handleLogin = async () => {
+    const result = await login(email, password);
+    if (result.error) {
+      setAlertMessage(result.error);
+      setShowAlert(true);
+      clearFields()
+    } else {
+      clearFields()
+      router.replace('/(camera)/TakePhoto');
+    }
+  };
+
+  function clearFields() {
+    setEmail('')
+    setPassword('')
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -69,12 +90,14 @@ export default function LogIn() {
 
         <TouchableOpacity 
           style={styles.continueButton}
-          onPress={() => {
-            login(email, password)
-          }}
+          onPress={handleLogin}
         >
           <Text style={styles.continueButtonText}>Continuar</Text>
         </TouchableOpacity>
+
+        {showAlert && (
+          <CustomAlert visible={showAlert} message={alertMessage} onClose={() => setShowAlert(false)}/>
+        )}
 
         <View style={styles.orContainer}>
           <View style={styles.line} />

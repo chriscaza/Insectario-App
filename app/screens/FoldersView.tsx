@@ -19,7 +19,7 @@ import { arachnidaOrders, insectaOrders } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import LogOutAlert from "@/components/LogOutAlert";
+import LogOutAlert from "@/components/Alerts/LogOutAlert";
 
 
 interface InsectaProps {

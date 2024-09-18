@@ -10,6 +10,7 @@ import {
     Keyboard,
     Alert
 } from "react-native";
+import CustomAlert from "@/components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { register } from "@/scripts/forms";
@@ -21,6 +22,31 @@ export default function Register() {
     const [mail, setMail] = useState("");
     const [birthDate, setBirthDate] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [showAlert, setShowAlert] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [isSuccess, setIsSuccess] = useState(false)
+
+    const handleRegister = async () => {
+        const result = await register(username, password, mail, birthDate);
+
+        if (result.error) {
+          setAlertMessage(result.error);
+          setShowAlert(true);
+        } else {
+            setAlertMessage(result.message);
+            setIsSuccess(true)
+            setShowAlert(true);
+        }
+
+        clearFields()
+    }
+
+    const handleAlertClose = () => {
+        setShowAlert(false)
+        if (isSuccess) {
+          router.back()
+        }
+      };
 
     const clearFields = () => {
         setUsername('')
@@ -109,12 +135,14 @@ export default function Register() {
 
                 <TouchableOpacity 
                     style={styles.continueButton}
-                    onPress={() => {
-                        register(username, password, mail, birthDate).then(() => {clearFields()})
-                    }}
+                    onPress={handleRegister}
                 >
                     <Text style={styles.continueButtonText}>Continuar</Text>
                 </TouchableOpacity>
+
+                {showAlert && (
+                    <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
+                )}
 
                 <View style={styles.orContainer}>
                     <View style={styles.line} />
