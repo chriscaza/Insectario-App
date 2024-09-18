@@ -24,7 +24,6 @@ export const login = async (email: string, password: string) => {
 
         const data = await response.json();
         if (response.ok) {
-            router.replace('/(camera)/TakePhoto')
             return { success: true, message: data.msg };
         } else {
             return { error: data.msg };

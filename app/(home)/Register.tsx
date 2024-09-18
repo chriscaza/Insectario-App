@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Keyboard,
-    Alert
+    Alert,
+    InteractionManager
 } from "react-native";
 import CustomAlert from "@/components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
@@ -45,7 +46,9 @@ export default function Register() {
     const handleAlertClose = () => {
         setShowAlert(false)
         if (isSuccess) {
-          router.back()
+            InteractionManager.runAfterInteractions(() => {
+                router.back()
+            })
         }
       };
 

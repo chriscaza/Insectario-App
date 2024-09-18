@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  InteractionManager,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -44,7 +45,9 @@ export default function LogIn() {
   const handleAlertClose = () => {
     setShowAlert(false)
     if(isSuccess) {
-      router.replace('/(camera)/TakePhoto')
+      InteractionManager.runAfterInteractions(() => {
+        router.replace('/(camera)/TakePhoto')
+      })
     }
   }
 
@@ -108,7 +111,7 @@ export default function LogIn() {
         </TouchableOpacity>
 
         {showAlert && (
-          <CustomAlert visible={showAlert} message={alertMessage} onClose={()=> {setShowAlert(false)}}/>
+          <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
         )}
 
         <View style={styles.orContainer}>

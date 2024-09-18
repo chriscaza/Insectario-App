@@ -7,6 +7,7 @@ import {
     View,
     Text,
     Pressable,
+    InteractionManager,
 } from "react-native";
 
 interface LogOutAlertProps {
@@ -16,9 +17,11 @@ interface LogOutAlertProps {
 
 export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
 
-    const logout = () => {
+    const handleLogOut = () => {
         onClose()
-        router.replace('/(home)/LogIn')
+        InteractionManager.runAfterInteractions(() => {
+            router.replace('/(home)/LogIn')
+        })
     }
 
 
@@ -36,7 +39,7 @@ export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
                     <Pressable onPress={onClose} style={styles.optionsContainer}>
                         <Text style={styles.options}>Cancelar</Text>
                     </Pressable>
-                    <Pressable onPress={logout} style={styles.optionsContainer}>
+                    <Pressable onPress={handleLogOut} style={styles.optionsContainer}>
                         <Text style={[styles.options, {color: '#FF0000'}]}>Salir</Text>
                     </Pressable>
                 </View>
