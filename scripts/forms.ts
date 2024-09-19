@@ -8,7 +8,7 @@ export const login = async (email: string, password: string) => {
 
     const encryptedPassword = encryptPassword(password);
     try {
-        const response = await fetch('http://192.168.0.129:3001/login', {
+        const response = await fetch('http://192.168.100.14:3001/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export const register = async (
     const encryptedPassword = encryptPassword(password);
 
     try {
-        const response = await fetch('http://192.168.0.129:3001/register', {
+        const response = await fetch('http://192.168.100.14:3001/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
