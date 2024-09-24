@@ -20,6 +20,7 @@ import apptheme from "@/themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import LogOutAlert from "@/components/LogOutAlert";
+import { router } from "expo-router";
 
 
 interface InsectaProps {
@@ -36,7 +37,7 @@ const renderItem = ({ item }: { item: string }) => (
         }}
     >
         <View style={{width: 'auto'}}>
-            <TouchableOpacity style={{alignItems: 'center'}}>
+            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {router.navigate('/(detect)/gallery')}}>
                 <MaterialIcons name="folder" size={115} color={apptheme.primary} />
                 <View 
                     style={{

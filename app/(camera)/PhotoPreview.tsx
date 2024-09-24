@@ -34,8 +34,8 @@ export default function PhotoPreview() {
             <View 
                 style={{
                     position: 'absolute',
-                    left: '15%',
-                    top: '5%',
+                    left: '12%',
+                    top: '6%',
                 }}
             >
                 <CloseButton icon="close" onPress={closeImage}/>   

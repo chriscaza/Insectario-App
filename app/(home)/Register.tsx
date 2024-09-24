@@ -84,7 +84,7 @@ export default function Register() {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.continueButton}>
+            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('/(camera)/TakePhoto')}}>
                 <Text style={styles.continueButtonText}>Continuar</Text>
             </TouchableOpacity>
 

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { router } from "expo-router";
 
 const { width, height } = Dimensions.get('screen');
 const MAX_TRANSLATE_Y = -height*0.92
@@ -93,7 +94,7 @@ export default function BottomSheet() {
                                     />
                                 </View>
                             ))}
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button} onPress={() => {router.navigate('/(camera)/TakePhoto')}}>
                                 <Text style={styles.textButton}>Registrar</Text>
                             </TouchableOpacity>
                         </View>
