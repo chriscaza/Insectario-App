@@ -7,10 +7,14 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  InteractionManager,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { login } from "@/scripts/forms";
+import CustomAlert from "@/components/Alerts/CustomAlert";
+
 
 export default function LogIn() {
   const router =  useRouter();
@@ -18,6 +22,39 @@ export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
+
+  const handleLogin = async () => {
+    const result = await login(email, password);
+    
+    if (result.error) {
+      setAlertMessage(result.error);
+      setIsSuccess(false)
+      setShowAlert(true);
+    } else {
+      setAlertMessage(result.message)
+      setShowAlert(true);
+      setIsSuccess(true)
+    }
+
+    clearFields()
+  }
+
+  const handleAlertClose = () => {
+    setShowAlert(false)
+    if(isSuccess) {
+      InteractionManager.runAfterInteractions(() => {
+        router.replace('/(camera)/TakePhoto')
+      })
+    }
+  }
+
+  function clearFields() {
+    setEmail('')
+    setPassword('')
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -68,10 +105,14 @@ export default function LogIn() {
 
         <TouchableOpacity 
           style={styles.continueButton}
-          onPress={() => {router.replace('/(camera)/TakePhoto')}}
+          onPress={handleLogin}
         >
           <Text style={styles.continueButtonText}>Continuar</Text>
         </TouchableOpacity>
+
+        {showAlert && (
+          <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
+        )}
 
         <View style={styles.orContainer}>
           <View style={styles.line} />

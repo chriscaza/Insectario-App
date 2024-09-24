@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
     Dimensions,
     FlatList,
+    InteractionManager,
     Pressable,
     StyleSheet,
     Text,
@@ -19,7 +20,7 @@ import { arachnidaOrders, insectaOrders } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import LogOutAlert from "@/components/LogOutAlert";
+import LogOutAlert from "@/components/Alerts/LogOutAlert";
 import { router } from "expo-router";
 
 
@@ -125,7 +126,7 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                             contentContainerStyle={styles.flatList}
                         />
                     </View>
-                    {visible && <LogOutAlert visible={modalVisible} onClose={() => setModalVisible(false)} />}
+                    {visible && <LogOutAlert visible={modalVisible} onClose={()=> setModalVisible(false)} />}
                 </SafeAreaView>
             </LinearGradient>
         </Animated.View>
