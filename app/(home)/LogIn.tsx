@@ -12,8 +12,9 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { login } from "@/scripts/forms";
 import CustomAlert from "@/components/Alerts/CustomAlert";
+import User from '@/scripts/models/user/User'
+
 
 
 export default function LogIn() {
@@ -27,10 +28,10 @@ export default function LogIn() {
   const [isSuccess, setIsSuccess] = useState(false)
 
   const handleLogin = async () => {
-    const result = await login(email, password);
+    const result = await User.login(email, password);
     
-    if (result.error) {
-      setAlertMessage(result.error);
+    if (!result.success) {
+      setAlertMessage(result.message);
       setIsSuccess(false)
       setShowAlert(true);
     } else {
@@ -43,7 +44,7 @@ export default function LogIn() {
   }
 
   const handleAlertClose = () => {
-    setShowAlert(false)
+    setShowAlert(false) 
     if(isSuccess) {
       InteractionManager.runAfterInteractions(() => {
         router.replace('/(camera)/TakePhoto')

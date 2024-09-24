@@ -4,7 +4,9 @@ import {
     Text,
     View,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -14,61 +16,62 @@ export default function NewPass() {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <LinearGradient
-            colors={["#98D798", "#507150"]}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.container}
-        >
-            <Text style={styles.title}>
-                Ingresa una nueva contraseña
-            </Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <LinearGradient
+                colors={["#98D798", "#507150"]}
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.container}
+            >
+                <Text style={styles.title}>
+                    Ingresa una nueva contraseña
+                </Text>
 
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Contraseña</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="**************"
-                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                    secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity
-                    onPress={() => setShowPassword(!showPassword)}
-                    style={styles.eyeButton}
-                >
-                    <Ionicons
-                        name={showPassword ? "eye-off-outline" : "eye-outline"}
-                        size={24}
-                        color="#fff"
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Contraseña</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="**************"
+                        placeholderTextColor="rgba(255, 255, 255, 1)"
+                        secureTextEntry={!showPassword}
                     />
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={styles.eyeButton}
+                    >
+                        <Ionicons
+                            name={showPassword ? "eye-off-outline" : "eye-outline"}
+                            size={24}
+                            color="#fff"
+                        />
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Confirmmar contraseña</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="**************"
-                    placeholderTextColor="rgba(255, 255, 255, 1)"
-                    secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity
-                    onPress={() => setShowPassword(!showPassword)}
-                    style={styles.eyeButton}
-                >
-                    <Ionicons
-                        name={showPassword ? "eye-off-outline" : "eye-outline"}
-                        size={24}
-                        color="#fff"
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Confirmmar contraseña</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="**************"
+                        placeholderTextColor="rgba(255, 255, 255, 1)"
+                        secureTextEntry={!showPassword}
                     />
+                    <TouchableOpacity
+                        onPress={() => setShowPassword(!showPassword)}
+                        style={styles.eyeButton}
+                    >
+                        <Ionicons
+                            name={showPassword ? "eye-off-outline" : "eye-outline"}
+                            size={24}
+                            color="#fff"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity style={styles.continueButton}>
+                    <Text style={styles.continueButtonText}>Continuar</Text>
                 </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity style={styles.continueButton}>
-                <Text style={styles.continueButtonText}>Continuar</Text>
-            </TouchableOpacity>
-
-        </LinearGradient>
+            </LinearGradient>
+        </TouchableWithoutFeedback>
     )
 
 }

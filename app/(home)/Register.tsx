@@ -14,7 +14,7 @@ import {
 import CustomAlert from "@/components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { register } from "@/scripts/forms";
+import User from '@/scripts/models/user/User'
 
 export default function Register() {
 
@@ -28,16 +28,16 @@ export default function Register() {
     const [isSuccess, setIsSuccess] = useState(false)
 
     const handleRegister = async () => {
-        const result = await register(username, password, mail, birthDate);
 
-        if (result.error) {
-          setAlertMessage(result.error);
-          setIsSuccess(false)
-          setShowAlert(true);
+        const result = await User.register(username, mail, password, birthDate)
+        if (!result.success) {
+            setAlertMessage(result.message)
+            setIsSuccess(false)
+            setShowAlert(true)
         } else {
-            setAlertMessage(result.message);
+            setAlertMessage(result.message)
             setIsSuccess(true)
-            setShowAlert(true);
+            setShowAlert(true)
         }
 
         clearFields()
