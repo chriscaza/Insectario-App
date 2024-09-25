@@ -15,6 +15,7 @@ import CustomAlert from "@/components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import User from '@/scripts/models/user/User'
+import Loading from "@/components/Loading";
 
 export default function Register() {
 
@@ -26,10 +27,13 @@ export default function Register() {
     const [showAlert, setShowAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
     const [isSuccess, setIsSuccess] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleRegister = async () => {
 
+        setIsLoading(true)
         const result = await User.register(username, mail, password, birthDate)
+        setIsLoading(false)
         if (!result.success) {
             setAlertMessage(result.message)
             setIsSuccess(false)
@@ -60,113 +64,117 @@ export default function Register() {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <LinearGradient
-                colors={["#98D798", "#507150"]}
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.container}
-            >
-                <Text style={styles.title}>
-                    Bienvenidx a <Text style={styles.bold}>Insectario</Text>
-                </Text>
-
-                <Text style={styles.text}>Crear cuenta</Text>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Nombre de usuario</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={username}
-                        onChangeText={setUsername}
-                        placeholder="chris.caza25"
-                        placeholderTextColor="rgba(255, 255, 255, 1)"
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Correo</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={mail}
-                        onChangeText={setMail}
-                        placeholder="hola@gmail.com"
-                        placeholderTextColor="rgba(255, 255, 255, 1)"
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Contraseña</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="**************"
-                        value={password}
-                        onChangeText={setPassword}
-                        placeholderTextColor="rgba(255, 255, 255, 1)"
-                        secureTextEntry={!showPassword}
-                    />
-                    <TouchableOpacity
-                        onPress={() => setShowPassword(!showPassword)}
-                        style={styles.eyeButton}
-                    >
-                        <Ionicons
-                            name={showPassword ? "eye-off-outline" : "eye-outline"}
-                            size={24}
-                            color="#fff"
-                        />
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Fecha de nacimiento</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="dd/mm/aaaa"
-                        value={birthDate}
-                        onChangeText={setBirthDate}
-                        placeholderTextColor="rgba(255, 255, 255, 1)"
-                    />
-                    <TouchableOpacity
-                        style={styles.eyeButton}
-                    >
-                        <Ionicons
-                            name="calendar"
-                            size={24}
-                            color="#fff"
-                        />
-                    </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity 
-                    style={styles.continueButton}
-                    onPress={handleRegister}
+        isLoading ? (
+            <Loading />
+        ) : (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <LinearGradient
+                    colors={["#98D798", "#507150"]}
+                    start={{ x: 1, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    style={styles.container}
                 >
-                    <Text style={styles.continueButtonText}>Continuar</Text>
-                </TouchableOpacity>
-
-                {showAlert && (
-                    <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
-                )}
-
-                <View style={styles.orContainer}>
-                    <View style={styles.line} />
-                    <Text style={styles.orText}>o</Text>
-                    <View style={styles.line} />
-                </View>
-
-                <TouchableOpacity style={styles.googleButton}>
-                    <Text style={styles.googleButtonText}>Continuar con Google</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => {router.back()}}>
-                    <Text style={styles.login}>
-                    ¿Ya tienes una cuenta? <Text style={styles.bold}>Inicia sesión</Text>
+                    <Text style={styles.title}>
+                        Bienvenidx a <Text style={styles.bold}>Insectario</Text>
                     </Text>
-                </TouchableOpacity>
-
-            </LinearGradient>
-        </TouchableWithoutFeedback>
-    );
+    
+                    <Text style={styles.text}>Crear cuenta</Text>
+    
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Nombre de usuario</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={username}
+                            onChangeText={setUsername}
+                            placeholder="chris.caza25"
+                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                        />
+                    </View>
+    
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Correo</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={mail}
+                            onChangeText={setMail}
+                            placeholder="hola@gmail.com"
+                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                        />
+                    </View>
+    
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Contraseña</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="**************"
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                            secureTextEntry={!showPassword}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            style={styles.eyeButton}
+                        >
+                            <Ionicons
+                                name={showPassword ? "eye-off-outline" : "eye-outline"}
+                                size={24}
+                                color="#fff"
+                            />
+                        </TouchableOpacity>
+                    </View>
+    
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Fecha de nacimiento</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="dd/mm/aaaa"
+                            value={birthDate}
+                            onChangeText={setBirthDate}
+                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                        />
+                        <TouchableOpacity
+                            style={styles.eyeButton}
+                        >
+                            <Ionicons
+                                name="calendar"
+                                size={24}
+                                color="#fff"
+                            />
+                        </TouchableOpacity>
+                    </View>
+    
+                    <TouchableOpacity 
+                        style={styles.continueButton}
+                        onPress={handleRegister}
+                    >
+                        <Text style={styles.continueButtonText}>Continuar</Text>
+                    </TouchableOpacity>
+    
+                    {showAlert && (
+                        <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
+                    )}
+    
+                    <View style={styles.orContainer}>
+                        <View style={styles.line} />
+                        <Text style={styles.orText}>o</Text>
+                        <View style={styles.line} />
+                    </View>
+    
+                    <TouchableOpacity style={styles.googleButton}>
+                        <Text style={styles.googleButtonText}>Continuar con Google</Text>
+                    </TouchableOpacity>
+    
+                    <TouchableOpacity onPress={() => {router.back()}}>
+                        <Text style={styles.login}>
+                            ¿Ya tienes una cuenta? <Text style={styles.bold}>Inicia sesión</Text>
+                        </Text>
+                    </TouchableOpacity>
+    
+                </LinearGradient>
+            </TouchableWithoutFeedback>
+        )
+    );    
 }
 
 const styles = StyleSheet.create({

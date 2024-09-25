@@ -74,6 +74,30 @@ export default class User {
         const validate = UserValidator.validatePassword(password, newPassword)
         if (!validate.success) return validate
 
-        return { message: 'Ok', success: true }
+        password = Password.encryptPassword(password)
+        newPassword = Password.encryptPassword(newPassword)
+        console.log(account, password, newPassword)
+ 
+        try {
+            const response = await fetch('http://192.168.0.129:3001/password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    values: {
+                        account: account,
+                        password: password,
+                        newPassword: newPassword,
+                    },
+                })
+            })
+            const data = await response.json()
+            console.log(data)
+            return { message: 'Ok', success: true }
+        } catch {
+            return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
+        }
     }
 }
