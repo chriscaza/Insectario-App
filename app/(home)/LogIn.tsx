@@ -14,11 +14,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CustomAlert from "@/components/Alerts/CustomAlert";
 import User from '@/scripts/models/user/User'
+import Loading from '../../components/Loading';
 
 
 
 export default function LogIn() {
-  const router =  useRouter();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,10 +27,12 @@ export default function LogIn() {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
+    setIsLoading(true)
     const result = await User.login(email, password);
-    
+    setIsLoading(false)
     if (!result.success) {
       setAlertMessage(result.message);
       setIsSuccess(false)
@@ -44,8 +47,8 @@ export default function LogIn() {
   }
 
   const handleAlertClose = () => {
-    setShowAlert(false) 
-    if(isSuccess) {
+    setShowAlert(false)
+    if (isSuccess) {
       InteractionManager.runAfterInteractions(() => {
         router.replace('/(camera)/TakePhoto')
       })
@@ -58,80 +61,84 @@ export default function LogIn() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <LinearGradient
-        colors={["#98D798", "#507150"]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.container}
-      >
-        <Text style={styles.title}>Inicia sesión</Text>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Correo</Text>
-        <TextInput
-            style={styles.input}
-            placeholder="hola@gmail.com"
-            placeholderTextColor="rgba(255, 255, 255, 1)"
-            value={email}
-            onChangeText={setEmail}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Contraseña</Text>
-        <TextInput
-            style={styles.input}
-            placeholder="**************"
-            placeholderTextColor="rgba(255, 255, 255, 1)"
-            value={password}
-            secureTextEntry={!showPassword}
-            onChangeText={setPassword}
-        />
-        <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeButton}
+    isLoading ? (
+      <Loading />
+    ) : (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <LinearGradient
+          colors={["#98D798", "#507150"]}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.container}
         >
-            <Ionicons
+          <Text style={styles.title}>Inicia sesión</Text>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Correo</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="hola@gmail.com"
+              placeholderTextColor="rgba(255, 255, 255, 1)"
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Contraseña</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="**************"
+              placeholderTextColor="rgba(255, 255, 255, 1)"
+              value={password}
+              secureTextEntry={!showPassword}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.eyeButton}
+            >
+              <Ionicons
                 name={showPassword ? "eye-off-outline" : "eye-outline"}
                 size={24}
                 color="#fff"
-            />
-        </TouchableOpacity>
-      </View>
+              />
+            </TouchableOpacity>
+          </View>
 
-        <TouchableOpacity onPress={() => {router.navigate('/ForgotPass')}}>
-          <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => { router.navigate('/ForgotPass') }}>
+            <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.continueButton}
-          onPress={handleLogin}
-        >
-          <Text style={styles.continueButtonText}>Continuar</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={handleLogin}
+          >
+            <Text style={styles.continueButtonText}>Continuar</Text>
+          </TouchableOpacity>
 
-        {showAlert && (
-          <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
-        )}
+          {showAlert && (
+            <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose} />
+          )}
 
-        <View style={styles.orContainer}>
-          <View style={styles.line} />
-          <Text style={styles.orText}>o</Text>
-          <View style={styles.line} />
-        </View>
+          <View style={styles.orContainer}>
+            <View style={styles.line} />
+            <Text style={styles.orText}>o</Text>
+            <View style={styles.line} />
+          </View>
 
-        <TouchableOpacity style={styles.googleButton}>
-          <Text style={styles.googleButtonText}>Continuar con Google</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.googleButton}>
+            <Text style={styles.googleButtonText}>Continuar con Google</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={styles.createAccount} onPress={() => {router.navigate('/Register')}}>
-            ¿Aún no tienes cuenta? Crear cuenta
-          </Text>
-        </TouchableOpacity>
-      </LinearGradient>
-    </TouchableWithoutFeedback>
+          <TouchableOpacity>
+            <Text style={styles.createAccount} onPress={() => { router.navigate('/Register') }}>
+              ¿Aún no tienes cuenta? Crear cuenta
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </TouchableWithoutFeedback>
+    )
 
   );
 }
@@ -155,16 +162,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 15,
-    marginBottom: 24,  
+    marginBottom: 24,
   },
   label: {
-      fontSize: 12,
-      color: 'rgba(255, 255, 255, 0.7)',
-      marginBottom: 3,
-  }, 
+    fontSize: 12,
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginBottom: 3,
+  },
   input: {
-      fontSize: 16,
-      color: '#fff',
+    fontSize: 16,
+    color: '#fff',
   },
   inputPass: {
     width: "100%",

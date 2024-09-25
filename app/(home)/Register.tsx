@@ -1,6 +1,6 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient";
-import { 
+import {
     TextInput,
     StyleSheet,
     Text,
@@ -54,7 +54,7 @@ export default function Register() {
                 router.back()
             })
         }
-      };
+    };
 
     const clearFields = () => {
         setUsername('')
@@ -77,9 +77,9 @@ export default function Register() {
                     <Text style={styles.title}>
                         Bienvenidx a <Text style={styles.bold}>Insectario</Text>
                     </Text>
-    
+
                     <Text style={styles.text}>Crear cuenta</Text>
-    
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Nombre de usuario</Text>
                         <TextInput
@@ -90,7 +90,7 @@ export default function Register() {
                             placeholderTextColor="rgba(255, 255, 255, 1)"
                         />
                     </View>
-    
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Correo</Text>
                         <TextInput
@@ -101,7 +101,7 @@ export default function Register() {
                             placeholderTextColor="rgba(255, 255, 255, 1)"
                         />
                     </View>
-    
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Contraseña</Text>
                         <TextInput
@@ -123,7 +123,7 @@ export default function Register() {
                             />
                         </TouchableOpacity>
                     </View>
-    
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Fecha de nacimiento</Text>
                         <TextInput
@@ -143,38 +143,38 @@ export default function Register() {
                             />
                         </TouchableOpacity>
                     </View>
-    
-                    <TouchableOpacity 
+
+                    <TouchableOpacity
                         style={styles.continueButton}
                         onPress={handleRegister}
                     >
                         <Text style={styles.continueButtonText}>Continuar</Text>
                     </TouchableOpacity>
-    
+
                     {showAlert && (
-                        <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
+                        <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose} />
                     )}
-    
+
                     <View style={styles.orContainer}>
                         <View style={styles.line} />
                         <Text style={styles.orText}>o</Text>
                         <View style={styles.line} />
                     </View>
-    
+
                     <TouchableOpacity style={styles.googleButton}>
                         <Text style={styles.googleButtonText}>Continuar con Google</Text>
                     </TouchableOpacity>
-    
-                    <TouchableOpacity onPress={() => {router.back()}}>
+
+                    <TouchableOpacity onPress={() => { router.back() }}>
                         <Text style={styles.login}>
                             ¿Ya tienes una cuenta? <Text style={styles.bold}>Inicia sesión</Text>
                         </Text>
                     </TouchableOpacity>
-    
+
                 </LinearGradient>
             </TouchableWithoutFeedback>
         )
-    );    
+    );
 }
 
 const styles = StyleSheet.create({
@@ -204,13 +204,13 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: 15,
-        marginBottom: 24,  
+        marginBottom: 24,
     },
     label: {
         fontSize: 12,
         color: 'rgba(255, 255, 255, 0.7)',
         marginBottom: 3,
-    }, 
+    },
     input: {
         fontSize: 16,
         color: '#fff',
