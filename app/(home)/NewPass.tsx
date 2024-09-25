@@ -11,14 +11,10 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-<<<<<<< HEAD
-import { router } from "expo-router";
-=======
 import { router, useLocalSearchParams } from "expo-router";
 import User from "@/scripts/models/user/User";
 import CustomAlert from "@/components/Alerts/CustomAlert";
 import Loading from "@/components/Loading";
->>>>>>> 8fa1c191deae099f4d4bbd175441b7e9ed403f06
 
 export default function NewPass() {
 
@@ -92,13 +88,6 @@ export default function NewPass() {
                         </TouchableOpacity>
                     </View>
 
-<<<<<<< HEAD
-            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('LogIn')}}>
-                <Text style={styles.continueButtonText}>Continuar</Text>
-            </TouchableOpacity>
-
-        </LinearGradient>
-=======
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Confirmmar contraseña</Text>
                         <TextInput
@@ -129,7 +118,6 @@ export default function NewPass() {
                 </LinearGradient>
             </TouchableWithoutFeedback>
         )
->>>>>>> 8fa1c191deae099f4d4bbd175441b7e9ed403f06
     )
 
 }

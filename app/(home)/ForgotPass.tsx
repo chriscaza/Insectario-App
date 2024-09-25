@@ -74,12 +74,6 @@ export default function ForgotPass() {
                         />
                     </View>
 
-<<<<<<< HEAD
-            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('/NewPass')}}>
-                <Text style={styles.continueButtonText}>Continuar</Text>
-            </TouchableOpacity>
-        </LinearGradient>
-=======
                     {showAlert && (
                         <CustomAlert visible={showAlert} message={alertMessage} onClose={() => setShowAlert(false)} />
                     )}
@@ -90,7 +84,6 @@ export default function ForgotPass() {
                 </LinearGradient>
             </TouchableWithoutFeedback >
         )
->>>>>>> 8fa1c191deae099f4d4bbd175441b7e9ed403f06
     )
 
 }

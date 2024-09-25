@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import Insecta from '../screens/FoldersView'
-import LogOutAlert from '@/components/LogOutAlert';
 import Animated, { 
   useAnimatedStyle,
   useSharedValue,
