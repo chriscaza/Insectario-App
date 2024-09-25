@@ -76,7 +76,6 @@ export default class User {
 
         password = Password.encryptPassword(password)
         newPassword = Password.encryptPassword(newPassword)
-        console.log(account, password, newPassword)
  
         try {
             const response = await fetch('http://192.168.0.129:3001/password', {
@@ -94,8 +93,11 @@ export default class User {
                 })
             })
             const data = await response.json()
-            console.log(data)
-            return { message: 'Ok', success: true }
+            if (response.ok) {
+                return { message: data.msg, success: true }
+            } else {
+                return { message: data.msg, success: false }
+            }
         } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
         }
