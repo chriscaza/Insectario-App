@@ -15,4 +15,8 @@ export default class Password {
     static isPasswordEmpty(password: string): boolean {
         return password === null || password === ''
     }
+
+    static areTheSamePassword(password: string, secondPassword: string): boolean {
+        return password.toLowerCase() === secondPassword.toLowerCase()
+    }
 }

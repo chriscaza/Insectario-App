@@ -24,14 +24,17 @@ export default function ForgotPass() {
 
     const handleOnPress = async() => {
         const result = await seekUser(account)
-        if (result.error && !result.success) {
-            setAlertMessage(result.error)
+        if (result.message && !result.success) {
+            setAlertMessage(result.message)
             setShowAlert(true)
         }
-        if (result.success && !result.error) {
-            router.navigate('/(home)/NewPass')
+        if (result.success && !result.message) {
+            router.navigate({
+                pathname: '/(home)/NewPass',
+                params: { account: account }
+            })
         }
-        if (!result.success && !result.error) {
+        if (!result.success && !result.message) {
             router.replace('/(home)/AccountNotFound')
         }
     }

@@ -6,14 +6,46 @@ import {
     TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    InteractionManager
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router, useLocalSearchParams } from "expo-router";
+import User from "@/scripts/models/user/User";
+import CustomAlert from "@/components/Alerts/CustomAlert";
 
 export default function NewPass() {
 
+    const { account } = useLocalSearchParams()
     const [showPassword, setShowPassword] = useState(false);
+    const [ alertMessage, setAlertMessage ] = useState('')
+    const [ isSuccess, setIsSuccess ] = useState(false)
+    const [ showAlert, setShowAlert ] = useState(false)
+    const [password, setPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    
+    const handlePassword = async() => {
+        const result = await User.changePassword(account, password, newPassword)
+        if (!result.success) {
+           setAlertMessage(result.message)
+           setIsSuccess(false)
+           setShowAlert(true)
+        } else {
+            setAlertMessage(result.message)
+            setIsSuccess(true)
+            setShowAlert(true)
+        }
+    }
+
+    const handleAlertClose = () => {
+        setShowAlert(false) 
+        if(isSuccess) {
+          InteractionManager.runAfterInteractions(() => {
+            router.dismiss(2)
+          })
+        }
+      }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -34,6 +66,8 @@ export default function NewPass() {
                         placeholder="**************"
                         placeholderTextColor="rgba(255, 255, 255, 1)"
                         secureTextEntry={!showPassword}
+                        value={password}
+                        onChangeText={setPassword}
                     />
                     <TouchableOpacity
                         onPress={() => setShowPassword(!showPassword)}
@@ -54,6 +88,8 @@ export default function NewPass() {
                         placeholder="**************"
                         placeholderTextColor="rgba(255, 255, 255, 1)"
                         secureTextEntry={!showPassword}
+                        value={newPassword}
+                        onChangeText={setNewPassword}
                     />
                     <TouchableOpacity
                         onPress={() => setShowPassword(!showPassword)}
@@ -66,8 +102,10 @@ export default function NewPass() {
                         />
                     </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity style={styles.continueButton}>
+                {showAlert && (
+                    <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose}/>
+                )}
+                <TouchableOpacity style={styles.continueButton} onPress={handlePassword}>
                     <Text style={styles.continueButtonText}>Continuar</Text>
                 </TouchableOpacity>
             </LinearGradient>

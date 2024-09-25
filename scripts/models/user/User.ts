@@ -69,4 +69,11 @@ export default class User {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false }
         }
     }
+
+    static async changePassword(account: string | string[], password: string, newPassword: string) {
+        const validate = UserValidator.validatePassword(password, newPassword)
+        if (!validate.success) return validate
+
+        return { message: 'Ok', success: true }
+    }
 }
