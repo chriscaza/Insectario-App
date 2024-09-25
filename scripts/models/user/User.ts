@@ -61,6 +61,10 @@ export default class User {
             });
             const data = await response.json()
             if (response.ok) {
+                // Manejar informacion del usuario cuando se loguee
+                console.log(data.user.username)
+                console.log(data.user.email)
+                console.log(data.user.bDay)
                 return { message: data.msg, success: true }
             } else {
                 return { message: data.msg, success: false }
