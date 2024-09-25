@@ -35,7 +35,7 @@ export default function ForgotPass() {
                 />
             </View>
 
-            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('NewPass')}}>
+            <TouchableOpacity style={styles.continueButton} onPress={() => {router.navigate('/NewPass')}}>
                 <Text style={styles.continueButtonText}>Continuar</Text>
             </TouchableOpacity>
         </LinearGradient>
