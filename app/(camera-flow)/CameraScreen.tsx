@@ -10,11 +10,11 @@ import { router } from 'expo-router'
 import { useCameraStore } from '@/global/cameraStore'
 
 import Flash from '@/components/icons/Flash'
-import Insecta from '../screens/FoldersView'
+import Insecta from '../(inventory)/FoldersScreen'
 
 const { width } = Dimensions.get('window')
 
-export default function TakePhoto() {
+export default function CameraScreen() {
   const [type, setType] = useState<CameraType>('back')
   const [flash, setFlash] = useState<FlashMode>('off')
   const [cameraReady, setCameraReady] = useState<boolean>(false)
@@ -40,7 +40,7 @@ export default function TakePhoto() {
       const response = await cameraRef.current?.takePictureAsync({})
       if(response) {
         setPicture(response!.uri);
-        router.navigate('/PhotoPreview');
+        router.navigate('/DetectionScreen');
       }
     } 
   }
@@ -138,7 +138,7 @@ export default function TakePhoto() {
             <TouchableOpacity 
               onPress={
                 () => {
-                  router.navigate('/(camera)/PhotoLibrary');
+                  router.navigate('/GalleryScreen');
                 }}
               >
                 <Text style={style.text}>GALERÍA</Text>

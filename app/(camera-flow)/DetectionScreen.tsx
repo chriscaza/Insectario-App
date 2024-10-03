@@ -12,7 +12,7 @@ import { router } from "expo-router";
 
 const {width} = Dimensions.get("window")
 
-export default function PhotoPreview() {
+export default function DetectionScreen() {
     const { picture } = useCameraStore();
     function closeImage() {
         router.back()
@@ -41,7 +41,7 @@ export default function PhotoPreview() {
                 <CloseButton icon="close" onPress={closeImage}/>   
             </View>
             <View style={styles.detect}>
-                <TouchableOpacity style={styles.pressable} onPress={() => {router.navigate('/(detect)/Detection')}}>
+                <TouchableOpacity style={styles.pressable} onPress={() => {router.navigate('/DataEntryScreen')}}>
                     <Text style={styles.text}>Detectar</Text>
                     <Ionicons name="arrow-forward" size={24} color="white" />
                 </TouchableOpacity>

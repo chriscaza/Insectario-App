@@ -27,7 +27,7 @@ const MemoizedImage = React.memo(({ uri }: MemoizedImageProps) => {
 
     function imagePressed() {
         setPicture(uri);
-        router.navigate('/PhotoPreview')
+        router.navigate('/DetectionScreen')
     }        
 
     return (

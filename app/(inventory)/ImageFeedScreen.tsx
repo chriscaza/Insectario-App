@@ -33,7 +33,7 @@ const TikTokStyleGallery: React.FC = () => {
           isLastItem && { marginBottom: 60 },
         ]}
       >
-        <TouchableOpacity style={styles.icon} onPress={() => {router.navigate('/(camera)/TakePhoto')}}>
+        <TouchableOpacity style={styles.icon} onPress={() => {router.navigate('/(inventory)/InventoryScreen')}}>
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Image
@@ -49,7 +49,7 @@ const TikTokStyleGallery: React.FC = () => {
         >
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.date}>{item.date}</Text>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => {router.navigate('/DataShowScreen')}}>
             <Text style={styles.buttonText}>Ver más</Text>
           </TouchableOpacity>
         </LinearGradient>

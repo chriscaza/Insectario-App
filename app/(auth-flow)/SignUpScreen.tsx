@@ -15,9 +15,9 @@ import CustomAlert from "@/components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import User from '@/scripts/models/user/User'
-import Loading from "@/components/Loading";
+import Loading from "@/components/LoadingScreen";
 
-export default function Register() {
+export default function SignUpScreen() {
 
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");

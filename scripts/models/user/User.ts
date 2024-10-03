@@ -12,7 +12,7 @@ export default class User {
         password = Password.encryptPassword(password)
 
         try {
-            const response = await fetch('http://192.168.0.129:3001/register', {
+            const response = await fetch('http://192.168.137.226:3001/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export default class User {
         password = Password.encryptPassword(password)
         
         try { 
-            const response = await fetch('http://192.168.0.129:3001/', {
+            const response = await fetch('http://192.168.137.226:3001/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export default class User {
         newPassword = Password.encryptPassword(newPassword)
  
         try {
-            const response = await fetch('http://192.168.0.129:3001/password', {
+            const response = await fetch('http://192.168.137.226:3001/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

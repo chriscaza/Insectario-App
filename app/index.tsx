@@ -13,12 +13,12 @@ import { useCameraPermissions } from 'expo-camera';
 const { height } = Dimensions.get('window');
 
 import apptheme from '@/themes/apptheme';
-import Logo from '../../components/icons/AppIcon';
-import SlidingButton from '../../components/icons/SlideButton';
+import Logo from '../components/icons/AppIcon';
+import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function index() {
+export default function StartScreen() {
 
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
@@ -53,7 +53,7 @@ export default function index() {
 
 
   const handleSwipeComplete = () => {
-    router.replace('/LogIn')
+    router.replace('/LoginScreen')
   };
 
   return (
