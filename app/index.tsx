@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Alert, InteractionManager } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -53,7 +53,10 @@ export default function StartScreen() {
 
 
   const handleSwipeComplete = () => {
-    router.replace('/LoginScreen')
+      InteractionManager.runAfterInteractions(() => {
+        router.replace('/(auth-flow)/LoginScreen')
+      })
+      // console.log('Swipe completed')
   };
 
   return (
@@ -64,8 +67,8 @@ export default function StartScreen() {
             <Logo />
             <Text style={styles.text}>INSECTARIO</Text>
             <View style={styles.footer}>
-              {/* <SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
-              <Text onPress={handleContinue} style={styles.text}>Iniciar</Text>
+              <SlidingButton onSwipeComplete={handleSwipeComplete}/>
+              {/* <Text style={styles.text} onPress={handleContinue}>INICIAR</Text> */}
             </View>
           </View>
         </GestureHandlerRootView>

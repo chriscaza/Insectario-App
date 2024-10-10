@@ -1,9 +1,9 @@
-import React from "react";
-import { StyleSheet, View, Platform, Text } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Platform, Text, InteractionManager } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolation } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolation, runOnJS } from "react-native-reanimated";
 import apptheme from "@/themes/apptheme";
 
 interface SlidingButtonProps {
@@ -17,20 +17,29 @@ const SWIPEABLE_AREA = BUTTON_WIDTH - 2 * BUTTON_PADDING;
 
 export default function SlidingButton({ onSwipeComplete }: SlidingButtonProps) {
     const translateY = useSharedValue(0);
+    const [isFinished, setIsFinished] = useState<boolean>(false)
 
     const slideButtonGesture = Gesture.Pan()
         .onUpdate((event) => {
             translateY.value = Math.max(-(BUTTON_HEIGHT - SWIPEABLE_AREA), Math.min(0, event.translationY));
+            // console.log(`TranslationY: ${event.translationY}`)
         })
         .onEnd(() => {
             if (translateY.value > -(BUTTON_WIDTH / 2 - BUTTON_PADDING / 2)) {
                 translateY.value = withSpring(0);
             } else {
                 translateY.value = withSpring(-BUTTON_HEIGHT / 2, {}, (isFinished) => {
-                    if (isFinished) {
-                        onSwipeComplete();
+                    if(isFinished) {
+                        runOnJS(onSwipeComplete)()
                     }
-                });
+                    // try {
+                    //     InteractionManager.runAfterInteractions(() => {
+                    //         onSwipeComplete()
+                    //     })
+                    // } catch(e) {
+                    //     console.log(e)
+                    // }
+                })
             }
         });
 
