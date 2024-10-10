@@ -2,7 +2,7 @@ export const seekUser = async(account: string) => {
     if(account === '') return { message: 'Usuario o correo vacío', success: false }
 
     try {
-        const response = await fetch('http://192.168.0.129:3001/checkAccount', {
+        const response = await fetch('http://143.110.231.124:5000/checkAccount', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

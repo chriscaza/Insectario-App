@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
@@ -9,6 +9,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { usePermissions } from 'expo-media-library' 
 import { useCameraPermissions } from 'expo-camera';
+import { useTensorflowModel } from 'react-native-fast-tflite'
+
+// '@/assets/models/model.tflite'
 
 const { height } = Dimensions.get('window');
 
@@ -19,6 +22,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function StartScreen() {
+
+  const model = useTensorflowModel(require('@/assets/models/model.tflite'))
+  const actualModel = model.state === 'loaded' ? model.model : undefined
+  
+  useEffect(() => {
+    if (actualModel) return
+    console.log('Modelo cargado')
+  }, [actualModel])
+
+  console.log(`Model ${model.state}`)
 
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
