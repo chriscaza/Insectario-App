@@ -20,7 +20,7 @@ export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
     const handleLogOut = () => {
         onClose()
         InteractionManager.runAfterInteractions(() => {
-            router.replace('/(home)/LogIn')
+            router.replace('/(auth-flow)/LoginScreen')
         })
     }
 

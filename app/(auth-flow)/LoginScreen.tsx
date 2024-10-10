@@ -14,11 +14,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CustomAlert from "@/components/Alerts/CustomAlert";
 import User from '@/scripts/models/user/User'
-import Loading from '../../components/Loading';
+import Loading from '../../components/LoadingScreen';
 
 
 
-export default function LogIn() {
+export default function LoginScreen() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -50,7 +50,7 @@ export default function LogIn() {
     setShowAlert(false)
     if (isSuccess) {
       InteractionManager.runAfterInteractions(() => {
-        router.replace('/(camera)/TakePhoto')
+        router.replace('/(camera-flow)/CameraScreen')
       })
     }
   }
@@ -106,7 +106,7 @@ export default function LogIn() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity onPress={() => { router.navigate('/ForgotPass') }}>
+          <TouchableOpacity onPress={() => { router.navigate('/ForgotPassScreen') }}>
             <Text style={styles.forgotPassword}>¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
 
@@ -132,7 +132,7 @@ export default function LogIn() {
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Text style={styles.createAccount} onPress={() => { router.navigate('/Register') }}>
+            <Text style={styles.createAccount} onPress={() => { router.navigate('/SignUpScreen') }}>
               ¿Aún no tienes cuenta? Crear cuenta
             </Text>
           </TouchableOpacity>

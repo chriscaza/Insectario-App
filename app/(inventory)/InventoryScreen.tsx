@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, Dimensions }
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import Insecta from '../screens/FoldersView'
+import Insecta from './FoldersScreen'
 import Animated, { 
   useAnimatedStyle,
   useSharedValue,
@@ -38,10 +38,10 @@ const imageData = [
   { id: '18', name: 'Violinista', uri: 'url_de_la_imagen' },
 ];
 
-const AraneaeScreen = ({ visible }: InsectaProps) => {
+const InventoryScreen = ({ visible }: InsectaProps) => {
 
   const renderImageItem = ({ item }: any) => (
-    <TouchableOpacity style={styles.imageContainer} onPress={() => {router.navigate('/(detect)/card')}}>
+    <TouchableOpacity style={styles.imageContainer} onPress={() => {router.navigate('/ImageFeedScreen')}}>
       <Image source={{ uri: item.uri }}/>
     </TouchableOpacity>
   );
@@ -61,7 +61,7 @@ const AraneaeScreen = ({ visible }: InsectaProps) => {
       </View>
       <View style={styles.header}>
         <View style={styles.botons}>
-          <TouchableOpacity style={styles.icons} onPress={() => {router.navigate('/(camera)/TakePhoto')}}>
+          <TouchableOpacity style={styles.icons} onPress={() => {router.navigate('/(camera-flow)/CameraScreen')}}>
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
           <Text style={styles.title}>ARANAE</Text>
@@ -185,4 +185,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AraneaeScreen;
+export default InventoryScreen;

@@ -94,7 +94,7 @@ export default function BottomSheet() {
                                     />
                                 </View>
                             ))}
-                            <TouchableOpacity style={styles.button} onPress={() => {router.navigate('/(camera)/TakePhoto')}}>
+                            <TouchableOpacity style={styles.button} onPress={() => {router.navigate('/(camera-flow)/CameraScreen')}}>
                                 <Text style={styles.textButton}>Registrar</Text>
                             </TouchableOpacity>
                         </View>

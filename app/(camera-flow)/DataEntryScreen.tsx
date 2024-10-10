@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { Asset } from "expo-asset";
 
-import { Ionicons } from '@expo/vector-icons';
 import { useCameraStore } from "@/global/cameraStore";
 import { Classes } from "@/global/classes";
 import apptheme from "@/themes/apptheme";
-import BottomSheet from "@/components/BottomSheetInventory";
+import BottomSheet from "@/components/DataEntryList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { router } from "expo-router";
 
-const { width, height } = Dimensions.get('window')
+    const { width, height } = Dimensions.get('window')
 
 export default function Detection() {
 
@@ -37,12 +35,8 @@ export default function Detection() {
                 <View style={styles.imageWraper}>
                     <Image source={picture} style={styles.pictureContainer}/>
                     <View style={styles.titleContainer}>
-                        <TouchableOpacity style={styles.icons}>
-                            <Ionicons name="arrow-back" size={24} color="white" onPress={() => {router.navigate('/(detect)/gallery')}}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.icons}>
-                            <Ionicons name="cloud-download" size={24} color="white" />
-                        </TouchableOpacity>
+                        <Text style={styles.classText}>{clase.toUpperCase()}</Text>
+                        <Text style={isSmallScreen ? styles.orderLargeText : styles.orderSmallText}>{order}</Text>
                     </View>
                 </View>
                 <View style={styles.dummyView} />
@@ -69,15 +63,11 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 60, // Ajusta según sea necesario
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        width: '100%',
+        height: 'auto',
+        marginTop: 20,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        // backgroundColor: apptheme.text
     },
     classText: {
         color: apptheme.white,
@@ -102,13 +92,5 @@ const styles = StyleSheet.create({
     },
     dummyView: {
         flex: 1
-    },
-    icons: {
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 50,
-        backgroundColor: 'rgba(0,0,0,0.4)'
-    },
+    }
 })

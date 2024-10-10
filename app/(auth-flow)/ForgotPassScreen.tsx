@@ -15,9 +15,9 @@ import CloseButton from "@/components/icons/CloseButton";
 import { router } from "expo-router";
 import { seekUser } from "@/scripts/findPassword";
 import CustomAlert from "@/components/Alerts/CustomAlert";
-import Loading from "@/components/Loading";
+import Loading from "@/components/LoadingScreen";
 
-export default function ForgotPass() {
+export default function ForgotPassScreen() {
 
     const [account, setAccount] = useState<string>('')
     const [alertMessage, setAlertMessage] = useState<string>('')
@@ -34,12 +34,12 @@ export default function ForgotPass() {
         }
         if (result.success && !result.message) {
             router.navigate({
-                pathname: '/(home)/NewPass',
+                pathname: '/NewPassScreen',
                 params: { account: account }
             })
         }
         if (!result.success && !result.message) {
-            router.replace('/(home)/AccountNotFound')
+            router.replace('/AccountNotFoundScreen')
         }
     }
 

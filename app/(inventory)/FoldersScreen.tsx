@@ -38,7 +38,7 @@ const renderItem = ({ item }: { item: string }) => (
         }}
     >
         <View style={{width: 'auto'}}>
-            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {router.navigate('/(detect)/gallery')}}>
+            <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {router.navigate('/InventoryScreen')}}>
                 <MaterialIcons name="folder" size={115} color={apptheme.primary} />
                 <View 
                     style={{

@@ -5,7 +5,7 @@ import { Text, StyleSheet } from "react-native";
 import { MotiView } from 'moti';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Loading() {
+export default function LoadingScreen() {
     return (
         <LinearGradient 
             style={styles.container}
