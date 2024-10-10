@@ -14,6 +14,7 @@ import apptheme from "@/themes/apptheme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useCameraStore } from "@/global/cameraStore";
+import { Ionicons } from "@expo/vector-icons";
 
 interface MemoizedImageProps {
     uri: string
@@ -125,21 +126,29 @@ export default function PhotoLibrary() {
                         <Text style={styles.text}>{title}</Text>
                     </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={assets}
-                    keyExtractor={(item, index) => `${item.id}-${index}`}
-                    renderItem={({item}) => (
-                        <MemoizedImage uri={item.uri}/>
-                    )}
-                    ref={flatListRef}
-                    numColumns={3}
-                    initialNumToRender={10}
-                    maxToRenderPerBatch={10}
-                    onEndReached={getAlbums}
-                    onEndReachedThreshold={0.5}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ gap: 10, width: width}}
-                />
+                {assets.length > 0 ? (
+                    <FlatList
+                        data={assets}
+                        keyExtractor={(item, index) => `${item.id}-${index}`}
+                        renderItem={({item}) => (
+                            <MemoizedImage uri={item.uri}/>
+                        )}
+                        ref={flatListRef}
+                        numColumns={3}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
+                        onEndReached={getAlbums}
+                        onEndReachedThreshold={0.5}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ gap: 10, width: width}}
+                    />
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Ionicons name={'sad-outline'} size={30} color="#314f33"/>
+                        <Text style={styles.emptyText}>No existen fotos en tu galería.</Text>
+                    </View>
+                )}
+
                 <View style={[styles.footer]}>
                     <TouchableOpacity onPress={() => {router.back()}}>
                         <Text style={styles.text}>CÁMARA</Text>
@@ -175,9 +184,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 30,
         alignItems: 'center',
-      },
+    },
     text: {
         color: apptheme.white,
         fontSize: 20
-      }
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 225
+    },
+    emptyText: {
+        color: apptheme.white,
+        fontSize: 24,
+        textAlign: "center",
+        marginTop: 20
+    },
 })
