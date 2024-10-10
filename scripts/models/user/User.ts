@@ -2,6 +2,8 @@ import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
 
+const ip = 'http://192.168.137.31:3001'
+
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
 
@@ -12,7 +14,7 @@ export default class User {
         password = Password.encryptPassword(password)
 
         try {
-            const response = await fetch('http://192.168.137.226:3001/register', {
+            const response = await fetch(`${ip}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +48,7 @@ export default class User {
         password = Password.encryptPassword(password)
         
         try { 
-            const response = await fetch('http://192.168.137.226:3001/', {
+            const response = await fetch(`${ip}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +84,7 @@ export default class User {
         newPassword = Password.encryptPassword(newPassword)
  
         try {
-            const response = await fetch('http://192.168.137.226:3001/password', {
+            const response = await fetch(`${ip}/password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
