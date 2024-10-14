@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { StyleSheet, Text, View, Dimensions, Alert, InteractionManager } from 'react-native';
@@ -12,17 +12,27 @@ import { useCameraPermissions } from 'expo-camera';
 
 const { height } = Dimensions.get('window');
 
-import apptheme from '@/themes/apptheme';
+import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
 import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as tf from '@tensorflow/tfjs'
+import '@tensorflow/tfjs-react-native'
 
 
 export default function StartScreen() {
 
-  const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
   const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
+  const [ isTFReady, setTFisReady ] = useState(false)
+
+  // IA Pruebas
+  async function isTfReady() {
+    await tf.ready()
+    setTFisReady(true)
+  }
+
+  const router = useRouter();
 
   async function handleContinue() {
     const allPermissions = await requestAllPermissions();

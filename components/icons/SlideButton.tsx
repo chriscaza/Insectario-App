@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolation, runOnJS } from "react-native-reanimated";
-import apptheme from "@/themes/apptheme";
+import apptheme from "../../themes/apptheme";
 
 interface SlidingButtonProps {
     onSwipeComplete: () => void;
