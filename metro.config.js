@@ -4,6 +4,6 @@ const { getDefaultConfig } = require('expo/metro-config');
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
 
-config.resolver.sourceExts.push('tflite')
+config.resolver.sourceExts.push('bin')
 
 module.exports = config;
