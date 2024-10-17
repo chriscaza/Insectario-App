@@ -112,7 +112,7 @@ export default function LoginScreen() {
 
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={handleLogin}
+            onPress={() => router.replace('/(camera-flow)/CameraScreen')}
           >
             <Text style={styles.continueButtonText}>Continuar</Text>
           </TouchableOpacity>

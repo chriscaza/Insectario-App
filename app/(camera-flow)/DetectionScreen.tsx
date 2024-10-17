@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import { View, StyleSheet, Text, Dimensions, TouchableOpacity} from "react-native";
 import { Image } from 'expo-image';
 import { LinearGradient } from "expo-linear-gradient";
@@ -14,6 +14,7 @@ const {width} = Dimensions.get("window")
 
 export default function DetectionScreen() {
     const { picture } = useCameraStore();
+    
     function closeImage() {
         router.back()
     }
@@ -41,7 +42,7 @@ export default function DetectionScreen() {
                 <CloseButton icon="close" onPress={closeImage}/>   
             </View>
             <View style={styles.detect}>
-                <TouchableOpacity style={styles.pressable} onPress={() => {router.navigate('/DataEntryScreen')}}>
+                <TouchableOpacity style={styles.pressable} onPress={() => {router.navigate('/MapScreen')}}>
                     <Text style={styles.text}>Detectar</Text>
                     <Ionicons name="arrow-forward" size={24} color="white" />
                 </TouchableOpacity>

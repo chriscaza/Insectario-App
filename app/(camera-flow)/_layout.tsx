@@ -8,6 +8,7 @@ export default function CameraFlowLayout() {
             <Stack.Screen name="DataEntryScreen" />
             <Stack.Screen name="DetectionScreen" />
             <Stack.Screen name="GalleryScreen" />
+            <Stack.Screen name="MapScreen" options={{ headerShown: true}}/>
         </Stack>
     )
 }
