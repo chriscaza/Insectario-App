@@ -5,9 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Ionicons } from '@expo/vector-icons';
-import CloseButton from "@/components/icons/CloseButton";
-import apptheme from "@/themes/apptheme";
-import { useCameraStore } from "@/global/cameraStore";
+import CloseButton from "../../components/icons/CloseButton";
+import apptheme from "../../themes/apptheme";
+import { useCameraStore } from "../../global/cameraStore";
 import { router } from "expo-router";
 
 const {width} = Dimensions.get("window")

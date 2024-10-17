@@ -12,8 +12,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import CustomAlert from "@/components/Alerts/CustomAlert";
-import User from '@/scripts/models/user/User'
+import CustomAlert from '../../components/Alerts/CustomAlert'
+import User from '../../scripts/models/user/User'
 import Loading from '../../components/LoadingScreen';
 
 
@@ -26,7 +26,6 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-  const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
@@ -35,12 +34,9 @@ export default function LoginScreen() {
     setIsLoading(false)
     if (!result.success) {
       setAlertMessage(result.message);
-      setIsSuccess(false)
       setShowAlert(true);
     } else {
-      setAlertMessage(result.message)
-      setShowAlert(true);
-      setIsSuccess(true)
+      router.replace('/(camera-flow)/CameraScreen')
     }
 
     clearFields()
@@ -48,11 +44,6 @@ export default function LoginScreen() {
 
   const handleAlertClose = () => {
     setShowAlert(false)
-    if (isSuccess) {
-      InteractionManager.runAfterInteractions(() => {
-        router.replace('/(camera-flow)/CameraScreen')
-      })
-    }
   }
 
   function clearFields() {
@@ -77,8 +68,8 @@ export default function LoginScreen() {
             <Text style={styles.label}>Correo</Text>
             <TextInput
               style={styles.input}
-              placeholder="hola@gmail.com"
-              placeholderTextColor="rgba(255, 255, 255, 1)"
+              placeholder="Ingresa tu correo"
+              placeholderTextColor="rgba(255, 255, 255, 0.9)"
               value={email}
               onChangeText={setEmail}
             />
@@ -88,8 +79,8 @@ export default function LoginScreen() {
             <Text style={styles.label}>Contraseña</Text>
             <TextInput
               style={styles.input}
-              placeholder="**************"
-              placeholderTextColor="rgba(255, 255, 255, 1)"
+              placeholder="Ingresa tu contraseña"
+              placeholderTextColor="rgba(255, 255, 255, 0.9)"
               value={password}
               secureTextEntry={!showPassword}
               onChangeText={setPassword}

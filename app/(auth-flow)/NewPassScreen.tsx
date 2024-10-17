@@ -12,9 +12,9 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
-import User from "@/scripts/models/user/User";
-import CustomAlert from "@/components/Alerts/CustomAlert";
-import Loading from "@/components/LoadingScreen";
+import User from '../../scripts/models/user/User';
+import CustomAlert from "../../components/Alerts/CustomAlert";
+import Loading from "../../components/LoadingScreen";
 
 export default function NewPass() {
 

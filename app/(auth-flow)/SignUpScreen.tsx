@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
     TextInput,
@@ -8,60 +8,69 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Keyboard,
-    Alert,
-    InteractionManager
+    Platform,
+    Modal,
+    useColorScheme
 } from "react-native";
-import CustomAlert from "@/components/Alerts/CustomAlert";
+import CustomAlert from "../../components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import User from '@/scripts/models/user/User'
+import User from '@/scripts/models/user/User';
 import Loading from "@/components/LoadingScreen";
+import DateTimePicker from '@react-native-community/datetimepicker';  // Importamos el DateTimePicker
 
 export default function SignUpScreen() {
-
-    const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [mail, setMail] = useState("");
+    const [password, setPassword] = useState("");
     const [birthDate, setBirthDate] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [showAlert, setShowAlert] = useState(false)
-    const [alertMessage, setAlertMessage] = useState('')
-    const [isSuccess, setIsSuccess] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [showDatePicker, setShowDatePicker] = useState(false);  // Para controlar el DateTimePicker
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const colorScheme = useColorScheme();
 
     const handleRegister = async () => {
-
-        setIsLoading(true)
-        const result = await User.register(username, mail, password, birthDate)
-        setIsLoading(false)
+        setIsLoading(true);
+        const result = await User.register(username, mail, password, birthDate);
+        setIsLoading(false);
         if (!result.success) {
-            setAlertMessage(result.message)
-            setIsSuccess(false)
-            setShowAlert(true)
+            setAlertMessage(result.message);
+            setIsSuccess(false);
+            setShowAlert(true);
         } else {
-            setAlertMessage(result.message)
-            setIsSuccess(true)
-            setShowAlert(true)
+            setAlertMessage(result.message);
+            setIsSuccess(true);
+            setShowAlert(true);
         }
 
-        clearFields()
-    }
+    };
 
     const handleAlertClose = () => {
-        setShowAlert(false)
+        setShowAlert(false);
         if (isSuccess) {
-            InteractionManager.runAfterInteractions(() => {
-                router.back()
-            })
+            router.back();
         }
     };
 
     const clearFields = () => {
-        setUsername('')
-        setPassword('')
-        setMail('')
-        setBirthDate('')
-    }
+        setUsername('');
+        setPassword('');
+        setMail('');
+        setBirthDate('');
+    };
+
+    const handleConfirmDate = (event: any, selectedDate: Date | undefined) => {
+        if (selectedDate) {
+            setSelectedDate(selectedDate);
+            setBirthDate(selectedDate.toLocaleDateString('es-ES'));
+        }
+    };
 
     return (
         isLoading ? (
@@ -81,13 +90,13 @@ export default function SignUpScreen() {
                     <Text style={styles.text}>Crear cuenta</Text>
 
                     <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Nombre de usuario</Text>
+                        <Text style={styles.label}>Usuario</Text>
                         <TextInput
                             style={styles.input}
                             value={username}
                             onChangeText={setUsername}
-                            placeholder="chris.caza25"
-                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                            placeholder="Nombre de usuario"
+                            placeholderTextColor="rgba(255, 255, 255, 0.9)"
                         />
                     </View>
 
@@ -97,8 +106,8 @@ export default function SignUpScreen() {
                             style={styles.input}
                             value={mail}
                             onChangeText={setMail}
-                            placeholder="hola@gmail.com"
-                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                            placeholder="Correo"
+                            placeholderTextColor="rgba(255, 255, 255, 0.9)"
                         />
                     </View>
 
@@ -106,10 +115,10 @@ export default function SignUpScreen() {
                         <Text style={styles.label}>Contraseña</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder="**************"
+                            placeholder="Crea una contraseña"
                             value={password}
                             onChangeText={setPassword}
-                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                            placeholderTextColor="rgba(255, 255, 255, 0.9)"
                             secureTextEntry={!showPassword}
                         />
                         <TouchableOpacity
@@ -130,10 +139,11 @@ export default function SignUpScreen() {
                             style={styles.input}
                             placeholder="dd/mm/aaaa"
                             value={birthDate}
-                            onChangeText={setBirthDate}
-                            placeholderTextColor="rgba(255, 255, 255, 1)"
+                            placeholderTextColor="rgba(255, 255, 255, 0.9)"
+                            editable={false}
                         />
                         <TouchableOpacity
+                            onPress={() => setShowDatePicker(!showDatePicker)}
                             style={styles.eyeButton}
                         >
                             <Ionicons
@@ -143,6 +153,36 @@ export default function SignUpScreen() {
                             />
                         </TouchableOpacity>
                     </View>
+
+                    {/* Modal que contendrá el DateTimePicker */}
+                    {showDatePicker && (
+                        <Modal
+                            transparent={true}
+                            animationType="fade"
+                            visible={showDatePicker}
+                            onRequestClose={() => setShowDatePicker(false)}
+                        >
+                            <View style={styles.modalOverlay}>
+                                <View style={[
+                                    styles.datePickerContainer, 
+                                    { backgroundColor: colorScheme === 'dark' ? '#333' : 'white' }
+                                ]}>
+                                    <DateTimePicker
+                                        value={selectedDate}
+                                        mode="date"
+                                        display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                                        onChange={handleConfirmDate}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => setShowDatePicker(false)}
+                                        style={styles.closeButton}
+                                    >
+                                        <Text style={styles.closeButtonText}>Listo</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+                    )}
 
                     <TouchableOpacity
                         style={styles.continueButton}
@@ -213,7 +253,7 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 16,
-        color: '#fff',
+        color: 'white',
     },
     eyeButton: {
         position: "absolute",
@@ -267,5 +307,32 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 14,
         alignSelf: "center",
-    }
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
+    datePickerContainer: {
+        borderRadius: 20,
+        padding: 20,
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    closeButton: {
+        padding: 10,
+    },
+    closeButtonText: {
+        color: '#3478F6',
+        fontSize: 16,
+        fontWeight: '500'
+    },
 })

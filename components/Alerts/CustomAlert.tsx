@@ -29,8 +29,9 @@ export default function customAlert({ visible, message, onClose }: customAlertPr
                 <View style={styles.modalContainer}>
                     <View style={styles.modalButtonTextContainer}>
                         <Text style={styles.modalMessage}>{message}</Text>
+                        <View style={styles.separator} />
                         <Pressable style={styles.modalButton} onPress={onClose}>
-                            <Text style={styles.modalButtonText}>OK</Text>
+                            <Text style={styles.modalButtonText}>Listo</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -48,10 +49,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.8)'
     },
     modalContainer: {
-        width: width*0.75,
-        height: width*0.38,
-        backgroundColor: '#F5F5F5',
-        borderRadius: 10,
+        width: width*0.65,
+        height: width*0.30,
+        backgroundColor: '#333',
+        borderRadius: 20,
         alignItems: 'center',
         overflow: 'hidden'
     },
@@ -59,22 +60,25 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'space-evenly'
     },
     modalMessage: {
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'medium',
+        color: 'white',
+        marginVertical: 10
     },
     modalButton: {
-        alignItems: 'center',
-        width: '45%',
-        paddingVertical: 10,
-        borderRadius: 10,
-        backgroundColor: '#314F33'
+        alignItems: 'center'
     },
     modalButtonText: {
-        color: '#FFF',
-        fontSize: 16,
+        color: '#3478F6',
+        fontSize: 16
+    },
+    separator: {
+        width: '100%',
+        height: 0.5,
+        backgroundColor: 'rgba(179, 179, 179, 0.5)'
     }
 })

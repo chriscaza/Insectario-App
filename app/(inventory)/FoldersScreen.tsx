@@ -16,11 +16,11 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { arachnidaOrders, insectaOrders } from "@/global/classes";
-import apptheme from "@/themes/apptheme";
+import { arachnidaOrders, insectaOrders } from "../../global/classes";
+import apptheme from "../../themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import LogOutAlert from "@/components/Alerts/LogOutAlert";
+import LogOutAlert from "../../components/Alerts/LogOutAlert";
 import { router } from "expo-router";
 
 
