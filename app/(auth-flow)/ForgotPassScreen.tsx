@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import CloseButton from "@/components/icons/CloseButton";
+import CloseButton from '../../components/icons/CloseButton'
 import { router } from "expo-router";
-import { seekUser } from "@/scripts/findPassword";
-import CustomAlert from "@/components/Alerts/CustomAlert";
-import Loading from "@/components/LoadingScreen";
+import { seekUser } from "../../scripts/findPassword";
+import CustomAlert from "../../components/Alerts/CustomAlert";
+import Loading from "../../components/LoadingScreen";
 
 export default function ForgotPassScreen() {
 

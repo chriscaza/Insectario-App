@@ -12,8 +12,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import CustomAlert from "@/components/Alerts/CustomAlert";
-import User from '@/scripts/models/user/User'
+import CustomAlert from '../../components/Alerts/CustomAlert'
+import User from '../../scripts/models/user/User'
 import Loading from '../../components/LoadingScreen';
 
 

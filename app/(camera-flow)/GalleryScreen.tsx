@@ -10,10 +10,10 @@ Dimensions,
 Pressable} from "react-native";
 import { Asset, getAlbumsAsync, getAssetsAsync } from "expo-media-library";
 import { Image } from "expo-image";
-import apptheme from "@/themes/apptheme";
+import apptheme from "../../themes/apptheme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import { useCameraStore } from "@/global/cameraStore";
+import { useCameraStore } from "../../global/cameraStore";
 import { Ionicons } from "@expo/vector-icons";
 
 interface MemoizedImageProps {

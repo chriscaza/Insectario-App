@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { StyleSheet, Text, View, Dimensions, Alert, InteractionManager } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useFonts } from 'expo-font';
+import { Router } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -17,8 +17,6 @@ import Logo from '../components/icons/AppIcon';
 import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as tf from '@tensorflow/tfjs'
-import '@tensorflow/tfjs-react-native'
-
 
 export default function StartScreen() {
 
@@ -33,6 +31,23 @@ export default function StartScreen() {
   }
 
   const router = useRouter();
+
+  async function loadModel() {
+    await tf.ready()
+    try {
+      const modelJSON = require('../assets/models/model.json')
+      const loadedModel = await tf.loadLayersModel(modelJSON)
+      console.log('Modelo cargado')
+    } catch(e) {
+      console.log(e)
+    }
+    // console.log('Modelo cargado', model)
+  }
+
+  useEffect(() => {
+    loadModel()
+  }, [])
+  
 
   async function handleContinue() {
     const allPermissions = await requestAllPermissions();

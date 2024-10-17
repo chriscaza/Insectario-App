@@ -1,4 +1,4 @@
-import apptheme from "@/themes/apptheme";
+import apptheme from "../themes/apptheme";
 import React, { useEffect } from "react";
 import {
     Dimensions,

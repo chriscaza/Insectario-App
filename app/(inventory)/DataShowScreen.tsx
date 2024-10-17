@@ -6,10 +6,10 @@ import { Image } from "expo-image";
 import { Asset } from "expo-asset";
 
 import { Ionicons } from '@expo/vector-icons';
-import { useCameraStore } from "@/global/cameraStore";
-import { Classes } from "@/global/classes";
-import apptheme from "@/themes/apptheme";
-import BottomSheet from "@/components/DataShowList";
+import { useCameraStore } from "../../global/cameraStore";
+import { Classes } from "../../global/classes";
+import apptheme from "../../themes/apptheme";
+import BottomSheet from "../../components/DataShowList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 

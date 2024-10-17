@@ -5,10 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { Asset } from "expo-asset";
 
-import { useCameraStore } from "@/global/cameraStore";
-import { Classes } from "@/global/classes";
-import apptheme from "@/themes/apptheme";
-import BottomSheet from "@/components/DataEntryList";
+import { useCameraStore } from "../../global/cameraStore";
+import { Classes } from "../../global/classes";
+import apptheme from "../../themes/apptheme";
+import BottomSheet from "../../components/DataEntryList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
     const { width, height } = Dimensions.get('window')

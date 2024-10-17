@@ -1,4 +1,4 @@
-import apptheme from "@/themes/apptheme";
+import apptheme from "../themes/apptheme";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Text, StyleSheet } from "react-native";
