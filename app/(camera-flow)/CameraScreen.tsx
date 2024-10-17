@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import apptheme from '../../themes/apptheme'
 import { CameraView, FlashMode, CameraType } from 'expo-camera'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Dimensions, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome6 } from '@expo/vector-icons'
@@ -19,6 +19,7 @@ export default function CameraScreen() {
   const [flash, setFlash] = useState<FlashMode>('off')
   const [cameraReady, setCameraReady] = useState<boolean>(false)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [welcomeVisible, setWelcomeVisible] = useState<boolean>(true);
   const cameraRef = useRef<CameraView>(null)
 
   const { setPicture } = useCameraStore();
@@ -26,6 +27,14 @@ export default function CameraScreen() {
   const onCameraReady = async () => {
     setCameraReady(true)
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWelcomeVisible(false);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -62,6 +71,12 @@ export default function CameraScreen() {
     >
       <SafeAreaView>
         <View style={[style.mainContainer, { top: 20 }]}>
+          {welcomeVisible && (
+            <View style={style.welcomeModal}>
+              <Text style={style.welcomeText}>Bienvenidx Christian...</Text>
+            </View>
+          )}
+
           <View style={[style.cameraContainer]}>
             <CameraView
               style={{
@@ -196,5 +211,20 @@ const style = StyleSheet.create({
   text: {
     color: apptheme.white,
     fontSize: 20
-  }
+  },
+  welcomeModal: {
+    position: 'absolute',
+    top: 45,
+    left: '25%',
+    right: '25%',
+    backgroundColor: '#333',
+    borderRadius: 20,
+    padding: 10,
+    alignItems: 'center',
+    zIndex: 100,
+  },
+  welcomeText: {
+    color: apptheme.white,
+    fontSize: 16,
+  },
 })

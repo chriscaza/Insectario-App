@@ -26,7 +26,6 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-  const [isSuccess, setIsSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
@@ -35,12 +34,9 @@ export default function LoginScreen() {
     setIsLoading(false)
     if (!result.success) {
       setAlertMessage(result.message);
-      setIsSuccess(false)
       setShowAlert(true);
     } else {
-      setAlertMessage(result.message)
-      setShowAlert(true);
-      setIsSuccess(true)
+      router.replace('/(camera-flow)/CameraScreen')
     }
 
     clearFields()
@@ -48,11 +44,6 @@ export default function LoginScreen() {
 
   const handleAlertClose = () => {
     setShowAlert(false)
-    if (isSuccess) {
-      InteractionManager.runAfterInteractions(() => {
-        router.replace('/(camera-flow)/CameraScreen')
-      })
-    }
   }
 
   function clearFields() {
