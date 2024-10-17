@@ -9,17 +9,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { usePermissions } from 'expo-media-library' 
 import { useCameraPermissions } from 'expo-camera';
-import { useTensorflowModel } from 'react-native-fast-tflite'
-
-// '@/assets/models/model.tflite'
 
 const { height } = Dimensions.get('window');
 
-import apptheme from '@/themes/apptheme';
+import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
 import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import * as tf from '@tensorflow/tfjs'
 
 export default function StartScreen() {
 
@@ -36,6 +33,23 @@ export default function StartScreen() {
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
   const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
+
+  async function loadModel() {
+    await tf.ready()
+    try {
+      const modelJSON = require('../assets/models/model.json')
+      const loadedModel = await tf.loadLayersModel(modelJSON)
+      console.log('Modelo cargado')
+    } catch(e) {
+      console.log(e)
+    }
+    // console.log('Modelo cargado', model)
+  }
+
+  useEffect(() => {
+    loadModel()
+  }, [])
+  
 
   async function handleContinue() {
     const allPermissions = await requestAllPermissions();

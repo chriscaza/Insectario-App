@@ -12,7 +12,7 @@ import {
     Modal,
     useColorScheme
 } from "react-native";
-import CustomAlert from "@/components/Alerts/CustomAlert";
+import CustomAlert from "../../components/Alerts/CustomAlert";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import User from '@/scripts/models/user/User';

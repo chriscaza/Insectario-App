@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import apptheme from '@/themes/apptheme'
+import apptheme from '../../themes/apptheme'
 import { CameraView, FlashMode, CameraType } from 'expo-camera'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
@@ -7,9 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { router } from 'expo-router'
-import { useCameraStore } from '@/global/cameraStore'
+import { useCameraStore } from '../../global/cameraStore'
 
-import Flash from '@/components/icons/Flash'
+import Flash from '../../components/icons/Flash'
 import Insecta from '../(inventory)/FoldersScreen'
 
 const { width } = Dimensions.get('window')
