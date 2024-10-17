@@ -23,7 +23,8 @@ export default function customAlert({ visible, message, onClose }: customAlertPr
             transparent={true}
             visible={visible}
             animationType="none"
-            onRequestClose={onClose}
+            // onRequestClose={onClose}
+            // onDismiss={onClose}
         >
         <View style={styles.modalBackground}>
                 <View style={styles.modalContainer}>

@@ -2,11 +2,7 @@ import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
 
-<<<<<<< HEAD
-const ip = 'http://192.168.137.31:3001'
-=======
 const ip = 'http://143.110.231.124:5000/'
->>>>>>> 0f26474e0566bfb1b4c0442147aff4d40c96a57f
 
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
@@ -18,11 +14,7 @@ export default class User {
         password = Password.encryptPassword(password)
 
         try {
-<<<<<<< HEAD
-            const response = await fetch(`${ip}/register`, {
-=======
             const response = await fetch(`${ip}register`, {
->>>>>>> 0f26474e0566bfb1b4c0442147aff4d40c96a57f
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,11 +48,7 @@ export default class User {
         password = Password.encryptPassword(password)
         
         try { 
-<<<<<<< HEAD
-            const response = await fetch(`${ip}/`, {
-=======
             const response = await fetch(ip, {
->>>>>>> 0f26474e0566bfb1b4c0442147aff4d40c96a57f
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,11 +84,7 @@ export default class User {
         newPassword = Password.encryptPassword(newPassword)
  
         try {
-<<<<<<< HEAD
-            const response = await fetch(`${ip}/password`, {
-=======
             const response = await fetch(`${ip}password`, {
->>>>>>> 0f26474e0566bfb1b4c0442147aff4d40c96a57f
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

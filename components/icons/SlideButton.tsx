@@ -3,7 +3,7 @@ import { StyleSheet, View, Platform, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome } from "@expo/vector-icons";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolation } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolation, runOnJS } from "react-native-reanimated";
 import apptheme from "@/themes/apptheme";
 
 interface SlidingButtonProps {
@@ -27,8 +27,8 @@ export default function SlidingButton({ onSwipeComplete }: SlidingButtonProps) {
                 translateY.value = withSpring(0);
             } else {
                 translateY.value = withSpring(-BUTTON_HEIGHT / 2, {}, (isFinished) => {
-                    if (isFinished) {
-                        onSwipeComplete();
+                    if(isFinished) {
+                        runOnJS(onSwipeComplete)()
                     }
                 });
             }

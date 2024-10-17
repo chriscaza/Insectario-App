@@ -52,17 +52,8 @@ export default function SignUpScreen() {
     };
 
     const handleAlertClose = () => {
+        if (isSuccess) router.back();
         setShowAlert(false);
-        if (isSuccess) {
-            router.back();
-        }
-    };
-
-    const clearFields = () => {
-        setUsername('');
-        setPassword('');
-        setMail('');
-        setBirthDate('');
     };
 
     const handleConfirmDate = (event: any, selectedDate: Date | undefined) => {
@@ -192,7 +183,7 @@ export default function SignUpScreen() {
                     </TouchableOpacity>
 
                     {showAlert && (
-                        <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose} />
+                        <CustomAlert visible={showAlert} message={alertMessage} onClose={() => setShowAlert(false)} />
                     )}
 
                     <View style={styles.orContainer}>

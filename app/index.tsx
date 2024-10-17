@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
-import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -13,42 +12,15 @@ const { height } = Dimensions.get('window');
 
 import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
-import Web from '../components/icons/web'
+import Web from '../components/icons/Web'
 import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import * as tf from '@tensorflow/tfjs'
 
 export default function StartScreen() {
-
-  /*const model = useTensorflowModel(require('@/assets/models/model.tflite'))
-  const actualModel = model.state === 'loaded' ? model.model : undefined
-  
-  useEffect(() => {
-    if (actualModel) return
-    console.log('Modelo cargado')
-  }, [actualModel])
-
-  console.log(`Model ${model.state}`)*/
 
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
   const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
-
-  /*async function loadModel() {
-    await tf.ready()
-    try {
-      const modelJSON = require('../assets/models/model.json')
-      const loadedModel = await tf.loadLayersModel(modelJSON)
-      console.log('Modelo cargado')
-    } catch(e) {
-      console.log(e)
-    }
-    // console.log('Modelo cargado', model)
-  }
-
-  useEffect(() => {
-    loadModel()
-  }, [])*/
   
 
   async function handleContinue() {
@@ -91,8 +63,7 @@ export default function StartScreen() {
             <Web style={styles.web}/>
             <Logo />
             <View style={styles.footer}>
-              {/*<SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
-              <Text onPress={handleContinue} style={styles.text}>Iniciar</Text>
+              <SlidingButton onSwipeComplete={handleSwipeComplete}/>
             </View>
           </View>
         </GestureHandlerRootView>
