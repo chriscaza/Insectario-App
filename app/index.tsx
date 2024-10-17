@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,9 +13,10 @@ const { height } = Dimensions.get('window');
 
 import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
+import Web from '../components/icons/web'
 import SlidingButton from '../components/icons/SlideButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as tf from '@tensorflow/tfjs'
+//import * as tf from '@tensorflow/tfjs'
 
 export default function StartScreen() {
 
@@ -34,7 +34,7 @@ export default function StartScreen() {
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
   const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
 
-  async function loadModel() {
+  /*async function loadModel() {
     await tf.ready()
     try {
       const modelJSON = require('../assets/models/model.json')
@@ -48,7 +48,7 @@ export default function StartScreen() {
 
   useEffect(() => {
     loadModel()
-  }, [])
+  }, [])*/
   
 
   async function handleContinue() {
@@ -84,26 +84,28 @@ export default function StartScreen() {
   };
 
   return (
-    <LinearGradient style={ StyleSheet.absoluteFillObject } colors={[apptheme.secondary, apptheme.black]}>
-      <SafeAreaView style={{flex: 1}}>
+    
+      <SafeAreaView style={styles.safeArea}>
         <GestureHandlerRootView>
           <View style={styles.container}>
+            <Web style={styles.web}/>
             <Logo />
-            <Text style={styles.text}>INSECTARIO</Text>
             <View style={styles.footer}>
-              {/* <SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
+              {/*<SlidingButton onSwipeComplete={handleSwipeComplete}/> */}
               <Text onPress={handleContinue} style={styles.text}>Iniciar</Text>
             </View>
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>
-    </LinearGradient>
+    
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
     width: '100%',
+    backgroundColor: apptheme.secondary,
+    flex: 1
   },
   container: {
     flex: 1,
@@ -122,4 +124,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: height * 0.1,
   },
+  web: {
+    position: 'absolute',
+    left: '-45%',
+    top: '-50%'
+  }
 });
