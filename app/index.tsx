@@ -23,7 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function StartScreen() {
 
-  const model = useTensorflowModel(require('@/assets/models/model.tflite'))
+  /*const model = useTensorflowModel(require('@/assets/models/model.tflite'))
   const actualModel = model.state === 'loaded' ? model.model : undefined
   
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function StartScreen() {
     console.log('Modelo cargado')
   }, [actualModel])
 
-  console.log(`Model ${model.state}`)
+  console.log(`Model ${model.state}`)*/
 
   const router = useRouter();
   const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();

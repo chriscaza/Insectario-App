@@ -8,12 +8,15 @@ import {
     Text,
     Pressable,
     InteractionManager,
+    Dimensions
 } from "react-native";
 
 interface LogOutAlertProps {
     visible: boolean,
     onClose: () => void,
 }
+
+const { width } = Dimensions.get('window')
 
 export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
 
@@ -34,13 +37,13 @@ export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
             <View style={styles.moadlContainer}>
                 <View style={styles.alertContainer}>
                     <View style={styles.messageContainer}>
-                        <Text style={styles.message}>¿Quieres cerrar sesión?</Text>
+                        <Text style={styles.message}>¿Salir de tu cuenta?</Text>
                     </View>
                     <Pressable onPress={onClose} style={styles.optionsContainer}>
                         <Text style={styles.options}>Cancelar</Text>
                     </Pressable>
                     <Pressable onPress={handleLogOut} style={styles.optionsContainer}>
-                        <Text style={[styles.options, {color: '#FF0000'}]}>Salir</Text>
+                        <Text style={[styles.options, {color: '#fff'}]}>Salir</Text>
                     </Pressable>
                 </View>
             </View>
@@ -53,36 +56,38 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.7)'
+        backgroundColor: 'rgba(0,0,0,0.8)'
     },
     alertContainer: {
-        width: 250,
-        height: 150,
+        width: width*0.65,
+        height: width*0.42,
         alignItems: 'center',
         borderRadius: 20,
-        backgroundColor: '#FFF'
+        backgroundColor: '#333'
     },
     messageContainer: {
         flex: 2,
         width: '100%',
         justifyContent: 'center',
+        marginVertical: 10
     },
     message: {
-        color: '#000',
+        color: '#fff',
         fontSize: 18,
         textAlign: 'center',
-        fontWeight: '600',
+        fontWeight: 'medium',
     },
     optionsContainer: {
         flex: 1,
-        borderTopColor: '#000',
-        borderTopWidth: 1,
+        borderTopColor: 'rgba(179, 179, 179, 0.5)',
+        borderTopWidth: 0.5,
         width: '100%',
         justifyContent: 'center',
+        paddingVertical: 10
     },
     options: {
         fontSize: 16,
         textAlign: 'center',
-        fontWeight: '600',
+        color: '#3478F6'
     }
 })

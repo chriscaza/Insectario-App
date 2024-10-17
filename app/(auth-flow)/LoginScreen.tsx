@@ -77,8 +77,8 @@ export default function LoginScreen() {
             <Text style={styles.label}>Correo</Text>
             <TextInput
               style={styles.input}
-              placeholder="hola@gmail.com"
-              placeholderTextColor="rgba(255, 255, 255, 1)"
+              placeholder="Ingresa tu correo"
+              placeholderTextColor="rgba(255, 255, 255, 0.9)"
               value={email}
               onChangeText={setEmail}
             />
@@ -88,8 +88,8 @@ export default function LoginScreen() {
             <Text style={styles.label}>Contraseña</Text>
             <TextInput
               style={styles.input}
-              placeholder="**************"
-              placeholderTextColor="rgba(255, 255, 255, 1)"
+              placeholder="Ingresa tu contraseña"
+              placeholderTextColor="rgba(255, 255, 255, 0.9)"
               value={password}
               secureTextEntry={!showPassword}
               onChangeText={setPassword}
