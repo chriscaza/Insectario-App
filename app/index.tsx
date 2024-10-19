@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { StyleSheet, Text, View, Dimensions, Alert } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Alert, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { usePermissions } from 'expo-media-library' 
-import { useCameraPermissions } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
+import * as Location from 'expo-location'
+import { Camera } from 'expo-camera';
 
 const { height } = Dimensions.get('window');
 
@@ -14,46 +15,46 @@ import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
 import Web from '../components/icons/Web'
 import SlidingButton from '../components/icons/SlideButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomAlert from '@/components/Alerts/CustomAlert';
+
+
+const router = useRouter()
 
 export default function StartScreen() {
 
-  const router = useRouter();
-  const [ cameraPermissions, requestCameraPermission ] = useCameraPermissions();
-  const [ mediaLibraryPermissions, requestMediaLibraryPermission ] = usePermissions();
-  
+  const [permissionsGranted, setPermissionsGranted] = useState(false);
 
-  async function handleContinue() {
-    const allPermissions = await requestAllPermissions();
-    if(allPermissions) {
-      handleSwipeComplete()
-    } else {
-      Alert.alert("Para continuar es necesario dar permisos a la aplicación desde ajustes")
+  const requestPermissions = async () => {
+    const [cameraStatus, locationStatus, mediaLibraryStatus] = await Promise.all([
+      Camera.requestCameraPermissionsAsync(),
+      Location.requestForegroundPermissionsAsync(),
+      MediaLibrary.requestPermissionsAsync(),
+    ]);
+
+    if (
+      cameraStatus.status === 'granted' &&
+      locationStatus.status === 'granted' &&
+      mediaLibraryStatus.status === 'granted'
+    ) {
+      return true
     }
-  }
+  };
 
-  async function requestAllPermissions() {
-    
-    const cameraStatus = await requestCameraPermission();
-    if(!cameraStatus.granted) {
-      Alert.alert("Error", 'Se necesita acceso a la cámara');
-      return false;
-    }
-
-    const mediaLibraryStatus = await requestMediaLibraryPermission();
-    if(!mediaLibraryStatus.granted) {
-      Alert.alert("Error", 'Se necesita acceso al contenido multimedia');
-      return false;
-    }
-
-    await AsyncStorage.setItem('hasOpened', 'true');
-    return true;
-  }
-
+  useEffect(() => {
+    requestPermissions();
+  }, []);
 
   const handleSwipeComplete = () => {
     router.replace('/LoginScreen')
   };
+
+  // if (!permissionsGranted) {
+  //   return (
+  //     <View>
+  //       <Text>"Por favor es necesario dar permisos"</Text>
+  //     </View>
+  //   )
+  // }
 
   return (
     
