@@ -19,7 +19,14 @@ const { width, height } = Dimensions.get('screen');
 const MAX_TRANSLATE_Y = -height*0.92
 const MIN_TRANSLATE_Y = -height*0.12
 
-export default function BottomSheet() {
+interface BottomSheetProps {
+    className: string,
+    orderName: string,
+    latitude: number,
+    longitude: number,
+}
+
+export default function BottomSheet({ className, orderName, latitude, longitude }: BottomSheetProps) {
     const translateY = useSharedValue<number>(0)
     const context = useSharedValue({y: 0})
 
@@ -47,16 +54,34 @@ export default function BottomSheet() {
         translateY.value = withSpring(MIN_TRANSLATE_Y)
     }, [])
 
+    function getCurrentDateAndTime(): [ formattedDate: string, formattedTime: string ] {
+        const now = new Date();
+    
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const formattedDate = `${day}/${month}/${year}`;
+    
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+    
+        return [ formattedDate, formattedTime ];
+    }
+
+    const [ date, hour ] = getCurrentDateAndTime()
+
     const formFields = [
-        { label: 'Clase', placeholder: 'Arachnida' },
-        { label: 'Orden', placeholder: 'Pseudoscorpiones' },
-        { label: 'Nombre', placeholder: 'Escorpión chico' },
-        { label: 'Coordenadas', placeholder: '20.698808997601578, -103.33158123132' },
-        { label: 'Hábitat', placeholder: 'Desierto' },
-        { label: 'Fecha', placeholder: 'dd/mm/aaaa' },
-        { label: 'Hora', placeholder: '12:30:00' },
-        { label: 'Detalles', placeholder: 'Especie pequeña' },
-        { label: 'Observaciones', placeholder: 'Debajo de una piedra' }
+        { label: 'Clase', placeholder: className },
+        { label: 'Orden', placeholder: orderName },
+        { label: 'Nombre', placeholder: 'Nombre común' },
+        { label: 'Coordenadas', placeholder: `${latitude}, ${longitude}` },
+        { label: 'Hábitat', placeholder: 'Ingresa el hábitat' },
+        { label: 'Fecha', placeholder: date },
+        { label: 'Hora', placeholder: hour },
+        { label: 'Detalles', placeholder: 'Ingresa los detalles' },
+        { label: 'Observaciones', placeholder: 'Ingresa las observaciones' }
     ];
 
     return (

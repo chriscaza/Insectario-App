@@ -11,6 +11,7 @@ import apptheme from "../../themes/apptheme";
 import BottomSheet from "../../components/DataEntryList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import LoadingScreen from "../../components/LoadingScreen";
+import * as Location from 'expo-location';
 
     const { width, height } = Dimensions.get('window')
 
@@ -23,6 +24,8 @@ export default function Detection() {
     const [isLoading, setIsLoading] = useState(true);
     const [clase, setClase] = useState('');
     const [order, setOrder] = useState('');
+    const [latitude, setLatitude] = useState<number>(0);
+    const [longitude, setLongitude] = useState<number>(0);
 
     useEffect(() => {
         const [randomClass, randomOrder] = getRandomClassAndOrder();
@@ -47,6 +50,11 @@ export default function Detection() {
             }, 900);
     
             return () => clearTimeout(timer);
+            (async() => {
+                let location = await Location.getCurrentPositionAsync({})
+                setLatitude(location.coords.latitude)
+                setLongitude(location.coords.longitude);
+            })
         }, []);
     
         if(isLoading) return  <LoadingScreen />
@@ -68,7 +76,7 @@ export default function Detection() {
                     </View>
                 </View>
                 <View style={styles.dummyView} />
-                <BottomSheet />
+                <BottomSheet className={clase} orderName={order}/>
             </LinearGradient>
         </GestureHandlerRootView>
     );
