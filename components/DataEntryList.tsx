@@ -22,8 +22,8 @@ const MIN_TRANSLATE_Y = -height*0.12
 interface BottomSheetProps {
     className: string,
     orderName: string,
-    latitude: number,
-    longitude: number,
+    latitude: string,
+    longitude: string,
 }
 
 export default function BottomSheet({ className, orderName, latitude, longitude }: BottomSheetProps) {

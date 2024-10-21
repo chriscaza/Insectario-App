@@ -21,11 +21,11 @@ export default function Detection() {
     const isSmallScreen = width > 400;
 
     const [classification, setClassification] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [clase, setClase] = useState('');
     const [order, setOrder] = useState('');
-    const [latitude, setLatitude] = useState<number>(0);
-    const [longitude, setLongitude] = useState<number>(0);
+    const [latitude, setLatitude] = useState<string>('');
+    const [longitude, setLongitude] = useState<string>('');
 
     useEffect(() => {
         const [randomClass, randomOrder] = getRandomClassAndOrder();
@@ -42,22 +42,17 @@ export default function Detection() {
 
         return [randomClass, randomOrder]
     }
-
-        //Simular la carga
         useEffect(() => {
-            const timer = setTimeout(() => {
-                setIsLoading(false);
-            }, 900);
-    
-            return () => clearTimeout(timer);
             (async() => {
-                let location = await Location.getCurrentPositionAsync({})
-                setLatitude(location.coords.latitude)
-                setLongitude(location.coords.longitude);
-            })
+                setIsLoading(true)
+                let currentLocation = await Location.getCurrentPositionAsync({});
+                setIsLoading(false)
+                setLatitude(currentLocation.coords.latitude.toFixed(6))
+                setLongitude(currentLocation.coords.longitude.toFixed(6))
+            })();
         }, []);
     
-        if(isLoading) return  <LoadingScreen />
+    if(isLoading) return  <LoadingScreen />
     
     return(
         <GestureHandlerRootView>
@@ -103,7 +98,6 @@ const styles = StyleSheet.create({
         height: 'auto',
         marginTop: 20,
         paddingHorizontal: 20,
-        // backgroundColor: apptheme.text
     },
     classText: {
         color: apptheme.white,
