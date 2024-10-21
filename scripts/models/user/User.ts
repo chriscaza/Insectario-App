@@ -60,6 +60,7 @@ export default class User {
                 }
             })
             if (response.status === 200) {
+                console.log(response.data.user)
                 return { message: response.data.msg, success: true }
             } else {
                 return { message: response.data.msg, success: false }

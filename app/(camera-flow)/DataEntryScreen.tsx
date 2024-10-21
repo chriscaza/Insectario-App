@@ -13,14 +13,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import LoadingScreen from "../../components/LoadingScreen";
 import * as Location from 'expo-location';
 
-    const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 export default function Detection() {
 
     const { picture } = useCameraStore();
     const isSmallScreen = width > 400;
 
-    const [classification, setClassification] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [clase, setClase] = useState('');
     const [order, setOrder] = useState('');
