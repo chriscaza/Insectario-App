@@ -16,13 +16,13 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { arachnidaOrders, insectaOrders } from "../../global/classes";
+import { Classes} from "../../global/classes";
 import apptheme from "../../themes/apptheme";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import LogOutAlert from "../../components/Alerts/LogOutAlert";
 import { router } from "expo-router";
-
+import MapScreen from "./MapScreen";
 
 interface InsectaProps {
     visible: boolean,
@@ -72,8 +72,11 @@ const renderItem = ({ item }: { item: string }) => (
 
 export default function Insecta({ visible, onClose }: InsectaProps) {
 
-    const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const [insecta, setInsecta] = useState<boolean>(true)
+    const [ modalLogOutVisible, setModalLogOutVisible ] = useState<boolean>(false)
+    const [ modalClassSelectorVisible, setModalClassSelectorVisible ] = useState<boolean>(false)
+    const [ mapVisible, setMapVisible ] = useState<boolean>(false)
+    const [ insectaVisible, setInsectaVisible ] = useState<boolean>(true)
+
     const translateX = useSharedValue(visible ? 0 : width)
     
     const animatedStyle = useAnimatedStyle(() => {
@@ -86,9 +89,9 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
         translateX.value = withSpring(visible ? 0 : width, {damping: 20})
     }, [visible])
 
-    const changeClass = (classType: boolean) => {
-        if (classType !== insecta) {
-            setInsecta(classType);
+    const changeMode = (classType: boolean) => {
+        if (classType !== mapVisible) {
+            setMapVisible(classType);
         }
     }
 
@@ -105,28 +108,40 @@ export default function Insecta({ visible, onClose }: InsectaProps) {
                         <TouchableOpacity style={styles.icons} onPress={onClose}>
                             <Ionicons name="camera-outline" size={28} color='white' />
                         </TouchableOpacity>
-                        <View style={styles.classes}>
-                            <Pressable onPress={() => changeClass(true)}>
-                                <Text style={[styles.title, insecta ? styles.bold : {}]}>INSECTA</Text>
+                        <View style={styles.topColumns}>
+                            <Pressable onPress={() => changeMode(false)}>
+                                <Text style={[styles.title, !mapVisible ? styles.bold : {}]}>CARPETAS</Text>
                             </Pressable>
-                            <Pressable onPress={() => changeClass(false)}>
-                                <Text style={[styles.title, !insecta ? styles.bold : {}]}>ARACHNIDA</Text>
+                            <Pressable onPress={() => changeMode(true)}>
+                                <Text style={[styles.title, mapVisible ? styles.bold : {}]}>MAPA</Text>
                             </Pressable>
                         </View>
-                        <TouchableOpacity style={styles.icons} onPress={() => {setModalVisible(true)}}>
+                        <TouchableOpacity style={styles.icons} onPress={() => {setModalLogOutVisible(true)}}>
                             <MaterialIcons name="exit-to-app" size={28} color="white" />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.folderContainer}>
-                        <FlatList 
-                            data={insecta ? insectaOrders : arachnidaOrders}
-                            renderItem={renderItem}
-                            numColumns={3}
-                            showsVerticalScrollIndicator={false}
-                            contentContainerStyle={styles.flatList}
-                        />
+                    <View style={styles.classSelectorContainer}>
+                        <Pressable style={styles.classSelectorTextContainer}>
+                            <Text style={styles.classSelectorText}>{mapVisible ? 'Seleccionar' : 'Insecta'}</Text>
+                            <Ionicons name="chevron-down-outline" size={24} color="white" />
+                        </Pressable>
                     </View>
-                    {visible && <LogOutAlert visible={modalVisible} onClose={()=> setModalVisible(false)} />}
+                    <View style={styles.bodyContainer}>
+                        {
+                            mapVisible
+                            ?
+                            <MapScreen />
+                            :
+                            <FlatList 
+                                data={insectaVisible ? Classes['Insecta'] : Classes['Arachnida']}
+                                renderItem={renderItem}
+                                numColumns={3}
+                                showsVerticalScrollIndicator={false}
+                                contentContainerStyle={styles.flatList}
+                            />
+                        }
+                    </View>
+                    {visible && <LogOutAlert visible={modalLogOutVisible} onClose={()=> setModalLogOutVisible(false)} />}
                 </SafeAreaView>
             </LinearGradient>
         </Animated.View>
@@ -143,13 +158,11 @@ const styles = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
         paddingHorizontal: 20,
         paddingTop: 30,
-        height: 'auto',
     },
-    classes: {
-        flex: 3,
+    topColumns: {
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
     },
@@ -161,9 +174,22 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         backgroundColor: 'rgba(0,0,0,0.4)'
     },
-    folderContainer: {
+    classSelectorContainer: {
+        padding: 20,
+    },
+    classSelectorTextContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6
+    },
+    classSelectorText: {
+        color: apptheme.white,
+        fontSize: 20,
+        fontWeight: 400,
+        lineHeight: 20,
+    },
+    bodyContainer: {
         flex: 1,
-        paddingTop: 30,
         marginBottom: 25,
     },
     flatList: {
