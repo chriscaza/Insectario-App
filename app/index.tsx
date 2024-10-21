@@ -15,7 +15,7 @@ import apptheme from '../themes/apptheme';
 import Logo from '../components/icons/AppIcon';
 import Web from '../components/icons/Web'
 import SlidingButton from '../components/icons/SlideButton';
-import CustomAlert from '@/components/Alerts/CustomAlert';
+import { UserProvider } from '@/global/user/UserContent';
 
 
 const router = useRouter()
@@ -57,7 +57,7 @@ export default function StartScreen() {
   // }
 
   return (
-    
+    <UserProvider>
       <SafeAreaView style={styles.safeArea}>
         <GestureHandlerRootView>
           <View style={styles.container}>
@@ -69,6 +69,7 @@ export default function StartScreen() {
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>
+    </UserProvider>
     
   );
 }

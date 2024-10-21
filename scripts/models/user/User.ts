@@ -1,10 +1,14 @@
 import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
+import { UserContext } from "../../../global/user/UserContent"
 import axios from 'axios'
+import { useContext } from "react"
 
 // const ip = 'http://143.110.231.124:5000/'
 const ip = 'http://192.168.0.129:5000/'
+
+const userContext = useContext(UserContext)
 
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
@@ -40,8 +44,7 @@ export default class User {
         }        
     }
 
-    static async login(email: string, password: string) {
-        
+    static async login(email: string, password: string, setUser: (user: any) => void) {
         const validation = UserValidator.validateLogin(email, password)
         if(!validation.success) return validation
 
@@ -60,7 +63,13 @@ export default class User {
                 }
             })
             if (response.status === 200) {
-                console.log(response.data.user)
+                setUser({
+                    id: response.data.user.id,
+                    username: response.data.user.username,
+                    email: response.data.user.email,
+                    bDay: response.data.user.bDay
+                })
+                console.log(response.data.user.id, response.data.user.username, response.data.user.email)
                 return { message: response.data.msg, success: true }
             } else {
                 return { message: response.data.msg, success: false }

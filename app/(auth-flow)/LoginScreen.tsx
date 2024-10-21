@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  InteractionManager,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,11 +14,11 @@ import { useRouter } from "expo-router";
 import CustomAlert from '../../components/Alerts/CustomAlert'
 import User from '../../scripts/models/user/User'
 import Loading from '../../components/LoadingScreen';
-
-
+import { UserContext } from "@/global/user/UserContent";
 
 export default function LoginScreen() {
   const router = useRouter();
+  const userContext = useContext(UserContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,15 +29,17 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     setIsLoading(true)
-    const result = await User.login(email, password);
-    setIsLoading(false)
-    if (!result.success) {
-      setAlertMessage(result.message);
-      setShowAlert(true);
-    } else {
-      router.replace('/(camera-flow)/CameraScreen')
+    if(userContext) {
+      const result = await User.login(email, password, userContext.setUser);
+      setIsLoading(false)
+      if (!result.success) {
+        setAlertMessage(result.message);
+        setShowAlert(true);
+      } else {
+        console.log(userContext.user)
+        router.replace('/(camera-flow)/CameraScreen')
+      }
     }
-
     clearFields()
   }
 
