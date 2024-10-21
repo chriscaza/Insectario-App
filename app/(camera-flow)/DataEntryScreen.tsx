@@ -21,8 +21,24 @@ export default function Detection() {
 
     const [classification, setClassification] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [clase, setClase] = useState('');
+    const [order, setOrder] = useState('');
 
-    const [clase, order] = Classes[4].split('/');
+    useEffect(() => {
+        const [randomClass, randomOrder] = getRandomClassAndOrder();
+        setClase(randomClass);
+        setOrder(randomOrder);
+    }, []);
+
+    function getRandomClassAndOrder(): [string, string] {
+        const classNames = Object.keys(Classes)
+        const randomClass = classNames[Math.floor(Math.random() * classNames.length)]
+
+        const orders = Classes[randomClass]
+        const randomOrder = orders[Math.floor(Math.random() * orders.length)]
+
+        return [randomClass, randomOrder]
+    }
 
         //Simular la carga
         useEffect(() => {
