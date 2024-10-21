@@ -1,4 +1,3 @@
-import apptheme from "@/themes/apptheme";
 import React from "react";
 import { 
     Modal,
@@ -23,15 +22,15 @@ export default function customAlert({ visible, message, onClose }: customAlertPr
             transparent={true}
             visible={visible}
             animationType="none"
-            // onRequestClose={onClose}
-            // onDismiss={onClose}
         >
         <View style={styles.modalBackground}>
                 <View style={styles.modalContainer}>
-                    <View style={styles.modalButtonTextContainer}>
+                    <View style={styles.modalTextContainer}>
                         <Text style={styles.modalMessage}>{message}</Text>
-                        <View style={styles.separator} />
-                        <Pressable style={styles.modalButton} onPress={onClose}>
+                    </View>
+                    <View style={styles.separator} />
+                    <View style={styles.modalButton}>
+                        <Pressable onPress={onClose} style={styles.modalButton}>
                             <Text style={styles.modalButtonText}>Listo</Text>
                         </Pressable>
                     </View>
@@ -57,21 +56,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden'
     },
-    modalButtonTextContainer: {
-        flex: 1,
+    modalTextContainer: {
+        flex: 2,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'center'
     },
     modalMessage: {
         textAlign: 'center',
         fontSize: 18,
         fontWeight: 'medium',
         color: 'white',
-        marginVertical: 10
+        marginVertical: 10,
     },
     modalButton: {
-        alignItems: 'center'
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
     },
     modalButtonText: {
         color: '#3478F6',
