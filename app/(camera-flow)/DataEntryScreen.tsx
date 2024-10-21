@@ -76,7 +76,7 @@ export default function Detection() {
                     </View>
                 </View>
                 <View style={styles.dummyView} />
-                <BottomSheet className={clase} orderName={order}/>
+                <BottomSheet className={clase} orderName={order} latitude={latitude} longitude={longitude}/>
             </LinearGradient>
         </GestureHandlerRootView>
     );
