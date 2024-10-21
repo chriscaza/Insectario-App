@@ -23,7 +23,6 @@ export default function Detection() {
     const [classification, setClassification] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const [clase, order] = Classes[4].split('/');
     
     return(
         <GestureHandlerRootView>
