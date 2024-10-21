@@ -10,6 +10,7 @@ import { Classes } from "../../global/classes";
 import apptheme from "../../themes/apptheme";
 import BottomSheet from "../../components/DataEntryList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import LoadingScreen from "../../components/LoadingScreen";
 
     const { width, height } = Dimensions.get('window')
 
@@ -19,9 +20,20 @@ export default function Detection() {
     const isSmallScreen = width > 400;
 
     const [classification, setClassification] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [clase, order] = Classes[4].split('/');
+
+        //Simular la carga
+        useEffect(() => {
+            const timer = setTimeout(() => {
+                setIsLoading(false);
+            }, 900);
+    
+            return () => clearTimeout(timer);
+        }, []);
+    
+        if(isLoading) return  <LoadingScreen />
     
     return(
         <GestureHandlerRootView>

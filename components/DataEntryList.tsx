@@ -45,7 +45,6 @@ export default function BottomSheet() {
 
     useEffect(() => {
         translateY.value = withSpring(MIN_TRANSLATE_Y)
-        console.log(height)
     }, [])
 
     const formFields = [
