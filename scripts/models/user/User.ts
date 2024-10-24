@@ -1,14 +1,9 @@
 import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
-import { UserContext } from "../../../global/user/UserContent"
-import axios from 'axios'
-import { useContext } from "react"
 
 // const ip = 'http://143.110.231.124:5000/'
-const ip = 'http://192.168.0.129:5000/'
-
-const userContext = useContext(UserContext)
+const ip = 'http://172.20.10.14:5000'
 
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
@@ -20,59 +15,64 @@ export default class User {
         password = Password.encryptPassword(password)
 
         try {
-            const response = await axios.post(`${ip}register`, {
-                values: {
-                    username: username,
-                    password: password,
-                    email: email,
-                    bDay: bDay,
-                },
-            }, {
+            const response = await fetch(`${ip}register`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
+                body: JSON.stringify({
+                    values: {
+                        username: username,
+                        password: password,
+                        email: email,
+                        bDay: bDay,
+                    },
+                }),
             });
-        
-            if (response.status === 200) {
-                return { message: response.data.msg, success: true };
+            const data = await response.json();
+            if (response.ok) {
+                return { message: data.msg, success: true };
             } else {
-                return { message: response.data.msg, success: false };
+                return { message: data.msg, success: false };
             }
-        } catch (error) {
+        } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
-        }        
+        }
     }
 
     static async login(email: string, password: string, setUser: (user: any) => void) {
+        
         const validation = UserValidator.validateLogin(email, password)
         if(!validation.success) return validation
 
         password = Password.encryptPassword(password)
         
-        try {
-            const response = await axios.post(`${ip}`, {
-                values: {
-                    email: email,
-                    password: password,
-                },
-            }, {
+        try { 
+            const response = await fetch(ip, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                }
-            })
-            if (response.status === 200) {
+                },
+                body: JSON.stringify({
+                    values: {
+                        email: email,
+                        password: password
+                    },
+                }),
+            });
+            const data = await response.json()
+            if (response.ok) {
                 setUser({
-                    id: response.data.user.id,
-                    username: response.data.user.username,
-                    email: response.data.user.email,
-                    bDay: response.data.user.bDay
+                    id: data.user.id,
+                    username: data.user.username,
+                    email: data.user.email,
+                    bDay: data.user.bDay
                 })
-                console.log(response.data.user.id, response.data.user.username, response.data.user.email)
-                return { message: response.data.msg, success: true }
+                return { message: data.msg, success: true }
             } else {
-                return { message: response.data.msg, success: false }
+                return { message: data.msg, success: false }
             }
         } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false }
@@ -87,26 +87,28 @@ export default class User {
         newPassword = Password.encryptPassword(newPassword)
  
         try {
-            const response = await axios.post(`${ip}password`, {
-                values: {
-                    account: account,
-                    password: password,
-                    newPassword: newPassword,
-                },
-            }, {
+            const response = await fetch(`${ip}password`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-            });
-        
-            if (response.status === 200) {
-                return { message: response.data.msg, success: true };
+                body: JSON.stringify({
+                    values: {
+                        account: account,
+                        password: password,
+                        newPassword: newPassword,
+                    },
+                })
+            })
+            const data = await response.json()
+            if (response.ok) {
+                return { message: data.msg, success: true }
             } else {
-                return { message: response.data.msg, success: false };
+                return { message: data.msg, success: false }
             }
-        } catch (error) {
+        } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
-        }        
+        }
     }
 }
