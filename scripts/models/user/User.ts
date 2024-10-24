@@ -2,8 +2,8 @@ import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
 
-const ip = 'http://143.110.231.124:5000/'
-// const ip = 'http://172.20.10.14:5000'
+// const ip = 'http://143.110.231.124:5000/'
+const ip = 'http://192.168.0.129:5000/'
 
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
