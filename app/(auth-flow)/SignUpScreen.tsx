@@ -183,7 +183,7 @@ export default function SignUpScreen() {
                     </TouchableOpacity>
 
                     {showAlert && (
-                        <CustomAlert visible={showAlert} message={alertMessage} onClose={() => setShowAlert(false)} />
+                        <CustomAlert visible={showAlert} message={alertMessage} onClose={handleAlertClose} />
                     )}
 
                     <View style={styles.orContainer}>

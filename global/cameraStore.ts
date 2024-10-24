@@ -1,4 +1,3 @@
-import { Dispatch } from 'react';
 import { create } from 'zustand';
 
 interface cameraStoreState {

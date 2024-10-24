@@ -40,7 +40,7 @@ export default class User {
         }
     }
 
-    static async login(email: string, password: string) {
+    static async login(email: string, password: string, setUser: (user: any) => void) {
         
         const validation = UserValidator.validateLogin(email, password)
         if(!validation.success) return validation
@@ -63,10 +63,12 @@ export default class User {
             });
             const data = await response.json()
             if (response.ok) {
-                // Manejar informacion del usuario cuando se loguee
-                console.log(data.user.username)
-                console.log(data.user.email)
-                console.log(data.user.bDay)
+                setUser({
+                    id: data.user.id,
+                    username: data.user.username,
+                    email: data.user.email,
+                    bDay: data.user.bDay
+                })
                 return { message: data.msg, success: true }
             } else {
                 return { message: data.msg, success: false }
