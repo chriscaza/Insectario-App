@@ -40,6 +40,7 @@ export default function LoginScreen() {
     }
 
     clearFields()
+    // router.replace('/(camera-flow)/CameraScreen')
   }
 
   const handleAlertClose = () => {

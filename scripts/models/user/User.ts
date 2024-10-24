@@ -1,10 +1,8 @@
 import Password from "../validation/Password"
 import BDay from "../validation/BDay"
 import { UserValidator } from "./UserValidator"
-import axios from 'axios'
 
-// const ip = 'http://143.110.231.124:5000/'
-const ip = 'http://192.168.0.129:5000/'
+const ip = 'http://143.110.231.124:5000/'
 
 export default class User {
     static async register(username: string, email: string, password: string, bDay: string) {
@@ -16,28 +14,30 @@ export default class User {
         password = Password.encryptPassword(password)
 
         try {
-            const response = await axios.post(`${ip}register`, {
-                values: {
-                    username: username,
-                    password: password,
-                    email: email,
-                    bDay: bDay,
-                },
-            }, {
+            const response = await fetch(`${ip}register`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
+                body: JSON.stringify({
+                    values: {
+                        username: username,
+                        password: password,
+                        email: email,
+                        bDay: bDay,
+                    },
+                }),
             });
-        
-            if (response.status === 200) {
-                return { message: response.data.msg, success: true };
+            const data = await response.json();
+            if (response.ok) {
+                return { message: data.msg, success: true };
             } else {
-                return { message: response.data.msg, success: false };
+                return { message: data.msg, success: false };
             }
-        } catch (error) {
+        } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
-        }        
+        }
     }
 
     static async login(email: string, password: string) {
@@ -47,22 +47,29 @@ export default class User {
 
         password = Password.encryptPassword(password)
         
-        try {
-            const response = await axios.post(`${ip}`, {
-                values: {
-                    email: email,
-                    password: password,
-                },
-            }, {
+        try { 
+            const response = await fetch(ip, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                }
-            })
-            if (response.status === 200) {
-                return { message: response.data.msg, success: true }
+                },
+                body: JSON.stringify({
+                    values: {
+                        email: email,
+                        password: password
+                    },
+                }),
+            });
+            const data = await response.json()
+            if (response.ok) {
+                // Manejar informacion del usuario cuando se loguee
+                console.log(data.user.username)
+                console.log(data.user.email)
+                console.log(data.user.bDay)
+                return { message: data.msg, success: true }
             } else {
-                return { message: response.data.msg, success: false }
+                return { message: data.msg, success: false }
             }
         } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false }
@@ -77,26 +84,28 @@ export default class User {
         newPassword = Password.encryptPassword(newPassword)
  
         try {
-            const response = await axios.post(`${ip}password`, {
-                values: {
-                    account: account,
-                    password: password,
-                    newPassword: newPassword,
-                },
-            }, {
+            const response = await fetch(`${ip}password`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-            });
-        
-            if (response.status === 200) {
-                return { message: response.data.msg, success: true };
+                body: JSON.stringify({
+                    values: {
+                        account: account,
+                        password: password,
+                        newPassword: newPassword,
+                    },
+                })
+            })
+            const data = await response.json()
+            if (response.ok) {
+                return { message: data.msg, success: true }
             } else {
-                return { message: response.data.msg, success: false };
+                return { message: data.msg, success: false }
             }
-        } catch (error) {
+        } catch {
             return { message: 'Error en la solicitud, por favor intente de nuevo', success: false };
-        }        
+        }
     }
 }
