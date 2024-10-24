@@ -57,20 +57,17 @@ export default function StartScreen() {
   // }
 
   return (
-    <UserProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <GestureHandlerRootView>
-          <View style={styles.container}>
-            <Web style={styles.web}/>
-            <Logo />
-            <View style={styles.footer}>
-              <SlidingButton onSwipeComplete={handleSwipeComplete}/>
-            </View>
+    <SafeAreaView style={styles.safeArea}>
+      <GestureHandlerRootView>
+        <View style={styles.container}>
+          <Web style={styles.web}/>
+          <Logo />
+          <View style={styles.footer}>
+            <SlidingButton onSwipeComplete={handleSwipeComplete}/>
           </View>
-        </GestureHandlerRootView>
-      </SafeAreaView>
-    </UserProvider>
-    
+        </View>
+      </GestureHandlerRootView>
+    </SafeAreaView>
   );
 }
 

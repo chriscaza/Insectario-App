@@ -28,8 +28,8 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
-    setIsLoading(true)
     if(userContext) {
+      setIsLoading(true)
       const result = await User.login(email, password, userContext.setUser);
       setIsLoading(false)
       if (!result.success) {
@@ -39,6 +39,8 @@ export default function LoginScreen() {
         console.log(userContext.user)
         router.replace('/(camera-flow)/CameraScreen')
       }
+    } else {
+      console.log('No user')
     }
     clearFields()
   }
