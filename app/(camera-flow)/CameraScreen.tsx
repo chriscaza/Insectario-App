@@ -75,7 +75,7 @@ export default function CameraScreen() {
         <View style={[style.mainContainer, { top: 20 }]}>
           {welcomeVisible && (
             <View style={style.welcomeModal}>
-              <Text style={style.welcomeText}>Bienvenidx {userContext?.user?.username}</Text>
+              <Text style={style.welcomeText}>Bienvenidx {userContext?.user!.username}</Text>
             </View>
           )}
 

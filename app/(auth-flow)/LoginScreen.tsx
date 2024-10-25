@@ -36,7 +36,6 @@ export default function LoginScreen() {
         setAlertMessage(result.message);
         setShowAlert(true);
       } else {
-        console.log(userContext.user)
         router.replace('/(camera-flow)/CameraScreen')
       }
     } else {
