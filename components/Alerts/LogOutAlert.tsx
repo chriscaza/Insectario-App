@@ -1,6 +1,7 @@
+import { UserContext } from "@/global/user/UserContent";
 import apptheme from "@/themes/apptheme";
 import { router } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import { 
     Modal,
     StyleSheet,
@@ -19,12 +20,18 @@ interface LogOutAlertProps {
 const { width } = Dimensions.get('window')
 
 export default function LogOutAlert({ visible, onClose }: LogOutAlertProps) {
+    const userContext = useContext(UserContext)
 
     const handleLogOut = () => {
-        onClose()
-        InteractionManager.runAfterInteractions(() => {
-            router.replace('/(auth-flow)/LoginScreen')
-        })
+        if(userContext) {
+            userContext.logOut()
+            onClose()
+            InteractionManager.runAfterInteractions(() => {
+                router.replace('/(auth-flow)/LoginScreen')
+            })
+        } else {
+            console.log('No usuario loggueado')
+        }
     }
 
 
