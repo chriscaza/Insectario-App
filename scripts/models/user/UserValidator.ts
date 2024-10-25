@@ -1,6 +1,6 @@
-import BDay from "../validation/BDay"
-import Email from '../validation/Email';
-import Password from '../validation/Password';
+import BDay from "../validation/user/BDay"
+import Email from '../validation/user/Email';
+import Password from '../validation/user/Password';
 
 export class UserValidator {
     static validateRegister(email: string, password: string, bDay: string): {message: string, success: boolean} {
