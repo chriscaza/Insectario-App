@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import apptheme from '../../themes/apptheme'
 import { CameraView, FlashMode, CameraType } from 'expo-camera'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -11,6 +11,7 @@ import { useCameraStore } from '../../global/cameraStore'
 
 import Flash from '../../components/icons/Flash'
 import Insecta from '../(inventory)/FoldersScreen'
+import { UserContext } from '@/global/user/UserContent'
 
 const { width } = Dimensions.get('window')
 
@@ -23,6 +24,7 @@ export default function CameraScreen() {
   const cameraRef = useRef<CameraView>(null)
 
   const { setPicture } = useCameraStore();
+  const userContext = useContext(UserContext)
 
   const onCameraReady = async () => {
     setCameraReady(true)
@@ -31,7 +33,7 @@ export default function CameraScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setWelcomeVisible(false);
-    }, 6000);
+    }, 4500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -73,7 +75,7 @@ export default function CameraScreen() {
         <View style={[style.mainContainer, { top: 20 }]}>
           {welcomeVisible && (
             <View style={style.welcomeModal}>
-              <Text style={style.welcomeText}>Bienvenidx Christian...</Text>
+              <Text style={style.welcomeText}>Bienvenidx {userContext?.user?.username}</Text>
             </View>
           )}
 
