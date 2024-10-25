@@ -51,7 +51,7 @@ export default function BottomSheet({ className, orderName, latitude, longitude 
     }));
 
     useEffect(() => {
-        translateY.value = withSpring(MIN_TRANSLATE_Y)
+        // translateY.value = withSpring(MIN_TRANSLATE_Y)
     }, [])
 
     function getCurrentDateAndTime(): [ formattedDate: string, formattedTime: string ] {
@@ -73,15 +73,15 @@ export default function BottomSheet({ className, orderName, latitude, longitude 
     const [ date, hour ] = getCurrentDateAndTime()
 
     const formFields = [
-        { label: 'Clase', placeholder: className },
-        { label: 'Orden', placeholder: orderName },
-        { label: 'Nombre', placeholder: 'Nombre común' },
-        { label: 'Coordenadas', placeholder: `${latitude}, ${longitude}` },
-        { label: 'Hábitat', placeholder: 'Ingresa el hábitat' },
-        { label: 'Fecha', placeholder: date },
-        { label: 'Hora', placeholder: hour },
-        { label: 'Detalles', placeholder: 'Ingresa los detalles' },
-        { label: 'Observaciones', placeholder: 'Ingresa las observaciones' }
+        { label: 'Clase', placeholder: className, editable: true },
+        { label: 'Orden', placeholder: orderName, editable: true },
+        { label: 'Nombre', placeholder: 'Nombre común', editable: true },
+        { label: 'Coordenadas', placeholder: `${latitude}, ${longitude}`, editable: false },
+        { label: 'Hábitat', placeholder: 'Ingresa el hábitat', editable: true },
+        { label: 'Fecha', placeholder: date, editable: false },
+        { label: 'Hora', placeholder: hour, editable: false },
+        { label: 'Detalles', placeholder: 'Ingresa los detalles', editable: true },
+        { label: 'Observaciones', placeholder: 'Ingresa las observaciones', editable: true }
     ];
 
     return (
@@ -99,7 +99,7 @@ export default function BottomSheet({ className, orderName, latitude, longitude 
             <KeyboardAvoidingView
                 style={{flex: 1}}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={70}
+                keyboardVerticalOffset={80}
             >
                 <ScrollView 
                     contentContainerStyle={styles.scrollViewContent}
@@ -111,11 +111,16 @@ export default function BottomSheet({ className, orderName, latitude, longitude 
                             {formFields.map((field, index) => (
                                 <View key={index} style={styles.input}>
                                     <Text style={styles.label}>{field.label}</Text>
-                                    <TextInput
-                                        style={styles.textInput}
-                                        placeholder={field.placeholder}
-                                        placeholderTextColor="rgba(255, 255, 255, 1)"
-                                    />
+                                    {field.editable ? (
+                                        <TextInput 
+                                            style={styles.textInput}
+                                            placeholder={field.placeholder}
+                                            placeholderTextColor="rgba(255, 255, 255, 0.8)"
+                                            editable={field.editable}
+                                        />
+                                    ) : (
+                                        <Text style={styles.textInputNoEditable}>{field.placeholder}</Text>
+                                    )}
                                 </View>
                             ))}
                             <TouchableOpacity style={styles.button} onPress={() => {router.navigate('/(camera-flow)/CameraScreen')}}>
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width,
         height,
-        top: height,
+        top: height*0.08,
         borderRadius: 20,
         overflow: 'hidden',
         borderTopWidth: 2,
@@ -175,8 +180,8 @@ const styles = StyleSheet.create({
     },
     bodyContainer: {
         flex: 1,
-        marginTop: 30,
-        paddingHorizontal: 35,
+        marginTop: 25,
+        paddingHorizontal: 25,
     },
     form: {
         flex: 1,
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        height: 60,
+        height: 65,
         paddingHorizontal: 16,
         justifyContent: 'center',
         borderRadius: 15,
@@ -193,12 +198,16 @@ const styles = StyleSheet.create({
     },
     textInput: {
         color: apptheme.white,
-        fontSize: 18,
+        fontSize: 19,
+    },
+    textInputNoEditable: {
+        fontSize: 19,
+        color: 'rgba(255, 255, 255, 1)'
     },
     label: {
-        color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 16,
-        fontWeight: '400',
+        color: 'rgba(255, 255, 255, 0.5)',
+        fontSize: 17,
+        fontWeight: 'bold',
     },
     button: {
         borderRadius: 50,
