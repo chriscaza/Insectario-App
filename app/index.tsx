@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { StyleSheet, Text, View, Dimensions, Alert, Platform } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Alert, Platform, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -41,7 +41,7 @@ export default function StartScreen() {
   };
 
   useEffect(() => {
-    requestPermissions();
+    // requestPermissions();
   }, []);
 
   const handleSwipeComplete = () => {
@@ -63,7 +63,12 @@ export default function StartScreen() {
           <Web style={styles.web}/>
           <Logo />
           <View style={styles.footer}>
-            <SlidingButton onSwipeComplete={handleSwipeComplete}/>
+            <TouchableOpacity onPress={() => {router.replace('/(auth-flow)/LoginScreen')}}>
+              <Text style={{
+                color: 'rgb(255, 255, 255)',
+                fontSize: 26
+              }}>Iniciar</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </GestureHandlerRootView>
