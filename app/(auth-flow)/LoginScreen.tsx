@@ -28,20 +28,21 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
-    if(userContext) {
-      setIsLoading(true)
-      const result = await User.login(email, password, userContext.setUser);
-      setIsLoading(false)
-      if (!result.success) {
-        setAlertMessage(result.message);
-        setShowAlert(true);
-      } else {
-        router.replace('/(camera-flow)/CameraScreen')
-      }
-    } else {
-      console.log('No user')
-    }
-    clearFields()
+    // if(userContext) {
+    //   setIsLoading(true)
+    //   const result = await User.login(email, password, userContext.setUser);
+    //   setIsLoading(false)
+    //   if (!result.success) {
+    //     setAlertMessage(result.message);
+    //     setShowAlert(true);
+    //   } else {
+    //     router.replace('/(camera-flow)/CameraScreen')
+    //   }
+    // } else {
+    //   console.log('No user')
+    // }
+    // clearFields()
+    router.replace('/(camera-flow)/CameraScreen')
   }
 
   const handleAlertClose = () => {
